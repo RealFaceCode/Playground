@@ -13,7 +13,7 @@ namespace GFX
 		glm::vec2 mPosition;
 		glm::vec4 mColor;
 		glm::vec2 mTexCoord;
-		ui32 mTexture;
+        f32 mTexture;
 	};
 
 	struct Batch

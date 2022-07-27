@@ -238,6 +238,10 @@ namespace GFX
 		{
 			GL_CHECK(glUniform1iv(mLocations.at(uniformName), elements, &i[0]);)
 		}
+		else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniform1ui(const char* uniformName, ui32 ui)

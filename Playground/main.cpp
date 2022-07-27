@@ -4,6 +4,7 @@
 #include "hdr/gfx/gfx.h"
 #include "hdr/gfx/shader.h"
 #include "hdr/gfx/batch.h"
+#include "hdr/util/time.h"
 
 
 //namespace GFX
@@ -111,7 +112,6 @@ int main()
 		.setRefreshRate(60)
 		.centerWindowOnScreen()
 		.setStandartCursor(Window::CrosshairCursor)
-		.makeBorderless()
 		.build("playground");
 
 	win.init();
@@ -165,13 +165,13 @@ int main()
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
 	GFX::BatchVertex vertices[6] = {
-		GFX::BatchVertex{ {-0.5,  0.5f}, {1.0f, 0.0f, 0.0f, 1.0f}, {0.0f, 1.0f}, 1 },
-		GFX::BatchVertex{ {-0.5, -0.5f}, {1.0f, 0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}, 1 },
-		GFX::BatchVertex{ { 0.5,  0.5f}, {1.0f, 0.0f, 0.0f, 1.0f}, {1.0f, 1.0f}, 1 },
+		GFX::BatchVertex{ {-0.5,  0.5f}, {1.0f, 0.0f, 0.0f, 1.0f}, {0.0f, 1.0f}, 1.0f },
+		GFX::BatchVertex{ {-0.5, -0.5f}, {1.0f, 0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}, 1.0f },
+		GFX::BatchVertex{ { 0.5,  0.5f}, {1.0f, 0.0f, 0.0f, 1.0f}, {1.0f, 1.0f}, 1.0f },
 																				 
-		GFX::BatchVertex{ { 0.5,  0.5f}, {0.0f, 0.0f, 1.0f, 1.0f}, {1.0f, 1.0f}, 1 },
-		GFX::BatchVertex{ { 0.5, -0.5f}, {0.0f, 0.0f, 1.0f, 1.0f}, {1.0f, 0.0f}, 1 },
-		GFX::BatchVertex{ {-0.5, -0.5f}, {0.0f, 0.0f, 1.0f, 1.0f}, {0.0f, 0.0f}, 1 }
+		GFX::BatchVertex{ { 0.5,  0.5f}, {0.0f, 0.0f, 1.0f, 1.0f}, {1.0f, 1.0f}, 1.0f },
+		GFX::BatchVertex{ { 0.5, -0.5f}, {0.0f, 0.0f, 1.0f, 1.0f}, {1.0f, 0.0f}, 1.0f },
+		GFX::BatchVertex{ {-0.5, -0.5f}, {0.0f, 0.0f, 1.0f, 1.0f}, {0.0f, 0.0f}, 1.0f }
 	};
 
 	while (win.isWindowValid())

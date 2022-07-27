@@ -23,7 +23,7 @@ namespace GFX
 
 		Image() = default;
 		Image(const char* path);
-		Image(const char* data, ui32 width, ui32 height, ui32 comp);
+		Image(const unsigned char* data, ui32 width, ui32 height, ui32 comp);
 		Image(const Image& image);
 		~Image() = default;
 

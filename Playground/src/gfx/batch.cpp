@@ -28,7 +28,7 @@ namespace GFX
 		glEnableVertexAttribArray(2);
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(BatchVertex), (void*)offsetof(BatchVertex, mTexCoord));
 		glEnableVertexAttribArray(3);
-		glVertexAttribPointer(3, 1, GL_INT, GL_FALSE, sizeof(BatchVertex), (void*)offsetof(BatchVertex, mTexture));
+		glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(BatchVertex), (void*)offsetof(BatchVertex, mTexture));
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
@@ -165,7 +165,6 @@ namespace GFX
 		
 		for (int i = 0; i < mNumTextures; i++)
 		{
-
 			GL_CHECK(glActiveTexture(GL_TEXTURE0 + i);)
 			GL_CHECK(glBindTexture(GL_TEXTURE_2D, mTextures[i]);)
 		}
@@ -212,8 +211,8 @@ namespace GFX
 
 		void Init()
 		{
-			const char whiteImage[4] = { 255, 255, 255, 255 };
-			Image image(whiteImage, 4, 1, 4);
+			const unsigned char whiteImage[4] = { 255, 255, 255, 255 };
+			Image image(whiteImage, 1, 1, 1);
 			defaultImage = image;
 		}
 
@@ -300,7 +299,7 @@ namespace GFX
 		{
 			shader.bind();
             int textures[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
-            shader.setUniformiv("uTextures", textures, 8);
+            shader.setUniformiv("uTexture[0]", textures, 8);
 			for (Batch& batch : batches)
 			{
 				batch.render(shader);

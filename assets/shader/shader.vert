@@ -2,7 +2,7 @@
 layout(location = 0) in vec2 aPosition;
 layout(location = 1) in vec4 aColor;
 layout(location = 2) in vec2 aTexCoord;
-layout(location = 3) in int aTexureId;
+layout(location = 3) in float aTexureId;
 
 uniform mat4 uModel;
 uniform mat4 uView;
@@ -10,7 +10,7 @@ uniform mat4 uProj;
 
 out vec2 fTexCoord;
 out vec4 fColor;
-out int fTextureId;
+out float fTextureId;
 
 void main()
 {

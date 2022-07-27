@@ -53,7 +53,7 @@ namespace GFX
 		stbi_image_free(texData);
 	}
 
-	Image::Image(const char* data, ui32 width, ui32 height, ui32 comp)
+	Image::Image(const unsigned char* data, ui32 width, ui32 height, ui32 comp)
 		:mWidth(width), mHeight(height), mComp(comp)
 	{
 		if (data == nullptr)
@@ -62,8 +62,8 @@ namespace GFX
 			return;
 		}
 
-		ui32 format = comp == 3 ? GL_RGB : GL_RGBA;
-		ui32 internalType = comp == 3 ? GL_RGB32F : GL_RGBA32F;
+		ui32 format = GL_RGBA;
+		ui32 internalType = GL_RGBA8;
 
 		GL_CHECK(glGenTextures(1, &mId);)
 		GL_CHECK(glBindTexture(GL_TEXTURE_2D, mId);)
