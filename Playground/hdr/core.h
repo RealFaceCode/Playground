@@ -38,6 +38,8 @@
 #include <ctime>
 #include <stdarg.h>
 #include <chrono>
+#include <map>
+#include <unordered_map>
 
 //FILEHANDLE
 #include <fhandle/BasicFileHandling.h>

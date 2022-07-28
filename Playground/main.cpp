@@ -3,7 +3,7 @@
 #include "hdr/window/input.h"
 #include "hdr/gfx/gfx.h"
 #include "hdr/gfx/shader.h"
-#include "hdr/gfx/batch.h"
+#include "hdr/gfx/renderer.h"
 
 int main()
 {
@@ -59,8 +59,8 @@ int main()
 	shader.build();
 	shader.bind();
 
-	GFX::BatchHandler::SetDefaultValuesBatch(1000, GL_TRIANGLES);
-	GFX::BatchHandler::AddImage(GFX::Image("../assets/images/bricks.png"));
+    GFX::Image brick("../assets/images/bricks.png");
+    GFX::Image dirt("../assets/images/dirt.png");
 
 	float scale = 1.5f;
 	float aspect = (float)win.mSettings.width / (float)win.mSettings.height;
@@ -72,16 +72,6 @@ int main()
 
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
-	GFX::BatchVertex vertices[6] = {
-		GFX::BatchVertex{ {-0.5,  0.5f}, {1.0f, 0.0f, 0.0f, 1.0f}, {0.0f, 1.0f}, 1.0f },
-		GFX::BatchVertex{ {-0.5, -0.5f}, {1.0f, 0.0f, 0.0f, 1.0f}, {0.0f, 0.0f}, 1.0f },
-		GFX::BatchVertex{ { 0.5,  0.5f}, {1.0f, 0.0f, 0.0f, 1.0f}, {1.0f, 1.0f}, 1.0f },
-																				 
-		GFX::BatchVertex{ { 0.5,  0.5f}, {0.0f, 0.0f, 1.0f, 1.0f}, {1.0f, 1.0f}, 1.0f },
-		GFX::BatchVertex{ { 0.5, -0.5f}, {0.0f, 0.0f, 1.0f, 1.0f}, {1.0f, 0.0f}, 1.0f },
-		GFX::BatchVertex{ {-0.5, -0.5f}, {0.0f, 0.0f, 1.0f, 1.0f}, {0.0f, 0.0f}, 1.0f }
-	};
-
 	while (win.isWindowValid())
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -90,15 +80,24 @@ int main()
 			win.close();
 		}
 
-		GFX::BatchHandler::AddToBatch(vertices, 6);
-		GFX::BatchHandler::RenderBatches(shader);
+        //GFX::Renderer::DrawTriangle({0, 0}, {1, 0, 1, 1}, 0.5, 1.5);
+        //GFX::Renderer::DrawTexturedTriangle({-1, 0}, brick, 0.5, 0.5);
+        //GFX::Renderer::DrawRectangle({1, 0}, {0, 1, 0, 1}, 0.5, 0.5);
+        //GFX::Renderer::DrawTexturedRectangle({0, 1}, brick, 0.5, 0.5);
+        GFX::Renderer::DrawLine({-1, 0},
+                                {0, 1},
+                                {0, 0, 1, 1},
+                                0.2f,
+                                false);
+
+
+        GFX::Renderer::render(shader);
 
 		Input::Update();
 		win.swapBuffers();
 		Window::pollEvents();
 	}
 
-	GFX::BatchHandler::Clear();
 	win.clear();
 
 	return 0;
