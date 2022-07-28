@@ -19,7 +19,7 @@ namespace GFX
 
 		glGenBuffers(1, &mVbo);
 		glBindBuffer(GL_ARRAY_BUFFER, mVbo);
-		glBufferData(GL_ARRAY_BUFFER, mMaxVertices * sizeof(BatchVertex), nullptr, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, mMaxVertices * sizeof(BatchVertex), nullptr, GL_STREAM_DRAW);
 
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(BatchVertex), 0);

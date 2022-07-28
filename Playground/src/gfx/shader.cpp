@@ -5,7 +5,9 @@
 namespace GFX
 {
 	Shader::Shader()
-	{}
+	{
+        mId = glCreateProgram();
+	}
 
 	void Shader::destroy()
 	{
@@ -40,7 +42,7 @@ namespace GFX
 
 		char buffer[8192];
 		GLsizei length = 0;
-		glGetShaderInfoLog(mId, sizeof(buffer), &length, buffer);
+		glGetShaderInfoLog(shaderId, sizeof(buffer), &length, buffer);
 		if (length)
 		{
 			log_fmt_assert(false, "Failed to build shader: '%s'", buffer);
@@ -59,8 +61,6 @@ namespace GFX
 			return false;
 		}
 
-		mId = glCreateProgram();
-
 		for (unsigned int shaderId : mAttachments)
 		{
 			glAttachShader(mId, shaderId);
@@ -70,7 +70,7 @@ namespace GFX
 
 		char buffer[8192];
 		GLsizei length = 0;
-		glGetShaderInfoLog(mId, sizeof(buffer), &length, buffer);
+		glGetProgramInfoLog(mId, sizeof(buffer), &length, buffer);
 		if (length)
 		{
 			log_fmt_error("Failed to build shader: '%s'", buffer);
