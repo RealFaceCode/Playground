@@ -28,8 +28,12 @@ namespace GFX
         void DrawLine(const glm::vec2& positionStart,
                       const glm::vec2& positionEnd,
                       const glm::vec4& color,
-                      const float& lineWidth,
-                      const bool& edge90 = true);
+                      const float& lineWidth);
+        void DrawLinedRectangle(const glm::vec2& position,
+                                const glm::vec4& color,
+                                const float& width,
+                                const float& height,
+                                const float& lineWidth);
 
         void render(Shader& shader);
 

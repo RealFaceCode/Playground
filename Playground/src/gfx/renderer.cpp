@@ -106,8 +106,7 @@ namespace GFX
         void DrawLine(const glm::vec2& positionStart,
                       const glm::vec2& positionEnd,
                       const glm::vec4& color,
-                      const float& lineWidth,
-                      const bool& edge90)
+                      const float& lineWidth)
         {
             float textureIndex = 0;
 
@@ -116,34 +115,61 @@ namespace GFX
                 textureIndex =(float)batch->getMapedTextureIndex(BatchHandler::defaultImage.mId);
             }
 
-            float x1 = positionStart.x;
-            float y1 = positionStart.y;
-            float x2 = positionEnd.x;
-            float y2 = positionEnd.y;
-            float w = lineWidth;
-            float move1 = 0;
-            float move2 = 0;
-            if(edge90)
-            {
-                float dif = y2 - y1;
-                move1 = (dif * lineWidth);
-            }
-            if(x1 == x2)
-            {
-                move2 = move1;
-            }
+            glm::vec2 ab = positionEnd - positionStart;
+
+            glm::vec2 ab_perpendicular_1 = { -ab.y, ab.x };
+            ab_perpendicular_1 = glm::normalize(ab_perpendicular_1);
+            ab_perpendicular_1 *= lineWidth * 0.5f;
+            glm::vec2 VERTEX_ONE = positionStart + ab_perpendicular_1;
+
+            glm::vec2 ab_perpendicular_2 = { ab.y, -ab.x };
+            ab_perpendicular_2 = glm::normalize(ab_perpendicular_2);
+            ab_perpendicular_2 *= lineWidth * 0.5f;
+            glm::vec2 VERTEX_TWO = positionStart + ab_perpendicular_2;
+
+            glm::vec2 ba = positionStart - positionEnd;
+
+            glm::vec2 ba_perpendicular_1 = { -ba.y, ba.x };
+            ba_perpendicular_1 = glm::normalize(ba_perpendicular_1);
+            ba_perpendicular_1 *= lineWidth * 0.5f;
+            glm::vec2 VERTEX_THREE = positionEnd + ba_perpendicular_1;
+
+            glm::vec2 ba_perpendicular_2 = { ba.y, -ba.x };
+            ba_perpendicular_2 = glm::normalize(ba_perpendicular_2);
+            ba_perpendicular_2 *= lineWidth * 0.5f;
+            glm::vec2 VERTEX_FOUR = positionEnd + ba_perpendicular_2;
 
             BatchVertex vertices[6] = {
-                    BatchVertex{ glm::vec2{x1, y1 - move2}, color, glm::vec2{0.0f, 1.0f}, textureIndex },
-                    BatchVertex{ glm::vec2{x2, y2}, color, glm::vec2{0.0f, 0.0f}, textureIndex },
-                    BatchVertex{ glm::vec2{ move1 + x1, y1 - w}, color, glm::vec2{1.0f, 1.0f}, textureIndex },
-
-                    BatchVertex{ glm::vec2{x2, y2}, color, glm::vec2{1.0f, 1.0f}, textureIndex },
-                    BatchVertex{ glm::vec2{move1 + x2, y2 - w + move2}, color, glm::vec2{1.0f, 0.0f}, textureIndex },
-                    BatchVertex{ glm::vec2{move1 + x1, y1 - w}, color, glm::vec2{0.0f, 0.0f}, textureIndex }
+                    BatchVertex{ VERTEX_ONE, color, glm::vec2{0.0f, 1.0f}, textureIndex },
+                    BatchVertex{ VERTEX_TWO, color, glm::vec2{0.0f, 0.0f}, textureIndex },
+                    BatchVertex{ VERTEX_FOUR, color, glm::vec2{1.0f, 1.0f}, textureIndex },
+                    BatchVertex{ VERTEX_TWO, color, glm::vec2{1.0f, 1.0f}, textureIndex },
+                    BatchVertex{ VERTEX_THREE, color, glm::vec2{1.0f, 0.0f}, textureIndex },
+                    BatchVertex{ VERTEX_FOUR, color, glm::vec2{0.0f, 0.0f}, textureIndex }
             };
 
             BatchHandler::AddToBatch(vertices, 6);
+        }
+
+        void DrawLinedRectangle(const glm::vec2 &position,
+                                const glm::vec4 &color,
+                                const float &width,
+                                const float &height,
+                                const float &lineWidth)
+        {
+            float textureIndex = 0;
+
+            {
+                Batch* batch = BatchHandler::GetBatchHasSpaceMatchTexture(3, BatchHandler::defaultImage.mId);
+                textureIndex =(float)batch->getMapedTextureIndex(BatchHandler::defaultImage.mId);
+            }
+
+            float w = lineWidth / 2;
+
+            DrawLine({position.x, position.y - w}, {position.x + width, position.y - w}, color, lineWidth);
+            DrawLine({position.x, position.y - height + w}, {position.x + width, position.y - height + w}, color, lineWidth);
+            DrawLine({position.x + w, position.y}, {position.x + w, position.y - height}, color, lineWidth);
+            DrawLine({position.x + width - w, position.y}, {position.x + width - w, position.y - height}, color, lineWidth);
         }
 
         void render(Shader &shader)

@@ -435,6 +435,8 @@ namespace Window
 	void Window::swapBuffers()
 	{
 		glfwSwapBuffers(mHandle);
+		//Todo: fix me i should be somewhere else
+		glViewport(0, 0, mSettings.width, mSettings.height);
 	}
 
 	void Window::close()
