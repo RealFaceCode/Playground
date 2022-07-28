@@ -160,18 +160,18 @@ namespace GFX
 
 		shader.setUniformMat4("uModel", mTransform);
 
-		GL_CHECK(glBindVertexArray(mVao);)
-		GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, mVbo);)
+		glBindVertexArray(mVao);
+		glBindBuffer(GL_ARRAY_BUFFER, mVbo);
 		
 		for (int i = 0; i < mNumTextures; i++)
 		{
-			GL_CHECK(glActiveTexture(GL_TEXTURE0 + i);)
-			GL_CHECK(glBindTexture(GL_TEXTURE_2D, mTextures[i]);)
+			glActiveTexture(GL_TEXTURE0 + i);
+			glBindTexture(GL_TEXTURE_2D, mTextures[i]);
 		}
 
-		GL_CHECK(glDrawArrays(GL_TRIANGLES, 0, mUsedVertices);)
-		GL_CHECK(glBindBuffer(GL_ARRAY_BUFFER, 0);)
-		GL_CHECK(glBindVertexArray(0);)
+		glDrawArrays(GL_TRIANGLES, 0, mUsedVertices);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
 		mUsedVertices = 0;
 	}
 

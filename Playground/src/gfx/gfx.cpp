@@ -6,6 +6,19 @@
 
 namespace GFX
 {
+    static void GLAPIENTRY GLErrorCallback( GLenum source,
+                     GLenum type,
+                     GLuint id,
+                     GLenum severity,
+                     GLsizei length,
+                     const GLchar* message,
+                     const void* userParam )
+    {
+        fprintf( stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+                 ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
+                 type, severity, message );
+    }
+
 	void Init(RenderApi api)
 	{
 		bool result = false;;
@@ -25,6 +38,11 @@ namespace GFX
 			log_assert(false, "Failed to init glad!");
 		}
 
+#ifdef _DEBUG
+        glEnable(GL_DEBUG_OUTPUT);
+        glDebugMessageCallback( GLErrorCallback, 0 );
+#endif
+
 		BatchHandler::Init();
 	}
 
@@ -41,14 +59,14 @@ namespace GFX
 		ui32 format = mComp == 3 ? GL_RGB : GL_RGBA;
 		ui32 internalType = mComp == 3 ? GL_RGB32F : GL_RGBA32F;
 
-		GL_CHECK(glGenTextures(1, &mId);)
-		GL_CHECK(glBindTexture(GL_TEXTURE_2D, mId);)
-		GL_CHECK(glTexImage2D(GL_TEXTURE_2D, 0, internalType, mWidth, mHeight, 0, format, GL_UNSIGNED_BYTE, texData);)
-		GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);)
-		GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);)
-		GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);)
-		GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);)
-		GL_CHECK(glBindTexture(GL_TEXTURE_2D, 0);)
+		glGenTextures(1, &mId);
+		glBindTexture(GL_TEXTURE_2D, mId);
+		glTexImage2D(GL_TEXTURE_2D, 0, internalType, mWidth, mHeight, 0, format, GL_UNSIGNED_BYTE, texData);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glBindTexture(GL_TEXTURE_2D, 0);
 
 		stbi_image_free(texData);
 	}
@@ -65,14 +83,14 @@ namespace GFX
 		ui32 format = GL_RGBA;
 		ui32 internalType = GL_RGBA8;
 
-		GL_CHECK(glGenTextures(1, &mId);)
-		GL_CHECK(glBindTexture(GL_TEXTURE_2D, mId);)
-		GL_CHECK(glTexImage2D(GL_TEXTURE_2D, 0, internalType, width, height, 0, format, GL_UNSIGNED_BYTE, data);)
-		GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);)
-		GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);)
-		GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);)
-		GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);)
-		GL_CHECK(glBindTexture(GL_TEXTURE_2D, 0);)
+		glGenTextures(1, &mId);
+		glBindTexture(GL_TEXTURE_2D, mId);
+		glTexImage2D(GL_TEXTURE_2D, 0, internalType, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glBindTexture(GL_TEXTURE_2D, 0);
 
 	}
 
@@ -86,18 +104,18 @@ namespace GFX
 
 	void Image::bind()
 	{
-		GL_CHECK(glBindTexture(GL_TEXTURE_2D, mId);)
+		glBindTexture(GL_TEXTURE_2D, mId);
 	}
 
 	void Image::unbind()
 	{
-		GL_CHECK(glBindTexture(GL_TEXTURE_2D, 0);)
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
 	void Image::clear()
 	{
-		GL_CHECK(glBindTexture(GL_TEXTURE_2D, 0);)
-		GL_CHECK(glDeleteTextures(1, &mId);)
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glDeleteTextures(1, &mId);
 	}
 
 	Image& Image::operator=(const Image& other)

@@ -9,17 +9,17 @@ namespace GFX
 
 	void Shader::destroy()
 	{
-		GL_CHECK(glDeleteProgram(mId);)
+		glDeleteProgram(mId);
 	}
 
 	void Shader::bind()
 	{
-		GL_CHECK(glUseProgram(mId);)
+		glUseProgram(mId);
 	}
 
 	void Shader::unbind()
 	{
-		GL_CHECK(glUseProgram(0);)
+		glUseProgram(0);
 	}
 
 	bool Shader::compile(const char* shaderPath, ui32 shaderType)
@@ -32,15 +32,15 @@ namespace GFX
 			return false;
 		}
 
-		unsigned int shaderId = GL_CHECK(glCreateShader(shaderType);)
+		unsigned int shaderId = glCreateShader(shaderType);
 		source.addUI8('\0');
 		char const* string = (char const*)source.getData();
-		GL_CHECK(glShaderSource(shaderId, 1, &string, 0);)
-		GL_CHECK(glCompileShader(shaderId);)
+		glShaderSource(shaderId, 1, &string, 0);
+		glCompileShader(shaderId);
 
 		char buffer[8192];
 		GLsizei length = 0;
-		GL_CHECK(glGetShaderInfoLog(mId, sizeof(buffer), &length, buffer);)
+		glGetShaderInfoLog(mId, sizeof(buffer), &length, buffer);
 		if (length)
 		{
 			log_fmt_assert(false, "Failed to build shader: '%s'", buffer);
@@ -59,18 +59,18 @@ namespace GFX
 			return false;
 		}
 
-		mId = GL_CHECK(glCreateProgram();)
+		mId = glCreateProgram();
 
 		for (unsigned int shaderId : mAttachments)
 		{
-			GL_CHECK(glAttachShader(mId, shaderId);)
+			glAttachShader(mId, shaderId);
 		}
 
-		GL_CHECK(glLinkProgram(mId);)
+		glLinkProgram(mId);
 
 		char buffer[8192];
 		GLsizei length = 0;
-		GL_CHECK(glGetShaderInfoLog(mId, sizeof(buffer), &length, buffer);)
+		glGetShaderInfoLog(mId, sizeof(buffer), &length, buffer);
 		if (length)
 		{
 			log_fmt_error("Failed to build shader: '%s'", buffer);
@@ -79,8 +79,8 @@ namespace GFX
 
 		for (unsigned int shaderId : mAttachments)
 		{
-			GL_CHECK(glDetachShader(mId, shaderId);)
-			GL_CHECK(glDeleteShader(shaderId);)
+			glDetachShader(mId, shaderId);
+			glDeleteShader(shaderId);
 		}
 
 		mAttachments.clear();
@@ -88,10 +88,10 @@ namespace GFX
 		bind();
 
 		int numUniforms;
-		GL_CHECK(glGetProgramiv(mId, GL_ACTIVE_UNIFORMS, &numUniforms);)
+		glGetProgramiv(mId, GL_ACTIVE_UNIFORMS, &numUniforms);
 
 		int maxCharLen;
-		GL_CHECK(glGetProgramiv(mId, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxCharLen);)
+		glGetProgramiv(mId, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxCharLen);
 
 		if (numUniforms > 0 && maxCharLen > 0)
 		{
@@ -101,8 +101,8 @@ namespace GFX
 			{
 				int len, size;
 				GLenum dataType;
-				GL_CHECK(glGetActiveUniform(mId, i, maxCharLen, &len, &size, &dataType, buffer);)
-				unsigned int loc = GL_CHECK(glGetUniformLocation(mId, buffer);)
+				glGetActiveUniform(mId, i, maxCharLen, &len, &size, &dataType, buffer);
+				unsigned int loc = glGetUniformLocation(mId, buffer);
 				mLocations[buffer] = loc;
 			}
 
@@ -116,7 +116,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniformMatrix4fv(mLocations.at(uniformName), 1, GL_FALSE, &mat2[0][0]);)
+			glUniformMatrix4fv(mLocations.at(uniformName), 1, GL_FALSE, &mat2[0][0]);
 		}
 	}
 
@@ -124,7 +124,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniformMatrix4fv(mLocations.at(uniformName), 1, GL_FALSE, &mat3[0][0]);)
+			glUniformMatrix4fv(mLocations.at(uniformName), 1, GL_FALSE, &mat3[0][0]);
 		}
 	}
 
@@ -132,7 +132,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniformMatrix4fv(mLocations.at(uniformName), 1, GL_FALSE, &mat4[0][0]);)
+			glUniformMatrix4fv(mLocations.at(uniformName), 1, GL_FALSE, &mat4[0][0]);
 		}
 	}
 
@@ -140,7 +140,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniform1f(mLocations.at(uniformName), f);)
+			glUniform1f(mLocations.at(uniformName), f);
 		}
 	}
 
@@ -148,7 +148,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniform2f(mLocations.at(uniformName), f0, f1);)
+			glUniform2f(mLocations.at(uniformName), f0, f1);
 		}
 	}
 
@@ -156,7 +156,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniform3f(mLocations.at(uniformName), f0, f1, f2);)
+			glUniform3f(mLocations.at(uniformName), f0, f1, f2);
 		}
 	}
 
@@ -164,7 +164,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniform4f(mLocations.at(uniformName), f0, f1, f2, f3);)
+			glUniform4f(mLocations.at(uniformName), f0, f1, f2, f3);
 		}
 	}
 
@@ -172,7 +172,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniform1d(mLocations.at(uniformName), d);)
+			glUniform1d(mLocations.at(uniformName), d);
 		}
 	}
 
@@ -180,7 +180,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniform2d(mLocations.at(uniformName), d0, d1);)
+			glUniform2d(mLocations.at(uniformName), d0, d1);
 		}
 	}
 
@@ -188,7 +188,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniform3d(mLocations.at(uniformName), d0, d1, d2);)
+			glUniform3d(mLocations.at(uniformName), d0, d1, d2);
 		}
 	}
 
@@ -196,7 +196,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniform4d(mLocations.at(uniformName), d0, d1, d2, d3);)
+			glUniform4d(mLocations.at(uniformName), d0, d1, d2, d3);
 		}
 	}
 
@@ -204,7 +204,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniform1i(mLocations.at(uniformName), i);)
+			glUniform1i(mLocations.at(uniformName), i);
 		}
 	}
 
@@ -212,7 +212,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniform2i(mLocations.at(uniformName), i0, i1);)
+			glUniform2i(mLocations.at(uniformName), i0, i1);
 		}
 	}
 
@@ -220,7 +220,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniform3i(mLocations.at(uniformName), i0, i1, i2);)
+			glUniform3i(mLocations.at(uniformName), i0, i1, i2);
 		}
 	}
 
@@ -228,7 +228,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniform4i(mLocations.at(uniformName), i0, i1, i2, i3);)
+			glUniform4i(mLocations.at(uniformName), i0, i1, i2, i3);
 		}
 	}
 
@@ -236,7 +236,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniform1iv(mLocations.at(uniformName), elements, &i[0]);)
+			glUniform1iv(mLocations.at(uniformName), elements, &i[0]);
 		}
 		else
         {
@@ -248,7 +248,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniform1ui(mLocations.at(uniformName), ui);)
+			glUniform1ui(mLocations.at(uniformName), ui);
 		}
 	}
 
@@ -256,7 +256,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniform2ui(mLocations.at(uniformName), ui0, ui1);)
+			glUniform2ui(mLocations.at(uniformName), ui0, ui1);
 		}
 	}
 
@@ -264,7 +264,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniform3ui(mLocations.at(uniformName), ui0, ui1, ui2);)
+			glUniform3ui(mLocations.at(uniformName), ui0, ui1, ui2);
 		}
 	}
 
@@ -272,7 +272,7 @@ namespace GFX
 	{
 		if (mLocations.find(uniformName) != mLocations.end())
 		{
-			GL_CHECK(glUniform4ui(mLocations.at(uniformName), ui0, ui1, ui2, ui3);)
+			glUniform4ui(mLocations.at(uniformName), ui0, ui1, ui2, ui3);
 		}
 	}
 }

@@ -3,8 +3,6 @@
 
 namespace GFX
 {
-#define GL_CHECK(gl_func) gl_func; { int err = glGetError(); if(err != GL_NO_ERROR){log_fmt_error("OpenGL error: '%i'", err);}}
-
 	enum RenderApi
 	{
 		GL,
@@ -34,7 +32,5 @@ namespace GFX
 
 		Image& operator=(const Image& other);
 	};
-
 }
-
 #endif // !GRF_H
