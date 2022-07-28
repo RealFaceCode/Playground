@@ -302,10 +302,6 @@ namespace GFX
         {
             log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
         }
-        else
-        {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
-        }
 	}
 
 	void Shader::setUniform1ui(const char* uniformName, ui32 ui)
