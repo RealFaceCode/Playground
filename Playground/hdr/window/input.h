@@ -113,6 +113,8 @@ namespace Input
 		i32 modifierKey;
 	};
 
+    float ToFloatCoord(const int coord, const int maxLen, const bool flip = false);
+
 	void Update();
 
 	void SetSetting(InputSettingsEnum setting, bool value);

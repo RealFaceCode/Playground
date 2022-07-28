@@ -8,7 +8,8 @@ namespace Input
 	ui32* windowPosX	= nullptr;
 	ui32* windowPosY	= nullptr;
 
-	InputSettings settings {
+	InputSettings settings
+	{
 		.collectKeyCallback					= false,
 		.collectCharacterCallback			= false,
 		.collectCursorPositionCallback		= false,
@@ -27,7 +28,7 @@ namespace Input
 		.collectWindowPosCallback			= false,
 		.collectWindowRefreshCallback		= false,
 		.collectWindowSizeCallback			= false,
-		.collectWindowIconifyCallback				= false,
+		.collectWindowIconifyCallback		= false,
 		.loadDropedFiles					= false,
 	};
 
@@ -56,7 +57,7 @@ namespace Input
 
 	bool wasMaximizedBMinimized								= false;
 
-	static float toFloatCoord(const int coord, const int maxLen, const bool flip = false)
+	float ToFloatCoord(const int coord, const int maxLen, const bool flip)
 	{
 		return flip == true
 			? ((float)((float)(coord * 2) / (float)maxLen) - 1.0f) * -1.0f
@@ -337,12 +338,12 @@ namespace Input
 
 	f32 GetMouseXFloat()
 	{
-		return toFloatCoord(mouseX, *windowWidth);
+		return ToFloatCoord(mouseX, *windowWidth);
 	}
 
 	f32 GetMouseYFloat(bool flip)
 	{
-		return toFloatCoord(mouseY, *windowHeight, flip);
+		return ToFloatCoord(mouseY, *windowHeight, flip);
 	}
 
 	bool WasWindowResized()
