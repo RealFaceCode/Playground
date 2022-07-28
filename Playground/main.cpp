@@ -80,17 +80,13 @@ int main()
 			win.close();
 		}
 
-        //GFX::Renderer::DrawTriangle({0, 0}, {1, 0, 1, 1}, 0.5, 1.5);
-        //GFX::Renderer::DrawTexturedTriangle({-1, 0}, brick, 0.5, 0.5);
-        //GFX::Renderer::DrawRectangle({1, 0}, {0, 1, 0, 1}, 0.5, 0.5);
-        //GFX::Renderer::DrawTexturedRectangle({0, 1}, brick, 0.5, 0.5);
-        GFX::Renderer::DrawLine({-1, 0},
-                                {0, 1},
-                                {0, 0, 1, 1},
-                                0.2f,
-                                false);
+		shader.bind();
+        aspect = (float)win.mSettings.width / (float)win.mSettings.height;
+        proj = glm::ortho(-aspect * scale, aspect * scale, -1.0f * scale, 1.0f * scale, -1.0f, 1.0f);
+        shader.setUniformMat4("uProj", proj);
 
-
+        GFX::Renderer::DrawRectangle({0, 0}, {0, 1, 0, 1}, 1, 1);
+        GFX::Renderer::DrawLinedRectangle({0, 0}, {1, 0, 0, 1}, 1, 1, 0.02f);
         GFX::Renderer::render(shader);
 
 		Input::Update();
