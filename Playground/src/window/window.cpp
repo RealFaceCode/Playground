@@ -267,13 +267,13 @@ namespace Window
 
 		if (hotX > 15)
 		{
-			log_error("Failed to set glfw cursor! hotX'%i' max is 15", hotX);
+			log_fmt_error("Failed to set glfw cursor! hotX'%i' max is 15", hotX);
 			return;
 		}
 
 		if (hotY > 15)
 		{
-			log_error("Failed to set glfw cursor! hotY'%i' max is 15", hotY);
+			log_fmt_error("Failed to set glfw cursor! hotY'%i' max is 15", hotY);
 			return;
 		}
 
@@ -309,13 +309,13 @@ namespace Window
 
 		if (hotX > 31)
 		{
-			log_error("Failed to set glfw cursor! hotX'%i' max is 31", hotX);
+			log_fmt_error("Failed to set glfw cursor! hotX'%i' max is 31", hotX);
 			return;
 		}
 
 		if (hotY > 31)
 		{
-			log_error("Failed to set glfw cursor! hotY'%i' max is 31", hotY);
+			log_fmt_error("Failed to set glfw cursor! hotY'%i' max is 31", hotY);
 			return;
 		}
 
@@ -351,13 +351,13 @@ namespace Window
 
 		if (hotX > 63)
 		{
-			log_error("Failed to set glfw cursor! hotX'%i' max is 63", hotX);
+			log_fmt_error("Failed to set glfw cursor! hotX'%i' max is 63", hotX);
 			return;
 		}
 
 		if (hotY > 63)
 		{
-			log_error("Failed to set glfw cursor! hotY'%i' max is 63", hotY);
+			log_fmt_error("Failed to set glfw cursor! hotY'%i' max is 63", hotY);
 			return;
 		}
 
