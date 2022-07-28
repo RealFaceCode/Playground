@@ -47,6 +47,7 @@ namespace GFX
 			return;
 		}
 		mTextures[mNumTextures] = image.mId;
+		mMapedTextureIndex.insert({image.mId, mNumTextures});
 		mNumTextures++;
 	}
 
@@ -58,6 +59,7 @@ namespace GFX
 			return;
 		}
 		mTextures[mNumTextures] = image;
+        mMapedTextureIndex.insert({image, mNumTextures});
 		mNumTextures++;
 	}
 
@@ -112,6 +114,16 @@ namespace GFX
 	{
 		return mTextures;
 	}
+
+    ui8 Batch::getMapedTextureIndex(const Image& image)
+    {
+	    return mMapedTextureIndex[image.mId];
+    }
+
+    ui8 Batch::getMapedTextureIndex(const ui32& image)
+    {
+        return mMapedTextureIndex[image];
+    }
 
 	void Batch::add(const BatchVertex vertex)
 	{

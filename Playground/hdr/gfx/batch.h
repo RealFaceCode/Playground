@@ -28,6 +28,7 @@ namespace GFX
 		ui8 mNumTextures;
 		ui32 mTextures[8];
 		//Shader* mShader;
+        std::unordered_map<ui32, ui8> mMapedTextureIndex;
 
 	public:
 		Batch(const ui64 maxVertices, const ui32 drawMode);
@@ -40,6 +41,9 @@ namespace GFX
 		bool hasSameTextures(const ui32 ids[8]);
 		ui32* getTextures();
 		bool hasSpaceTexture();
+
+		ui8 getMapedTextureIndex(const Image& image);
+        ui8 getMapedTextureIndex(const ui32& image);
 
 		void add(const BatchVertex vertex);
 		void add(const BatchVertex* vertices, ui64 elements);
