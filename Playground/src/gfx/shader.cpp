@@ -118,6 +118,10 @@ namespace GFX
 		{
 			glUniformMatrix4fv(mLocations.at(uniformName), 1, GL_FALSE, &mat2[0][0]);
 		}
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniformMat3(const char* uniformName, glm::mat3 mat3)
@@ -126,6 +130,10 @@ namespace GFX
 		{
 			glUniformMatrix4fv(mLocations.at(uniformName), 1, GL_FALSE, &mat3[0][0]);
 		}
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniformMat4(const char* uniformName, glm::mat4 mat4)
@@ -134,6 +142,10 @@ namespace GFX
 		{
 			glUniformMatrix4fv(mLocations.at(uniformName), 1, GL_FALSE, &mat4[0][0]);
 		}
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniform1f(const char* uniformName, f32 f)
@@ -142,6 +154,10 @@ namespace GFX
 		{
 			glUniform1f(mLocations.at(uniformName), f);
 		}
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniform2f(const char* uniformName, f32 f0, f32 f1)
@@ -150,6 +166,10 @@ namespace GFX
 		{
 			glUniform2f(mLocations.at(uniformName), f0, f1);
 		}
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniform3f(const char* uniformName, f32 f0, f32 f1, f32 f2)
@@ -158,6 +178,10 @@ namespace GFX
 		{
 			glUniform3f(mLocations.at(uniformName), f0, f1, f2);
 		}
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniform4f(const char* uniformName, f32 f0, f32 f1, f32 f2, f32 f3)
@@ -166,6 +190,10 @@ namespace GFX
 		{
 			glUniform4f(mLocations.at(uniformName), f0, f1, f2, f3);
 		}
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniform1d(const char* uniformName, f64 d)
@@ -174,6 +202,10 @@ namespace GFX
 		{
 			glUniform1d(mLocations.at(uniformName), d);
 		}
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniform2d(const char* uniformName, f64 d0, f64 d1)
@@ -182,6 +214,10 @@ namespace GFX
 		{
 			glUniform2d(mLocations.at(uniformName), d0, d1);
 		}
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniform3d(const char* uniformName, f64 d0, f64 d1, f64 d2)
@@ -190,6 +226,10 @@ namespace GFX
 		{
 			glUniform3d(mLocations.at(uniformName), d0, d1, d2);
 		}
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniform4d(const char* uniformName, f64 d0, f64 d1, f64 d2, f64 d3)
@@ -198,6 +238,10 @@ namespace GFX
 		{
 			glUniform4d(mLocations.at(uniformName), d0, d1, d2, d3);
 		}
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniform1i(const char* uniformName, i32 i)
@@ -206,6 +250,10 @@ namespace GFX
 		{
 			glUniform1i(mLocations.at(uniformName), i);
 		}
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniform2i(const char* uniformName, i32 i0, i32 i1)
@@ -214,6 +262,10 @@ namespace GFX
 		{
 			glUniform2i(mLocations.at(uniformName), i0, i1);
 		}
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniform3i(const char* uniformName, i32 i0, i32 i1, i32 i2)
@@ -222,6 +274,10 @@ namespace GFX
 		{
 			glUniform3i(mLocations.at(uniformName), i0, i1, i2);
 		}
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniform4i(const char* uniformName, i32 i0, i32 i1, i32 i2, i32 i3)
@@ -230,6 +286,10 @@ namespace GFX
 		{
 			glUniform4i(mLocations.at(uniformName), i0, i1, i2, i3);
 		}
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniformiv(const char* uniformName, i32* i, ui64 elements)
@@ -242,6 +302,10 @@ namespace GFX
         {
             log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
         }
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniform1ui(const char* uniformName, ui32 ui)
@@ -250,6 +314,10 @@ namespace GFX
 		{
 			glUniform1ui(mLocations.at(uniformName), ui);
 		}
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniform2ui(const char* uniformName, ui32 ui0, ui32 ui1)
@@ -258,6 +326,10 @@ namespace GFX
 		{
 			glUniform2ui(mLocations.at(uniformName), ui0, ui1);
 		}
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniform3ui(const char* uniformName, ui32 ui0, ui32 ui1, ui32 ui2)
@@ -266,6 +338,10 @@ namespace GFX
 		{
 			glUniform3ui(mLocations.at(uniformName), ui0, ui1, ui2);
 		}
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 
 	void Shader::setUniform4ui(const char* uniformName, ui32 ui0, ui32 ui1, ui32 ui2, ui32 ui3)
@@ -274,5 +350,9 @@ namespace GFX
 		{
 			glUniform4ui(mLocations.at(uniformName), ui0, ui1, ui2, ui3);
 		}
+        else
+        {
+            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+        }
 	}
 }
