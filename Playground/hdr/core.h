@@ -40,6 +40,9 @@
 #include <chrono>
 #include <map>
 #include <unordered_map>
+#include <algorithm>
+#include <array>
+#include <memory>
 
 //FILEHANDLE
 #include <fhandle/BasicFileHandling.h>
