@@ -11,6 +11,3 @@ include_directories("../PlaygroundLib/hdr/")
 add_executable(Sandbox ${SOURCE_FILES} ${GLAD_FILES} ${FHANDLE_FILES})
 
 target_link_libraries(Sandbox PlaygroundLib)
-target_link_libraries(Sandbox glfw)
-find_package(OpenGL REQUIRED)
-target_link_libraries(Sandbox OpenGL::GL)
