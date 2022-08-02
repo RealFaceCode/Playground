@@ -1,3 +1,6 @@
+#include "../../hdr/core.h"
+#include "../../hdr/gfx/image.h"
+#include "../../hdr/gfx/shader.h"
 #include "../../hdr/gfx/batch.h"
 
 namespace GFX

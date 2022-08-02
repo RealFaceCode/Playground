@@ -1,12 +1,13 @@
 #include "../core.h"
 #include "gfx.h"
-#include "shader.h"
 
 #ifndef BATCH_H
 #define BATCH_H
 
 namespace GFX
 {
+    struct Image;
+    struct Shader;
 
 	struct BatchVertex
 	{
