@@ -1,4 +1,5 @@
 #include <iostream>
+#include <gfx/image.h>
 #include "core.h"
 #include "window/window.h"
 #include "window/input.h"

@@ -5,6 +5,7 @@
 #include "../../hdr/core.h"
 #include "../../hdr/gfx/renderer.h"
 #include "../../hdr/gfx/batch.h"
+#include "../../hdr/gfx/image.h"
 
 namespace GFX
 {
