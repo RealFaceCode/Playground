@@ -52,7 +52,7 @@ namespace GFX
 	    std::vector<std::string> mFilePaths;
 
         void addFile(const char* filePath);
-        void createSpriteSheet(const char* name, const ui8 maxImageInRow);
+        void createSpriteSheet(const char* name);
     };
 
 

@@ -156,7 +156,7 @@ namespace GFX
         memcpy(arr + pos, data, dataSize);
     }
 
-    void SpriteSheet::createSpriteSheet(const char* name, const ui8 maxImageInRow)
+    void SpriteSheet::createSpriteSheet(const char* name)
     {
         std::vector<FileData> data;
         //load data
@@ -188,47 +188,30 @@ namespace GFX
         }
 
         //get maxImage width
-        ui8 count = 0;
         i32 maxImageWidth = 0;
-        for(const auto& pid : data)
+        if(data.size() > 1)
         {
-            if(count >= maxImageInRow)
-            {
-                break;
-            }
-
-            maxImageWidth += pid.mWidth;
-
-            count++;
+            maxImageWidth = data.at(0).mWidth + data.at(1).mWidth;
+        }
+        else
+        {
+            maxImageWidth = data.at(0).mWidth;
         }
 
         //get maxImage height
         i32 maxImageHeight = data.at(0).mHeight;
-        ui32 rows = 1;
         ui32 tmpHeight = 0;
-        for(auto i = 1; i < data.size(); i++)
+        ui32 tmpWidth = 0;
+        for(auto image : data)
         {
-            tmpHeight += data.at(i).mHeight;
-            if(tmpHeight > maxImageHeight)
+            if(tmpWidth >= maxImageWidth)
             {
-                maxImageHeight += data.at(i).mHeight;
-                rows++;
+                tmpWidth = 0;
+                maxImageHeight += image.mHeight;
             }
+            tmpWidth += image.mWidth;
         }
 
-
-        /*{
-            ui32 tmpHeight = 0;
-            for(int i = 0; i < data.size(); i+= maxImageInRow)
-            {
-                if(maxImageInRow < i )
-                {
-                    break;
-                }
-                maxImageHeight += data.at(i).mHeight;
-
-            }
-        }*/
 
         // correct data to 4 comp;
         for(auto& image : data)
@@ -274,33 +257,41 @@ namespace GFX
         ui32 prevImgHeight = 0;
         ui32 prevImgWidth = 0;
         ui32 trackHeight = 0;
+        ui32 trackWidth = 0;
         FileData image{};
 
         while(!fileQueue.empty())
         {
             image = fileQueue.front();
             fileQueue.pop();
-            if(fileQueue.size() == 1)
-            {
-                log_info(1);
-            }
 
             ui32 width = image.mWidth;
             ui32 height = image.mHeight;
             ui32 comp = image.mComp;
             ui32 rowSize = width * comp;
 
-            if(prevImgWidth + width <= maxImageWidth && !canFitNextTo)
+            if(trackWidth + width <= maxImageWidth && !canFitNextTo)
             {
                 canFitNextTo = true;
                 x = prevImgWidth;
                 y = trackHeight;
             }
+            else if(trackWidth + width <= maxImageWidth && canFitNextTo)
+            {
+                x = trackWidth;
+            }
+            else
+            {
+                x = prevImgWidth;
+                trackWidth = prevImgWidth;
+            }
 
             if(trackHeight >= prevImgHeight)
             {
                 canFitNextTo = false;
+                prevImgWidth = 0;
                 x = 0;
+                trackWidth = 0;
             }
 
             for(auto i = 0; i < height; i++)
@@ -309,26 +300,28 @@ namespace GFX
                 memcpy(imageBuffer + (calculatedY + x * 4), image.mData + (i * rowSize), rowSize);
             }
 
-            if(fileQueue.size() == 1)
-            {
-                log_info(1);
-            }
-
             if(canFitNextTo)
             {
-
-                trackHeight += height;
-                y += height;
+                if(trackWidth + width >= maxImageWidth)
+                {
+                    trackHeight += height;
+                    y += height;
+                }
 
             }
 
-                prevImgWidth = width;
-                if(!canFitNextTo)
-                {
-                    prevImgHeight += height;
-                    x += width;
-                    y += height;
-                }
+            trackWidth += width;
+
+            if(!canFitNextTo)
+                prevImgWidth += width;
+
+
+            if(!canFitNextTo)
+            {
+                prevImgHeight += height;
+                x += width;
+                y += height;
+            }
         }
 
         //stbi_flip_vertically_on_write(true);
