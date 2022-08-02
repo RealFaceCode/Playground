@@ -90,216 +90,238 @@ namespace GFX
         return *this;
     }
 
-    void SpriteSheet::addFile(const char *filePath)
+    namespace SpriteSheetBuilder
     {
-        mFilePaths.emplace_back(std::string(filePath));
-    }
+        std::vector<std::string> mFilePaths;
 
-
-
-    struct FileData
-    {
-    public:
-        ui8* mData;
-        i32 mWidth;
-        i32 mHeight;
-        i32 mComp;
-
-    public:
-        bool operator>(const FileData& other) const
+        void addFile(const char *filePath)
         {
-            return (mWidth * mHeight) > (other.mWidth * other.mHeight);
+            mFilePaths.emplace_back(std::string(filePath));
         }
-    };
 
-    void getPosArrayAccessCpy(ui8* arr, int x, int y, int dimy, ui8* data, ui32 dataSize)
-    {
-        ui32 pos = x + (y * dimy);
-        memcpy(arr + pos, data, dataSize);
-    }
-
-    void SpriteSheet::createSpriteSheet(const char* name)
-    {
-        std::vector<FileData> data;
-        //load data
+        struct FileData
         {
-            data.reserve(mFilePaths.size());
-            for(auto& path : mFilePaths)
+        public:
+            ui8* mData;
+            i32 mWidth;
+            i32 mHeight;
+            i32 mComp;
+
+        public:
+            bool operator>(const FileData& other) const
             {
-                FileData dat{};
-                dat.mData = stbi_load(path.c_str(), &dat.mWidth, &dat.mHeight, &dat.mComp, STBI_rgb_alpha);
-                if(dat.mData == nullptr)
-                {
-                    log_fmt_error("Failed to load file in to spritesheed: '%s", path.c_str());
-                    continue;
-                }
-                data.emplace_back(dat);
+                return (mWidth * mHeight) > (other.mWidth * other.mHeight);
             }
-            mFilePaths.clear();
+        };
+
+        struct Position
+        {
+        public:
+            i32 x;
+            i32 y;
+        };
+
+        static void getPosArrayAccessCpy(ui8* arr, int x, int y, int dimy, ui8* data, ui32 dataSize)
+        {
+            ui32 pos = x + (y * dimy);
+            memcpy(arr + pos, data, dataSize);
         }
 
-        if(data.empty())
+        static void correctComponents(std::vector<FileData>& data)
         {
-            log_fmt_error("Failed to generate spritesheet no source given");
-        }
-
-        //sort
-        for (const auto& i : data)
-        {
-            std::sort(data.begin(), data.end(), std::greater <>());
-        }
-
-        //get maxImage width
-        i32 maxImageWidth = 0;
-        if(data.size() > 1)
-        {
-            maxImageWidth = data.at(0).mWidth + data.at(1).mWidth;
-        }
-        else
-        {
-            maxImageWidth = data.at(0).mWidth;
-        }
-
-        //get maxImage height
-        i32 maxImageHeight = data.at(0).mHeight;
-        ui32 tmpHeight = 0;
-        ui32 tmpWidth = 0;
-        for(auto image : data)
-        {
-            if(tmpWidth >= maxImageWidth)
+            for(auto& image : data)
             {
-                tmpWidth = 0;
-                maxImageHeight += image.mHeight;
-            }
-            tmpWidth += image.mWidth;
-        }
-
-
-        // correct data to 4 comp;
-        for(auto& image : data)
-        {
-            if(image.mComp != 4)
-            {
-                const ui64 size = image.mWidth * image.mHeight * 4;
-                ui8* ptr = new ui8[size];
-                memset(ptr, 255, size);
-                for(auto i = 0; i < size ; i ++)
+                if(image.mComp != 4)
                 {
-                    auto check = (i + 1) % 4;
-                    if(check)
+                    const ui64 size = image.mWidth * image.mHeight * 4;
+                    ui8* ptr = new ui8[size];
+                    memset(ptr, 255, size);
+                    for(auto i = 0; i < size ; i ++)
                     {
-                        ptr[i] = image.mData[i];
+                        auto check = (i + 1) % 4;
+                        if(check)
+                        {
+                            ptr[i] = image.mData[i];
+                        }
                     }
+                    delete image.mData;
+                    image.mData = nullptr;
+                    image.mData = ptr;
+                    image.mComp = 4;
                 }
-                delete image.mData;
-                image.mData = nullptr;
-                image.mData = ptr;
-                image.mComp = 4;
             }
         }
 
-        //allocating buffer and zero mem
-        ui64 maxSizeBuffer = maxImageHeight * maxImageWidth * 4;
-        ui8* imageBuffer =  new ui8[maxSizeBuffer];
-        memset(imageBuffer, 255, maxSizeBuffer);
-
-        //queue
-        std::queue<FileData> fileQueue;
-        for(auto image : data)
+        static void getMaxDimension(i32& width, i32& height, const std::vector<FileData>& data)
         {
-            fileQueue.emplace(image);
-        }
-
-        //fill data
-        //Todo: get x and y coords
-        ui32 x = 0;             // xPos
-        ui32 y = 0;             // yPos
-        ui32 calculatedY = 0;   // calculated y with offset ( (y + i) * maxImageWidth * components)
-        bool canFitNextTo = false;
-        ui32 prevImgHeight = 0;
-        ui32 prevImgWidth = 0;
-        ui32 trackHeight = 0;
-        ui32 trackWidth = 0;
-        FileData image{};
-
-        while(!fileQueue.empty())
-        {
-            image = fileQueue.front();
-            fileQueue.pop();
-
-            ui32 width = image.mWidth;
-            ui32 height = image.mHeight;
-            ui32 comp = image.mComp;
-            ui32 rowSize = width * comp;
-
-            if(trackWidth + width <= maxImageWidth && !canFitNextTo)
+            if(data.size() > 1)
             {
-                canFitNextTo = true;
-                x = prevImgWidth;
-                y = trackHeight;
-            }
-            else if(trackWidth + width <= maxImageWidth && canFitNextTo)
-            {
-                x = trackWidth;
+                width = data.at(0).mWidth + data.at(1).mWidth;
             }
             else
             {
-                x = prevImgWidth;
-                trackWidth = prevImgWidth;
+                width = data.at(0).mWidth;
             }
 
-            if(trackHeight >= prevImgHeight)
+            height = data.at(0).mHeight;;
+            ui32 tmpWidth = 0;
+            for(auto image : data)
             {
-                canFitNextTo = false;
-                prevImgWidth = 0;
-                x = 0;
-                trackWidth = 0;
-            }
-
-            for(auto i = 0; i < height; i++)
-            {
-                calculatedY = ((y + i) * maxImageWidth * comp);
-                memcpy(imageBuffer + (calculatedY + x * 4), image.mData + (i * rowSize), rowSize);
-            }
-
-            if(canFitNextTo)
-            {
-                if(trackWidth + width >= maxImageWidth)
+                if(tmpWidth >= width)
                 {
-                    trackHeight += height;
-                    y += height;
+                    tmpWidth = 0;
+                    height += image.mHeight;
                 }
-
-            }
-
-            trackWidth += width;
-
-            if(!canFitNextTo)
-                prevImgWidth += width;
-
-
-            if(!canFitNextTo)
-            {
-                prevImgHeight += height;
-                x += width;
-                y += height;
+                tmpWidth += image.mWidth;
             }
         }
 
-        //stbi_flip_vertically_on_write(true);
-        stbi_write_png(name, maxImageWidth, maxImageHeight, 4, imageBuffer, 0);
-
-        //clear data
+        static void loadAndSort(std::vector<FileData>& data, std::vector<std::string>& paths)
         {
-            //clearing vector filedata
+            {
+                data.reserve(paths.size());
+                for(auto& path : paths)
+                {
+                    FileData dat{};
+                    dat.mData = stbi_load(path.c_str(), &dat.mWidth, &dat.mHeight, &dat.mComp, STBI_rgb_alpha);
+                    if(dat.mData == nullptr)
+                    {
+                        log_fmt_error("Failed to load file in to spritesheed: '%s", path.c_str());
+                        continue;
+                    }
+                    data.emplace_back(dat);
+                }
+                paths.clear();
+            }
+
+            if(data.empty())
+            {
+                log_fmt_error("Failed to generate spritesheet no source given");
+            }
+
+
+            for (const auto& i : data)
+            {
+                std::sort(data.begin(), data.end(), std::greater <>());
+            }
+        }
+
+        Position getPosition(bool* tracker,
+                             const ui32& wArr, const ui32& hArr,
+                             const i32& wImage, const i32& hImage,
+                             const ui32& wMax, ui32 yMax)
+        {
+            for(auto height = 0; height < hArr; height++)
+            {
+                for(auto width = 0; width < wArr; width++)
+                {
+                    bool track = tracker[(height * wMax)  + width];
+                    //check is rect free
+                    if(!track)
+                    {
+                        if(width + wImage <= wMax)
+                        {
+                            bool foundFree = true;
+                            for(auto hIn = height; hIn < height + hImage; hIn++)
+                            {
+                                for(auto wIn = width; wIn < width + wImage; wIn++)
+                                {
+                                    bool checkFree = tracker[(hIn * wMax) + wIn];
+                                    if(checkFree)
+                                    {
+                                        foundFree = false;
+                                        break;
+                                    }
+                                }
+                                if(!foundFree)
+                                {
+                                    break;
+                                }
+                            }
+                            if (foundFree)
+                            {
+                                for(auto hIn = height; hIn < height + hImage; hIn++)
+                                {
+                                    for(auto wIn = width; wIn < width + wImage; wIn++)
+                                    {
+                                        tracker[(hIn * wMax) + wIn] = true;
+                                    }
+                                }
+                                return Position{.x = width, .y = height};
+                            }
+
+                        }
+                    }
+                }
+            }
+            return Position{.x = -1, .y = -1};
+        }
+
+        SpriteSheet createSpriteSheet(const char* name, const bool& forceOverWrite)
+        {
+            if(FHandle::checkExistFile(name) && !forceOverWrite)
+            {
+                mFilePaths.clear();
+                return SpriteSheet{};
+            }
+
+            std::vector<FileData> data;
+            //load and sort data
+            loadAndSort(data, mFilePaths);
+
+            //get maxImage width and maxImage height
+            i32 maxImageWidth = 0;
+            i32 maxImageHeight = 0;
+            getMaxDimension(maxImageWidth, maxImageHeight, data);
+
+            // correct data to 4 comp;
+            correctComponents(data);
+
+            //allocating buffer and zero mem
+            ui64 maxSizeBuffer = maxImageHeight * maxImageWidth * 4;
+            ui64 maxSizeTrackBuffer = maxImageHeight * maxImageWidth;
+            ui8* imageBuffer =  new ui8[maxSizeBuffer];
+            bool* trackBuffer =  new bool[maxSizeTrackBuffer];
+            memset(imageBuffer, 255, maxSizeBuffer);
+            memset(trackBuffer, 0, maxSizeTrackBuffer);
+
+            //queue
+            std::queue<FileData> fileQueue;
+            for(auto image : data)
+            {
+                fileQueue.emplace(image);
+            }
+
+            //fill data
+            while(!fileQueue.empty())
+            {
+                const auto& image = fileQueue.front();
+                fileQueue.pop();
+                Position pos = getPosition(trackBuffer, maxImageWidth, maxImageHeight,
+                                           image.mWidth, image.mHeight,
+                                           maxImageWidth, maxImageHeight);
+                for(auto i = 0; i < image.mHeight; i++)
+                {
+                    memcpy(imageBuffer + ((i + pos.y) * (maxImageWidth * 4) + (pos.x * 4)),
+                           image.mData + (i * image.mWidth * 4), image.mWidth * 4);
+                }
+            }
+
+            //stbi_flip_vertically_on_write(true);
+            stbi_write_png(name, maxImageWidth, maxImageHeight, 4, imageBuffer, 0);
+
+            //clear data
             {
                 for(auto& dat : data)
                 {
                     stbi_image_free(dat.mData);
                 }
                 data.clear();
-            }
 
+                delete[] imageBuffer;
+                delete[] trackBuffer;
+            }
+            return SpriteSheet{};
         }
     }
 }

@@ -44,11 +44,12 @@ namespace GFX
     {
     public:
         std::unordered_map<std::string, Sprite> mSprites;
-        std::vector<std::string> mFilePaths;
-
-        void addFile(const char* filePath);
-        void createSpriteSheet(const char* name);
     };
 
+    namespace SpriteSheetBuilder
+    {
+        void addFile(const char* filePath);
+        SpriteSheet createSpriteSheet(const char* name, const bool& forceOverWrite = false);
+    }
 }
 #endif //PLAYGROUNDLIB_IMAGE_H

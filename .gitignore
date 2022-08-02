@@ -16,3 +16,4 @@
 /cmake-build-release/
 /cmake-build-relwithdebinfo/
 /.vs/
+/.idea/dataSources.xml
