@@ -2,3 +2,8 @@
 /cmake-build-debug/
 /buildpacked/
 /vendor/
+/.idea/vcs.xml
+/.idea/.gitignore
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/Playground.iml
