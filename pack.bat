@@ -1,3 +1,6 @@
+@echo off
+#TODO: change this to correct
+
 mkdir buildpacked
 cd buildpacked
 

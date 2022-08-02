@@ -45,9 +45,9 @@
 #include <memory>
 
 //FILEHANDLE
-#include <fhandle/BasicFileHandling.h>
-#include <fhandle/File.h>
-#include <fhandle/Node.h>
+#include <BasicFileHandling.h>
+#include <File.h>
+#include <Node.h>
 
 //TYPEDEFS
 typedef int8_t		i8;
