@@ -122,12 +122,12 @@ namespace Window
 	void Window::setOpacity(const f32 opacity)
 	{
 		float opc = opacity;
-		if (opc >= 1.0f)
+		if (opc > 1.0f)
 		{
 			log_fmt_warning("Window opacity'%f' cannot be greater than 1.0f!", opacity);
 			opc = 1.0f;
 		}
-		else if (opacity <= 0.0f)
+		else if (opacity < 0.0f)
 		{
 			log_fmt_warning("Window opacity'%i' cannot be less than 0.0f!", opacity);
 			opc = 0.0f;
