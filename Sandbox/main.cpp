@@ -7,148 +7,11 @@
 #include "gfx/shader.h"
 #include "gfx/renderer.h"
 
+//TODO: implement assert if window function is called and window is not init
+//TODO: implement assert if GFX function is called and GFX is not init
+
 int main()
 {
-    {
-        GFX::SpriteSheet sheet;
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/images.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/images.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/red_peper.jpg");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/red_peper.jpg");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        GFX::SpriteSheetBuilder::addFile("../assets/images/images.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/images.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/red_peper.jpg");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/red_peper.jpg");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/red_peper.jpg");
-        GFX::SpriteSheetBuilder::createSpriteSheet("../assets/spritesheets/sheet.png", true);
-    }
-
     Window::Init();
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -194,6 +57,15 @@ int main()
     }
 
     GFX::Init();
+
+    {
+        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
+        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
+        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
+        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
+
+        auto sheet = GFX::SpriteSheetBuilder::createSpriteSheet("../assets/spritesheets/sheet.png", true);
+    }
 
     GFX::Shader shader;
     shader.compile("../assets/shader/shader.vert", GL_VERTEX_SHADER);

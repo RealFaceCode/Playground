@@ -34,16 +34,17 @@ namespace GFX
     {
     public:
         ui32 mId;
-        f32 uv0;
-        f32 uv1;
-        f32 uv2;
-        f32 uv3;
+        glm::vec2 uv0;
+        glm::vec2 uv1;
+        glm::vec2 uv2;
+        glm::vec2 uv3;
     };
 
     struct SpriteSheet
     {
     public:
         std::unordered_map<std::string, Sprite> mSprites;
+        Image image;
     };
 
     namespace SpriteSheetBuilder

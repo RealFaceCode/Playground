@@ -94,14 +94,23 @@ namespace GFX
     {
         std::vector<std::string> mFilePaths;
 
-        void addFile(const char *filePath)
+        void addFile(const char* filePath)
         {
+            for(const auto& path : mFilePaths)
+            {
+                if(path == std::string(filePath))
+                {
+                    log_fmt_warning("File with path'%s' was already in list", filePath);
+                    return;
+                }
+            }
             mFilePaths.emplace_back(std::string(filePath));
         }
 
         struct FileData
         {
         public:
+            std::string mName;
             ui8* mData;
             i32 mWidth;
             i32 mHeight;
@@ -120,12 +129,6 @@ namespace GFX
             i32 x;
             i32 y;
         };
-
-        static void getPosArrayAccessCpy(ui8* arr, int x, int y, int dimy, ui8* data, ui32 dataSize)
-        {
-            ui32 pos = x + (y * dimy);
-            memcpy(arr + pos, data, dataSize);
-        }
 
         static void correctComponents(std::vector<FileData>& data)
         {
@@ -183,10 +186,11 @@ namespace GFX
                 for(auto& path : paths)
                 {
                     FileData dat{};
+                    dat.mName = FHandle::getFileName(path.c_str());
                     dat.mData = stbi_load(path.c_str(), &dat.mWidth, &dat.mHeight, &dat.mComp, STBI_rgb_alpha);
                     if(dat.mData == nullptr)
                     {
-                        log_fmt_error("Failed to load file in to spritesheed: '%s", path.c_str());
+                        log_fmt_error("Failed to load file in to sprite sheet: '%s", path.c_str());
                         continue;
                     }
                     data.emplace_back(dat);
@@ -196,7 +200,7 @@ namespace GFX
 
             if(data.empty())
             {
-                log_fmt_error("Failed to generate spritesheet no source given");
+                log_fmt_error("Failed to generate sprite sheet no source given");
             }
 
 
@@ -209,14 +213,13 @@ namespace GFX
         Position getPosition(bool* tracker,
                              const ui32& wArr, const ui32& hArr,
                              const i32& wImage, const i32& hImage,
-                             const ui32& wMax, ui32 yMax)
+                             const ui32& wMax)
         {
             for(auto height = 0; height < hArr; height++)
             {
                 for(auto width = 0; width < wArr; width++)
                 {
                     bool track = tracker[(height * wMax)  + width];
-                    //check is rect free
                     if(!track)
                     {
                         if(width + wImage <= wMax)
@@ -249,7 +252,6 @@ namespace GFX
                                 }
                                 return Position{.x = width, .y = height};
                             }
-
                         }
                     }
                 }
@@ -266,51 +268,66 @@ namespace GFX
             }
 
             std::vector<FileData> data;
-            //load and sort data
             loadAndSort(data, mFilePaths);
 
-            //get maxImage width and maxImage height
             i32 maxImageWidth = 0;
             i32 maxImageHeight = 0;
             getMaxDimension(maxImageWidth, maxImageHeight, data);
-
-            // correct data to 4 comp;
             correctComponents(data);
 
-            //allocating buffer and zero mem
             ui64 maxSizeBuffer = maxImageHeight * maxImageWidth * 4;
             ui64 maxSizeTrackBuffer = maxImageHeight * maxImageWidth;
             ui8* imageBuffer =  new ui8[maxSizeBuffer];
             bool* trackBuffer =  new bool[maxSizeTrackBuffer];
-            memset(imageBuffer, 255, maxSizeBuffer);
+            memset(imageBuffer, 0, maxSizeBuffer);
             memset(trackBuffer, 0, maxSizeTrackBuffer);
 
-            //queue
             std::queue<FileData> fileQueue;
-            for(auto image : data)
+            for(const auto& image : data)
             {
                 fileQueue.emplace(image);
             }
 
-            //fill data
+            SpriteSheet spSh;
+            spSh.image.mWidth = maxImageWidth;
+            spSh.image.mHeight = maxImageHeight;
+            spSh.image.mComp = 4;
+
             while(!fileQueue.empty())
             {
-                const auto& image = fileQueue.front();
+                const auto image = fileQueue.front();
                 fileQueue.pop();
                 Position pos = getPosition(trackBuffer, maxImageWidth, maxImageHeight,
                                            image.mWidth, image.mHeight,
-                                           maxImageWidth, maxImageHeight);
+                                           maxImageWidth);
+
                 for(auto i = 0; i < image.mHeight; i++)
                 {
                     memcpy(imageBuffer + ((i + pos.y) * (maxImageWidth * 4) + (pos.x * 4)),
                            image.mData + (i * image.mWidth * 4), image.mWidth * 4);
                 }
+
+                {
+                    Sprite sprite
+                    {
+                        .uv0 = {(float) ((float) pos.x / (float) maxImageWidth),
+                                (float) ((float) pos.y / (float) maxImageHeight)},
+                        .uv1 = {(float) ((float) (pos.x + image.mWidth) / (float) maxImageWidth),
+                                (float) ((float) pos.y / (float) maxImageHeight)},
+                        .uv2 = {(float) ((float) pos.x / (float) maxImageWidth),
+                                (float) ((float) (pos.y + image.mHeight) / (float) maxImageHeight)},
+                        .uv3 = {(float) ((float) (pos.x + image.mWidth) / (float) maxImageWidth),
+                                (float) ((float) (pos.y + image.mHeight) / (float) maxImageHeight)},
+                    };
+
+                    auto r = spSh.mSprites.emplace(image.mName, sprite);
+                }
             }
 
-            //stbi_flip_vertically_on_write(true);
+            spSh.image = Image(imageBuffer, maxImageWidth, maxImageHeight, 4);
+
             stbi_write_png(name, maxImageWidth, maxImageHeight, 4, imageBuffer, 0);
 
-            //clear data
             {
                 for(auto& dat : data)
                 {
@@ -321,7 +338,7 @@ namespace GFX
                 delete[] imageBuffer;
                 delete[] trackBuffer;
             }
-            return SpriteSheet{};
+            return spSh;
         }
     }
 }
