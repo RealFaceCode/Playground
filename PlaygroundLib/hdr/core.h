@@ -95,8 +95,6 @@ static FILE* LogFile_					= fopen(LogPath_, "a");
 #define LOG_COLOR_FMT_WITHOUT_DATE		"%s[%s][FILE:%s][LINE:%i][%s][%s]\033[0m\n%s\n"
 #define LOG_TO_FILE_FMT					"[%s][FILE:%s][LINE:%i][%s][%s]\n%s\n"
 
-#define log_stringify_msg(msg, out)
-
 #define log_to_file(msg) {\
 	if(!LogFile_)\
 	{\
@@ -112,11 +110,13 @@ static FILE* LogFile_					= fopen(LogPath_, "a");
 		printf(outC.c_str());\
 		std::string outF = GetFormatedString(LOG_TO_FILE_FMT, type, GetFileName(__FILE__).c_str(), __LINE__, GetTime().c_str(), GetDate().c_str(), msg);\
 		log_to_file(outF.c_str());\
+	    _flushall();\
 	}
 #else
 	#define log_and_write(color, type, fmt, msg) {\
 		std::string outC = GetFormatedString(fmt, color, type, GetFileName(__FILE__).c_str(), __LINE__, GetTime().c_str(), GetDate().c_str(), msg);\
 		printf(outC.c_str());\
+	    _flushall();\
 	}
 #endif // LOG_TO_FILE
 
