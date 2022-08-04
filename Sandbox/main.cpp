@@ -13,12 +13,23 @@
 //TODO: implement load function for sprite sheet loading
 //TODO: implement image handler
 //TODO: implement sprite sheet handler
+//TODO: implement text rendering
+//TODO: implement gui system
+//TODO: |-> buttons
+//TODO: |-> sliders
+//TODO: |-> loading/progress bar
+//TODO: |-> text fields
+//TODO: |-> text input fields
+//TODO: |-> checkbox
+//TODO: scripting support?
+//TODO: |-> lua?
 // ---------- TODO SECTION ----------
 
 int main()
 {
     Window::Init();
 
+    //TODO: move to window.cpp
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
