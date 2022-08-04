@@ -314,9 +314,9 @@ namespace GFX
                                 (float) ((float) pos.y / (float) maxImageHeight)},
                         .uv1 = {(float) ((float) (pos.x + image.mWidth) / (float) maxImageWidth),
                                 (float) ((float) pos.y / (float) maxImageHeight)},
-                        .uv2 = {(float) ((float) pos.x / (float) maxImageWidth),
+                        .uv2 = {(float) ((float) (pos.x + image.mWidth) / (float) maxImageWidth),
                                 (float) ((float) (pos.y + image.mHeight) / (float) maxImageHeight)},
-                        .uv3 = {(float) ((float) (pos.x + image.mWidth) / (float) maxImageWidth),
+                        .uv3 = {(float) ((float) pos.x / (float) maxImageWidth),
                                 (float) ((float) (pos.y + image.mHeight) / (float) maxImageHeight)},
                     };
 
@@ -324,7 +324,13 @@ namespace GFX
                 }
             }
 
-            spSh.image = Image(imageBuffer, maxImageWidth, maxImageHeight, 4);
+            {
+                spSh.image = Image(imageBuffer, maxImageWidth, maxImageHeight, 4);
+                for(auto& sprite : spSh.mSprites)
+                {
+                    sprite.second.mId = spSh.image.mId;
+                }
+            }
 
             stbi_write_png(name, maxImageWidth, maxImageHeight, 4, imageBuffer, 0);
 

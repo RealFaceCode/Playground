@@ -7,8 +7,13 @@
 #include "gfx/shader.h"
 #include "gfx/renderer.h"
 
+// ---------- TODO SECTION ----------
 //TODO: implement assert if window function is called and window is not init
 //TODO: implement assert if GFX function is called and GFX is not init
+//TODO: implement load function for sprite sheet loading
+//TODO: implement image handler
+//TODO: implement sprite sheet handler
+// ---------- TODO SECTION ----------
 
 int main()
 {
@@ -63,9 +68,9 @@ int main()
         GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
         GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
         GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
-
-        auto sheet = GFX::SpriteSheetBuilder::createSpriteSheet("../assets/spritesheets/sheet.png", true);
     }
+    auto sheet = GFX::SpriteSheetBuilder::createSpriteSheet("../assets/spritesheets/sheet.png", true);
+
 
     GFX::Shader shader;
     shader.compile("../assets/shader/shader.vert", GL_VERTEX_SHADER);
@@ -99,8 +104,8 @@ int main()
         proj = glm::ortho(-aspect * scale, aspect * scale, -1.0f * scale, 1.0f * scale, -1.0f, 1.0f);
         shader.setUniformMat4("uProj", proj);
 
-        GFX::Renderer::DrawRectangle({0, 0}, {0, 1, 0, 1}, 1, 1);
-        GFX::Renderer::DrawLinedRectangle({0, 0}, {1, 0, 0, 1}, 1, 1, 0.02f);
+        GFX::Renderer::DrawTexturedRectangle({0, 0}, sheet.mSprites["bricks"], .5, .5);
+        GFX::Renderer::DrawTexturedRectangle({0, 1}, sheet.mSprites["dirt"], .5, .5);
         GFX::Renderer::render(shader);
 
         Input::Update();

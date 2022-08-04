@@ -11,6 +11,7 @@ namespace GFX
 {
     namespace Renderer
     {
+        static glm::vec4 white(1.0f, 1.0f, 1.0f, 1.0f);
 
         void DrawTriangle(const glm::vec2& position, const glm::vec4& color, const float& width, const float& height)
         {
@@ -46,12 +47,33 @@ namespace GFX
             float y = position.y;
 
             BatchVertex vertices[3] = {
-                    BatchVertex{glm::vec2{x, y}, glm::vec4{1, 1, 1, 1}, glm::vec2{0, 1}, textureIndex},
-                    BatchVertex{glm::vec2{x + width, y}, glm::vec4{1, 1, 1, 1}, glm::vec2{1, 1}, textureIndex},
-                    BatchVertex{glm::vec2{x, y - height}, glm::vec4{1, 1, 1, 1}, glm::vec2{0, 0}, textureIndex}
+                    BatchVertex{glm::vec2{x, y}, white, glm::vec2{0, 1}, textureIndex},
+                    BatchVertex{glm::vec2{x + width, y}, white, glm::vec2{1, 1}, textureIndex},
+                    BatchVertex{glm::vec2{x, y - height}, white, glm::vec2{0, 0}, textureIndex}
             };
 
             BatchHandler::AddToBatch(vertices, 3, texture);
+        }
+
+        void DrawTexturedTriangle(const glm::vec2& position, const Sprite& sprite, const float& width, const float& height)
+        {
+            float textureIndex = 0;
+
+            {
+                Batch* batch = BatchHandler::GetBatchHasSpaceMatchTexture(3, sprite.mId);
+                textureIndex =(float)batch->getMapedTextureIndex(sprite.mId);
+            }
+
+            float x = position.x;
+            float y = position.y;
+
+            BatchVertex vertices[3] = {
+                    BatchVertex{glm::vec2{x, y}, white, sprite.uv0, textureIndex},
+                    BatchVertex{glm::vec2{x + width, y}, white, sprite.uv1, textureIndex},
+                    BatchVertex{glm::vec2{x, y - height}, white, sprite.uv3, textureIndex}
+            };
+
+            BatchHandler::AddToBatch(vertices, 3, sprite.mId);
         }
 
         void DrawRectangle(const glm::vec2& position, const glm::vec4& color, const float& width, const float& height)
@@ -99,6 +121,31 @@ namespace GFX
                     BatchVertex{ glm::vec2{x + width, y}, glm::vec4{1, 1, 1, 1}, glm::vec2{1.0f, 1.0f}, textureIndex },
                     BatchVertex{ glm::vec2{x + width , y - height}, glm::vec4{1, 1, 1, 1}, glm::vec2{1.0f, 0.0f}, textureIndex },
                     BatchVertex{ glm::vec2{x, y - height}, glm::vec4{1, 1, 1, 1}, glm::vec2{0.0f, 0.0f}, textureIndex }
+            };
+
+            BatchHandler::AddToBatch(vertices, 6);
+        }
+
+        void DrawTexturedRectangle(const glm::vec2& position, const Sprite& sprite, const float& width, const float& height)
+        {
+            float textureIndex = 0;
+
+            {
+                Batch* batch = BatchHandler::GetBatchHasSpaceMatchTexture(3, sprite.mId);
+                textureIndex =(float)batch->getMapedTextureIndex(sprite.mId);
+            }
+
+            float x = position.x;
+            float y = position.y;
+
+            BatchVertex vertices[6] = {
+                    BatchVertex{glm::vec2{x, y}, white, sprite.uv0, textureIndex},
+                    BatchVertex{glm::vec2{x + width, y}, white, sprite.uv1, textureIndex},
+                    BatchVertex{glm::vec2{x, y - height}, white, sprite.uv3, textureIndex},
+
+                    BatchVertex{ glm::vec2{x + width, y}, white, sprite.uv1, textureIndex },
+                    BatchVertex{ glm::vec2{x + width , y - height}, white, sprite.uv2, textureIndex },
+                    BatchVertex{ glm::vec2{x, y - height}, white, sprite.uv3, textureIndex }
             };
 
             BatchHandler::AddToBatch(vertices, 6);

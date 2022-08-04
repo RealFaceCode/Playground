@@ -67,7 +67,8 @@ namespace GFX
 		Batch* GetBatchHasSpaceMatchTexture(const ui64 elements, const ui32 texture);
 		Batch* GetBatchMatchTexture(const ui32 texture);
 		void AddToBatch(const BatchVertex vertex, const Image& image = defaultImage);
-		void AddToBatch(const BatchVertex* vertex, const ui64 elements, const Image& image = defaultImage);
+		void AddToBatch(const BatchVertex* vertices, const ui64 elements, const Image& image = defaultImage);
+        void AddToBatch(const BatchVertex* vertices, const ui64 elements, const ui32 imageId);
 		void RenderBatches(Shader& shader);
 		void Clear();
 	}

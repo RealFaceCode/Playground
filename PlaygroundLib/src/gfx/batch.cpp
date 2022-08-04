@@ -310,6 +310,12 @@ namespace GFX
 			batch->add(vertices, elements);
 		}
 
+        void AddToBatch(const BatchVertex* vertices, const ui64 elements, const ui32 imageId)
+        {
+            Batch* batch = GetBatchHasSpaceMatchTexture(elements, imageId);
+            batch->add(vertices, elements);
+        }
+
 		void RenderBatches(Shader& shader)
 		{
 			shader.bind();
