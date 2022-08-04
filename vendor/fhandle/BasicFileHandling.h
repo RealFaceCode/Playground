@@ -16,6 +16,8 @@ namespace FHandle
 	void createDirIfNotExist(const char* dir);
 	bool checkIfDirContainsFiles(const char* dir);
 	uint64_t getFileCountFromDir(const char* dir);
+	std::string getFileName(const char* filePath);
+    std::string getFileNameExtension(const char* filePath);
 	std::vector<std::string> getFileNamesFromDir(const char* dir);
 	std::vector<std::string> getFilePathsFromDir(const char* dir);
 }

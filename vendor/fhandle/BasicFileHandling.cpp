@@ -114,10 +114,38 @@ namespace FHandle
 		return count;
 	}
 
+    std::string getFileName(const char* filePath)
+    {
+        if(filePath == nullptr)
+        {
+            return std::string("");
+        }
+
+        std::string name(filePath);
+        auto offset = name.find_last_of('/');
+        name.erase(name.begin(), name.begin() + offset + 1);
+        offset = name.find_last_of('.');
+        name.erase(name.begin() + (offset), name.end());
+        return name;
+    }
+
+    std::string getFileNameExtension(const char* filePath)
+    {
+	    if(filePath == nullptr)
+        {
+	        return std::string("");
+        }
+
+        std::string nameExt(filePath);
+        auto offset = nameExt.find_last_of('/');
+        nameExt.erase(nameExt.begin(), nameExt.begin() + offset + 1);
+        return nameExt;
+    }
+
 	std::vector<std::string> getFileNamesFromDir(const char* dir)
 	{
 		std::vector<std::string> fileNames;
-		for (auto entry : std::filesystem::directory_iterator(dir))
+		for (const auto& entry : std::filesystem::directory_iterator(dir))
 		{
 			auto path = entry.path().generic_string();
 			uint64_t offset = path.find_last_of("/");
@@ -130,7 +158,7 @@ namespace FHandle
 	std::vector<std::string> getFilePathsFromDir(const char* dir)
 	{
 		std::vector<std::string> filePaths;
-		for (auto entry : std::filesystem::directory_iterator(dir))
+		for (const auto& entry : std::filesystem::directory_iterator(dir))
 		{
 			filePaths.emplace_back(entry.path().generic_string());
 		}
