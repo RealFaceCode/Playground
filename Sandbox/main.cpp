@@ -8,8 +8,8 @@
 #include "gfx/renderer.h"
 
 // ---------- TODO SECTION ----------
-//TODO: implement assert if window function is called and window is not init
 //TODO: implement assert if GFX function is called and GFX is not init
+//TODO: implement setting save and load for window
 //TODO: implement load function for sprite sheet loading
 //TODO: implement image handler
 //TODO: implement sprite sheet handler

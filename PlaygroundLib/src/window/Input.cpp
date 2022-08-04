@@ -361,7 +361,7 @@ namespace Input
 		return onMouseMove;
 	}
 
-	bool HasCurserEnteredWindow()
+	bool HasCursorEnteredWindow()
 	{
 		return (windowEnterLeave == 1);
 	}

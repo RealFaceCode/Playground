@@ -145,7 +145,7 @@ namespace Input
 	bool WasWindowMoved();
 	bool IsMouseOnMove();
 
-	bool HasCurserEnteredWindow();
+	bool HasCursorEnteredWindow();
 	bool HasCursorLeftWindow();
 
 	void SetFileEndingToWhitelist(const char* fileEnding);
