@@ -1,4 +1,3 @@
-#include <iostream>
 #include <gfx/image.h>
 #include "core.h"
 #include "window/window.h"
@@ -10,10 +9,9 @@
 // ---------- TODO SECTION ----------
 //TODO: implement setting save and load for window
 //TODO: implement load function for sprite sheet loading
-//TODO: implement image handler
-//TODO: implement sprite sheet handler
 //TODO: implement text rendering
 //TODO: implement gui system
+//TODO: implement shader management
 //TODO: |-> buttons
 //TODO: |-> sliders
 //TODO: |-> loading/progress bar
@@ -22,6 +20,7 @@
 //TODO: |-> checkbox
 //TODO: scripting support?
 //TODO: |-> lua?
+//TODO: check UV´s sprite sheet creator
 // ---------- TODO SECTION ----------
 
 int main()
@@ -73,12 +72,12 @@ int main()
     GFX::Init();
 
     {
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_quartz_block.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/bricks.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/dirt.png");
-        GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
+        GFX::SpriteSheetBuilder::AddFile("../assets/images/bricks.png");
+        GFX::SpriteSheetBuilder::AddFile("../assets/images/dirt.png");
+        GFX::SpriteSheetBuilder::AddFile("../assets/images/chiseled_stone_bricks.png");
+        GFX::SpriteSheetBuilder::AddFile("../assets/images/chiseled_quartz_block.png");
     }
-    auto sheet = GFX::SpriteSheetBuilder::createSpriteSheet("../assets/spritesheets/sheet.png", true);
+    auto sheet = GFX::SpriteSheetBuilder::CreateSpriteSheet("../assets/spritesheets/sheet.png", true);
 
     GFX::Shader shader;
     shader.compile("../assets/shader/shader.vert", GL_VERTEX_SHADER);
@@ -86,8 +85,8 @@ int main()
     shader.build();
     shader.bind();
 
-    GFX::Image brick("../assets/images/bricks.png");
-    GFX::Image dirt("../assets/images/dirt.png");
+    GFX::ImageHandler::AddImage("../assets/images/bricks.png");
+    GFX::ImageHandler::AddImage("../assets/images/dirt.png");
 
     float scale = 1.5f;
     float aspect = (float)win.mSettings.width / (float)win.mSettings.height;
@@ -112,8 +111,8 @@ int main()
         proj = glm::ortho(-aspect * scale, aspect * scale, -1.0f * scale, 1.0f * scale, -1.0f, 1.0f);
         shader.setUniformMat4("uProj", proj);
 
-        GFX::Renderer::DrawTexturedRectangle({0, 0}, sheet.mSprites["bricks"], .5, .5);
-        GFX::Renderer::DrawTexturedRectangle({0, 1}, sheet.mSprites["dirt"], .5, .5);
+        GFX::Renderer::DrawTexturedRectangle({0, 0}, GFX::ImageHandler::GetImage("bricks"), 1, 1);
+        GFX::Renderer::DrawTexturedRectangle({0, 1}, &sheet.mSprites["chiseled_stone_bricks"], .5, .5);
         GFX::Renderer::render(shader);
 
         Input::Update();

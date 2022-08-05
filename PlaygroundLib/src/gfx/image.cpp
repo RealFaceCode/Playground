@@ -108,7 +108,7 @@ namespace GFX
     {
         std::vector<std::string> mFilePaths;
 
-        void addFile(const char* filePath)
+        void AddFile(const char* filePath)
         {
             CHECK_INIT_GFX
 
@@ -275,14 +275,18 @@ namespace GFX
             return Position{.x = -1, .y = -1};
         }
 
-        SpriteSheet createSpriteSheet(const char* name, const bool& forceOverWrite)
+        SpriteSheet LoadSpriteSheet(const char *filePath) {
+            return SpriteSheet();
+        }
+
+        SpriteSheet CreateSpriteSheet(const char* name, const bool& forceOverWrite)
         {
             CHECK_INIT_GFX
 
             if(FHandle::checkExistFile(name) && !forceOverWrite)
             {
                 mFilePaths.clear();
-                return SpriteSheet{};
+                return LoadSpriteSheet(name);
             }
 
             std::vector<FileData> data;
@@ -365,4 +369,181 @@ namespace GFX
             return spSh;
         }
     }
+
+    namespace ImageHandler
+    {
+        std::unordered_map<std::string, Image> images;
+
+        const Image* GetImage(const char* imageName)
+        {
+            CHECK_INIT_GFX
+
+            if(images.find(std::string(imageName)) != images.end())
+            {
+                return &images.at(std::string(imageName));
+            }
+
+            log_fmt_warning("Failed to get image with image name'%s'", imageName);
+            return nullptr;
+        }
+
+        void AddImage(const char* imagePath)
+        {
+            CHECK_INIT_GFX
+            if(!FHandle::checkExistFile(imagePath))
+            {
+                log_fmt_warning("Failed to add image with image path'%s'", imagePath);
+                return;
+            }
+
+            std::string imgName = FHandle::getFileName(imagePath);
+
+            for(const auto& name : images)
+            {
+                if(name.first == imgName)
+                {
+
+                    log_fmt_warning("Failed to add image with image path'%s'. File already added", imagePath);
+                    return;
+                }
+            }
+
+            images.emplace(imgName, Image(imagePath));
+        }
+
+        void AddImages(const char* dirPath)
+        {
+            CHECK_INIT_GFX
+            if(!FHandle::checkExistDir(dirPath))
+            {
+                log_fmt_warning("Failed to add images from dir path'%s'", dirPath);
+                return;
+            }
+
+            auto paths = FHandle::getFilePathsFromDir(dirPath);
+
+            for(const auto& path : paths)
+            {
+                std::string imgName = FHandle::getFileName(path.c_str());
+                bool add = true;
+                for(const auto& name : images)
+                {
+                    if(name.first == imgName)
+                    {
+                        add = false;
+                        log_fmt_warning("Failed to add image with image path'%s'. File already added", path.c_str());
+                        break;
+                    }
+                }
+
+                if(add)
+                {
+                    images.emplace(imgName, Image(path.c_str()));
+                }
+            }
+        }
+    }
+
+    namespace SpriteSheetHandler
+    {
+        std::unordered_map<std::string, SpriteSheet> sheets;
+
+        const SpriteSheet* GetSheet(const char* sheetName)
+        {
+            CHECK_INIT_GFX
+            if(sheets.find(std::string(sheetName)) != sheets.end())
+            {
+                return (const SpriteSheet*)&sheets.at(std::string(sheetName));
+            }
+            return nullptr;
+        }
+
+        const Sprite* getSpriteFromSheet(const char* sheetName, const char* spriteName)
+        {
+            CHECK_INIT_GFX
+            const auto* sheet = GetSheet(sheetName);
+            if(sheet == nullptr)
+            {
+                return nullptr;
+            }
+
+            if(sheet->mSprites.find(spriteName) != sheet->mSprites.end())
+            {
+                return (const Sprite*)&sheet->mSprites.at(spriteName);
+            }
+            return nullptr;
+        }
+
+        void AddSheet(const char* sheetPath)
+        {
+            CHECK_INIT_GFX
+            if(!FHandle::checkExistFile(sheetPath))
+            {
+                log_fmt_warning("Failed to add sheet with path'%s'", sheetPath);
+                return;
+            }
+
+            std::string sheetName = FHandle::getFileName(sheetPath);
+
+            for(const auto& name : sheets)
+            {
+                if(name.first == sheetName)
+                {
+
+                    log_fmt_warning("Failed to add image with image path'%s'. File already added", sheetPath);
+                    return;
+                }
+            }
+
+            sheets.emplace(sheetName, SpriteSheetBuilder::LoadSpriteSheet(sheetPath));
+        }
+
+        void AddSheets(const char* dirPath)
+        {
+            CHECK_INIT_GFX
+            if(!FHandle::checkExistDir(dirPath))
+            {
+                log_fmt_warning("Failed to add sheet with path'%s'", sheetPath);
+                return;
+            }
+
+            auto paths = FHandle::getFilePathsFromDir(dirPath);
+
+            for(const auto& path : paths)
+            {
+                std::string sheetName = FHandle::getFileName(path.c_str());
+
+                for(const auto& name : sheets)
+                {
+                    if(name.first == sheetName)
+                    {
+
+                        log_fmt_warning("Failed to add image with image path'%s'. File already added", path.c_str());
+                        return;
+                    }
+                }
+
+                sheets.emplace(sheetName, SpriteSheetBuilder::LoadSpriteSheet(path.c_str()));
+            }
+        }
+
+        void AddRawToSheet(const char* sheetName, const char* dirPath)
+        {
+            CHECK_INIT_GFX
+            if(!FHandle::checkExistDir(dirPath))
+            {
+                log_fmt_warning("Failed to add sheet with path'%s'", sheetPath);
+                return;
+            }
+
+            auto paths = FHandle::getFilePathsFromDir(dirPath);
+
+            for(const auto& path : paths)
+            {
+                SpriteSheetBuilder::AddFile(path.c_str());
+            }
+            sheets.emplace(std::string(sheetName), SpriteSheetBuilder::CreateSpriteSheet(sheetName));
+        }
+    }
+
 }

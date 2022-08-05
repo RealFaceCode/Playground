@@ -50,8 +50,25 @@ namespace GFX
 
     namespace SpriteSheetBuilder
     {
-        void addFile(const char* filePath);
-        SpriteSheet createSpriteSheet(const char* name, const bool& forceOverWrite = false);
+        void AddFile(const char* filePath);
+        SpriteSheet LoadSpriteSheet(const char* filePath);
+        SpriteSheet CreateSpriteSheet(const char* name, const bool& forceOverWrite = false);
+    }
+
+    namespace ImageHandler
+    {
+        const Image* GetImage(const char* imageName);
+        void AddImage(const char* imagePath);
+        void AddImages(const char* dirPath);
+    }
+
+    namespace SpriteSheetHandler
+    {
+        const SpriteSheet* GetSheet(const char* sheetName);
+        const Sprite* getSpriteFromSheet(const char* sheetName, const char* spriteName);
+        void AddSheet(const char* sheetPath);
+        void AddSheets(const char* dirPath);
+        void AddRawToSheet(const char* sheetName, const char* dirPath);
     }
 }
 #endif //PLAYGROUNDLIB_IMAGE_H
