@@ -11,6 +11,8 @@ namespace GFX
 {
     Image::Image(const char* path)
     {
+        CHECK_INIT_GFX
+
         unsigned char* texData = stbi_load(path, &mWidth, &mHeight, &mComp, 0);
         if (texData == nullptr)
         {
@@ -37,6 +39,8 @@ namespace GFX
     Image::Image(const unsigned char* data, ui32 width, ui32 height, ui32 comp)
             :mWidth(width), mHeight(height), mComp(comp)
     {
+        CHECK_INIT_GFX
+
         if (data == nullptr)
         {
             log_error("Failed to create Texture!")
@@ -59,6 +63,8 @@ namespace GFX
 
     Image::Image(const Image& image)
     {
+        CHECK_INIT_GFX
+
         mId = image.mId;
         mWidth = image.mWidth;
         mHeight = image.mHeight;
@@ -67,22 +73,30 @@ namespace GFX
 
     void Image::bind()
     {
+        CHECK_INIT_GFX
+
         glBindTexture(GL_TEXTURE_2D, mId);
     }
 
     void Image::unbind()
     {
+        CHECK_INIT_GFX
+
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
     void Image::clear()
     {
+        CHECK_INIT_GFX
+
         glBindTexture(GL_TEXTURE_2D, 0);
         glDeleteTextures(1, &mId);
     }
 
     Image& Image::operator=(const Image& other)
     {
+        CHECK_INIT_GFX
+
         mId = other.mId;
         mWidth = other.mWidth;
         mHeight = other.mHeight;
@@ -96,6 +110,8 @@ namespace GFX
 
         void addFile(const char* filePath)
         {
+            CHECK_INIT_GFX
+
             for(const auto& path : mFilePaths)
             {
                 if(path == std::string(filePath))
@@ -261,6 +277,8 @@ namespace GFX
 
         SpriteSheet createSpriteSheet(const char* name, const bool& forceOverWrite)
         {
+            CHECK_INIT_GFX
+
             if(FHandle::checkExistFile(name) && !forceOverWrite)
             {
                 mFilePaths.clear();

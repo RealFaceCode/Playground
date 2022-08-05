@@ -3,6 +3,8 @@
 #include "../../hdr/gfx/batch.h"
 namespace GFX
 {
+    bool INIT = false;
+
     static void GLAPIENTRY GLErrorCallback( GLenum source,
                      GLenum type,
                      GLuint id,
@@ -35,6 +37,7 @@ namespace GFX
 		{
 			log_assert(false, "Failed to init glad!");
 		}
+        INIT = true;
 
 #ifdef _DEBUG
         glEnable(GL_DEBUG_OUTPUT);

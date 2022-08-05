@@ -5,6 +5,14 @@
 
 namespace GFX
 {
+#ifdef _DEBUG
+    #define CHECK_INIT_GFX {if(!INIT){log_fmt_assert(false, "Tried to use function'%s()' but GFX::Init() is not init!", __FUNCTION__);}};
+#else
+    #define CHECK_INIT_GFX
+#endif
+
+    extern bool INIT;
+
 	enum RenderApi
 	{
 		GL,

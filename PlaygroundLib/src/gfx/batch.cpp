@@ -8,6 +8,8 @@ namespace GFX
 	Batch::Batch(const ui64 maxVertices, const ui32 drawMode)
 		: mMaxVertices(maxVertices), mUsedVertices(0), mVao(0), mVbo(0), mDrawMode(drawMode), mTransform(glm::mat4(1.0f)), mNumTextures(0)
 	{
+	    CHECK_INIT_GFX
+
 		mTextures[0] = 0;
 		mTextures[1] = 0;
 		mTextures[2] = 0;
@@ -44,7 +46,9 @@ namespace GFX
 
 	void Batch::addTexture(const Image& image)
 	{
-		if(mNumTextures >= 8)
+        CHECK_INIT_GFX
+
+        if(mNumTextures >= 8)
 		{
 			log_warning("Failed to bind texture to batch, max textures is 8");
 			return;
@@ -56,7 +60,9 @@ namespace GFX
 
 	void Batch::addTexture(const ui32 image)
 	{
-		if (mNumTextures >= 8)
+        CHECK_INIT_GFX
+
+        if (mNumTextures >= 8)
 		{
 			log_warning("Failed to bind texture to batch, max textures is 8");
 			return;
@@ -68,7 +74,9 @@ namespace GFX
 
 	bool Batch::hasTexture(const Image& image)
 	{
-		for (int i = 0; i < 8; i++)
+        CHECK_INIT_GFX
+
+        for (int i = 0; i < 8; i++)
 		{
 			if (mTextures[i] == image.mId)
 			{
@@ -81,7 +89,9 @@ namespace GFX
 
 	bool Batch::hasTexture(const ui32 texId)
 	{
-		for (int i = 0; i < 8; i++)
+        CHECK_INIT_GFX
+
+        for (int i = 0; i < 8; i++)
 		{
 			if (mTextures[i] == texId)
 			{
@@ -94,7 +104,9 @@ namespace GFX
 
 	bool  Batch::hasSameTextures(const ui32 ids[8])
 	{
-		if (mTextures[0] == ids[0]
+        CHECK_INIT_GFX
+
+        if (mTextures[0] == ids[0]
 			&& mTextures[1] == ids[1]
 			&& mTextures[2] == ids[2]
 			&& mTextures[3] == ids[3]
@@ -110,27 +122,37 @@ namespace GFX
 
 	bool Batch::hasSpaceTexture()
 	{
-		return (mNumTextures <= 8);
+        CHECK_INIT_GFX
+
+        return (mNumTextures <= 8);
 	}
 
 	ui32* Batch::getTextures()
 	{
-		return mTextures;
+        CHECK_INIT_GFX
+
+        return mTextures;
 	}
 
     ui8 Batch::getMapedTextureIndex(const Image& image)
     {
-	    return mMapedTextureIndex[image.mId];
+        CHECK_INIT_GFX
+
+        return mMapedTextureIndex[image.mId];
     }
 
     ui8 Batch::getMapedTextureIndex(const ui32& image)
     {
+        CHECK_INIT_GFX
+
         return mMapedTextureIndex[image];
     }
 
 	void Batch::add(const BatchVertex vertex)
 	{
-		if (mUsedVertices >= mMaxVertices)
+        CHECK_INIT_GFX
+
+        if (mUsedVertices >= mMaxVertices)
 		{
 			return;
 		}
@@ -144,7 +166,9 @@ namespace GFX
 
 	void Batch::add(const BatchVertex* vertices, ui64 elements)
 	{
-		if ((mUsedVertices + elements) >= mMaxVertices)
+        CHECK_INIT_GFX
+
+        if ((mUsedVertices + elements) >= mMaxVertices)
 		{
 			return;
 		}
@@ -158,17 +182,23 @@ namespace GFX
 
 	bool Batch::hasSpace() const 
 	{
-		return (mMaxVertices > mUsedVertices);
+        CHECK_INIT_GFX
+
+        return (mMaxVertices > mUsedVertices);
 	}
 
 	bool Batch::hasSpace(const ui64 elements) const
 	{
-		return (mMaxVertices > (mUsedVertices + elements));
+        CHECK_INIT_GFX
+
+        return (mMaxVertices > (mUsedVertices + elements));
 	}
 
 	void Batch::render(Shader& shader)
 	{
-		if (mUsedVertices == 0)
+        CHECK_INIT_GFX
+
+        if (mUsedVertices == 0)
 		{
 			return;
 		}
@@ -192,7 +222,9 @@ namespace GFX
 
 	void Batch::clear()
 	{
-		if (mVbo)
+        CHECK_INIT_GFX
+
+        if (mVbo)
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			glDeleteBuffers(1, &mVbo);
@@ -213,37 +245,47 @@ namespace GFX
 
 	namespace BatchHandler
 	{
-		static std::vector<Batch> batches = {};
+        static std::vector<Batch> batches = {};
 		static ui64 maxVerticesDefault = 1000;
 		static ui32 drawModeDefault = GL_TRIANGLES;
 		Image defaultImage;
 
 		void SetDefaultValuesBatch(const ui64 maxVertices, const ui32 drawMode)
 		{
-			maxVerticesDefault = maxVertices;
+            CHECK_INIT_GFX
+
+            maxVerticesDefault = maxVertices;
 			drawModeDefault = drawMode;
 		}
 
 		void Init()
 		{
-			const unsigned char whiteImage[4] = { 255, 255, 255, 255 };
+            CHECK_INIT_GFX
+
+            const unsigned char whiteImage[4] = { 255, 255, 255, 255 };
 			Image image(whiteImage, 1, 1, 1);
 			defaultImage = image;
 		}
 
 		void AddBatch()
 		{
-			batches.emplace_back(Batch(maxVerticesDefault, drawModeDefault));
+            CHECK_INIT_GFX
+
+            batches.emplace_back(Batch(maxVerticesDefault, drawModeDefault));
 		}
 
 		void AddBatch(const ui64 maxVertices, const ui32 drawMode)
 		{
-			batches.emplace_back(Batch(maxVertices, drawMode));
+            CHECK_INIT_GFX
+
+            batches.emplace_back(Batch(maxVertices, drawMode));
 		}
 
 		Batch* GetBatchHasSpace(const ui64 elements)
 		{
-			for (Batch& batch : batches)
+            CHECK_INIT_GFX
+
+            for (Batch& batch : batches)
 			{
 				if ((batch.mUsedVertices + elements) < batch.mMaxVertices)
 				{
@@ -258,7 +300,9 @@ namespace GFX
 
 		Batch* GetBatchHasSpaceMatchTexture(const ui64 elements, ui32 texture)
 		{
-			for (Batch& batch : batches)
+            CHECK_INIT_GFX
+
+            for (Batch& batch : batches)
 			{
 				if ((batch.mUsedVertices + elements) < batch.mMaxVertices && batch.hasTexture(texture))
 				{
@@ -279,7 +323,9 @@ namespace GFX
 
 		void AddImage(const Image& image)
 		{
-			if (image.mId == 0)
+            CHECK_INIT_GFX
+
+            if (image.mId == 0)
 			{
 				return;
 			}
@@ -300,25 +346,33 @@ namespace GFX
 
 		void AddToBatch(const BatchVertex vertex, const Image& image)
 		{
-			Batch* batch = GetBatchHasSpaceMatchTexture(1, image.mId);
+            CHECK_INIT_GFX
+
+            Batch* batch = GetBatchHasSpaceMatchTexture(1, image.mId);
 			batch->add(vertex);
 		}
 
 		void AddToBatch(const BatchVertex* vertices, const ui64 elements, const Image& image)
 		{
-			Batch* batch = GetBatchHasSpaceMatchTexture(elements, image.mId);
+            CHECK_INIT_GFX
+
+            Batch* batch = GetBatchHasSpaceMatchTexture(elements, image.mId);
 			batch->add(vertices, elements);
 		}
 
         void AddToBatch(const BatchVertex* vertices, const ui64 elements, const ui32 imageId)
         {
+            CHECK_INIT_GFX
+
             Batch* batch = GetBatchHasSpaceMatchTexture(elements, imageId);
             batch->add(vertices, elements);
         }
 
 		void RenderBatches(Shader& shader)
 		{
-			shader.bind();
+            CHECK_INIT_GFX
+
+            shader.bind();
             int textures[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
             shader.setUniformiv("uTexture[0]", textures, 8);
 			for (Batch& batch : batches)
@@ -330,7 +384,9 @@ namespace GFX
 
 		void Clear()
 		{
-			for (Batch& batch : batches)
+            CHECK_INIT_GFX
+
+            for (Batch& batch : batches)
 			{
 				batch.clear();
 			}

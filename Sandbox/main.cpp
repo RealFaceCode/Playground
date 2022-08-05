@@ -8,7 +8,6 @@
 #include "gfx/renderer.h"
 
 // ---------- TODO SECTION ----------
-//TODO: implement assert if GFX function is called and GFX is not init
 //TODO: implement setting save and load for window
 //TODO: implement load function for sprite sheet loading
 //TODO: implement image handler
@@ -45,7 +44,6 @@ int main()
 
     win.init();
 
-    //input settings
     {
         Input::SetSetting(Input::CollectKeyCallback, true);
         Input::SetSetting(Input::CollectCharacterCallback, true);
@@ -81,7 +79,6 @@ int main()
         GFX::SpriteSheetBuilder::addFile("../assets/images/chiseled_stone_bricks.png");
     }
     auto sheet = GFX::SpriteSheetBuilder::createSpriteSheet("../assets/spritesheets/sheet.png", true);
-
 
     GFX::Shader shader;
     shader.compile("../assets/shader/shader.vert", GL_VERTEX_SHADER);

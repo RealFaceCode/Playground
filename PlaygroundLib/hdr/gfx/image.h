@@ -2,6 +2,7 @@
 // Created by Kevin-Laptop on 02.08.2022.
 //
 #include "../core.h"
+#include "gfx.h"
 
 #ifndef PLAYGROUNDLIB_IMAGE_H
 #define PLAYGROUNDLIB_IMAGE_H

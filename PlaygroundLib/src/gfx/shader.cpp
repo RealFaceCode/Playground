@@ -6,27 +6,37 @@ namespace GFX
 {
 	Shader::Shader()
 	{
+        CHECK_INIT_GFX
+
         mId = glCreateProgram();
 	}
 
 	void Shader::destroy()
 	{
-		glDeleteProgram(mId);
+        CHECK_INIT_GFX
+
+        glDeleteProgram(mId);
 	}
 
 	void Shader::bind()
 	{
-		glUseProgram(mId);
+        CHECK_INIT_GFX
+
+        glUseProgram(mId);
 	}
 
 	void Shader::unbind()
 	{
-		glUseProgram(0);
+        CHECK_INIT_GFX
+
+        glUseProgram(0);
 	}
 
 	bool Shader::compile(const char* shaderPath, ui32 shaderType)
 	{
-		FHandle::File source(shaderPath, FILE_READ);
+        CHECK_INIT_GFX
+
+        FHandle::File source(shaderPath, FILE_READ);
 
 		if (source.getData() == nullptr)
 		{
@@ -56,7 +66,9 @@ namespace GFX
 
 	bool Shader::build()
 	{
-		if (mAttachments.empty())
+        CHECK_INIT_GFX
+
+        if (mAttachments.empty())
 		{
 			return false;
 		}
@@ -114,7 +126,9 @@ namespace GFX
 
 	void Shader::setUniformMat2(const char* uniformName, glm::mat2 mat2)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniformMatrix4fv(mLocations.at(uniformName), 1, GL_FALSE, &mat2[0][0]);
 		}
@@ -126,7 +140,9 @@ namespace GFX
 
 	void Shader::setUniformMat3(const char* uniformName, glm::mat3 mat3)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniformMatrix4fv(mLocations.at(uniformName), 1, GL_FALSE, &mat3[0][0]);
 		}
@@ -138,7 +154,9 @@ namespace GFX
 
 	void Shader::setUniformMat4(const char* uniformName, glm::mat4 mat4)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniformMatrix4fv(mLocations.at(uniformName), 1, GL_FALSE, &mat4[0][0]);
 		}
@@ -150,7 +168,9 @@ namespace GFX
 
 	void Shader::setUniform1f(const char* uniformName, f32 f)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniform1f(mLocations.at(uniformName), f);
 		}
@@ -162,7 +182,9 @@ namespace GFX
 
 	void Shader::setUniform2f(const char* uniformName, f32 f0, f32 f1)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniform2f(mLocations.at(uniformName), f0, f1);
 		}
@@ -174,7 +196,9 @@ namespace GFX
 
 	void Shader::setUniform3f(const char* uniformName, f32 f0, f32 f1, f32 f2)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniform3f(mLocations.at(uniformName), f0, f1, f2);
 		}
@@ -186,7 +210,9 @@ namespace GFX
 
 	void Shader::setUniform4f(const char* uniformName, f32 f0, f32 f1, f32 f2, f32 f3)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniform4f(mLocations.at(uniformName), f0, f1, f2, f3);
 		}
@@ -198,7 +224,9 @@ namespace GFX
 
 	void Shader::setUniform1d(const char* uniformName, f64 d)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniform1d(mLocations.at(uniformName), d);
 		}
@@ -210,7 +238,9 @@ namespace GFX
 
 	void Shader::setUniform2d(const char* uniformName, f64 d0, f64 d1)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniform2d(mLocations.at(uniformName), d0, d1);
 		}
@@ -222,7 +252,9 @@ namespace GFX
 
 	void Shader::setUniform3d(const char* uniformName, f64 d0, f64 d1, f64 d2)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniform3d(mLocations.at(uniformName), d0, d1, d2);
 		}
@@ -234,7 +266,9 @@ namespace GFX
 
 	void Shader::setUniform4d(const char* uniformName, f64 d0, f64 d1, f64 d2, f64 d3)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniform4d(mLocations.at(uniformName), d0, d1, d2, d3);
 		}
@@ -246,7 +280,9 @@ namespace GFX
 
 	void Shader::setUniform1i(const char* uniformName, i32 i)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniform1i(mLocations.at(uniformName), i);
 		}
@@ -258,7 +294,9 @@ namespace GFX
 
 	void Shader::setUniform2i(const char* uniformName, i32 i0, i32 i1)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniform2i(mLocations.at(uniformName), i0, i1);
 		}
@@ -270,7 +308,9 @@ namespace GFX
 
 	void Shader::setUniform3i(const char* uniformName, i32 i0, i32 i1, i32 i2)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniform3i(mLocations.at(uniformName), i0, i1, i2);
 		}
@@ -282,7 +322,9 @@ namespace GFX
 
 	void Shader::setUniform4i(const char* uniformName, i32 i0, i32 i1, i32 i2, i32 i3)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniform4i(mLocations.at(uniformName), i0, i1, i2, i3);
 		}
@@ -294,7 +336,9 @@ namespace GFX
 
 	void Shader::setUniformiv(const char* uniformName, i32* i, ui64 elements)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniform1iv(mLocations.at(uniformName), elements, &i[0]);
 		}
@@ -306,7 +350,9 @@ namespace GFX
 
 	void Shader::setUniform1ui(const char* uniformName, ui32 ui)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniform1ui(mLocations.at(uniformName), ui);
 		}
@@ -318,7 +364,9 @@ namespace GFX
 
 	void Shader::setUniform2ui(const char* uniformName, ui32 ui0, ui32 ui1)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniform2ui(mLocations.at(uniformName), ui0, ui1);
 		}
@@ -330,7 +378,9 @@ namespace GFX
 
 	void Shader::setUniform3ui(const char* uniformName, ui32 ui0, ui32 ui1, ui32 ui2)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniform3ui(mLocations.at(uniformName), ui0, ui1, ui2);
 		}
@@ -342,7 +392,9 @@ namespace GFX
 
 	void Shader::setUniform4ui(const char* uniformName, ui32 ui0, ui32 ui1, ui32 ui2, ui32 ui3)
 	{
-		if (mLocations.find(uniformName) != mLocations.end())
+        CHECK_INIT_GFX
+
+        if (mLocations.find(uniformName) != mLocations.end())
 		{
 			glUniform4ui(mLocations.at(uniformName), ui0, ui1, ui2, ui3);
 		}

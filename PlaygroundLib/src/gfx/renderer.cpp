@@ -15,6 +15,8 @@ namespace GFX
 
         void DrawTriangle(const glm::vec2& position, const glm::vec4& color, const float& width, const float& height)
         {
+            CHECK_INIT_GFX
+
             float textureIndex = 0;
 
             {
@@ -36,6 +38,8 @@ namespace GFX
 
         void DrawTexturedTriangle(const glm::vec2& position, const Image& texture, const float& width, const float& height)
         {
+            CHECK_INIT_GFX
+
             float textureIndex = 0;
 
             {
@@ -57,6 +61,8 @@ namespace GFX
 
         void DrawTexturedTriangle(const glm::vec2& position, const Sprite& sprite, const float& width, const float& height)
         {
+            CHECK_INIT_GFX
+
             float textureIndex = 0;
 
             {
@@ -78,6 +84,8 @@ namespace GFX
 
         void DrawRectangle(const glm::vec2& position, const glm::vec4& color, const float& width, const float& height)
         {
+            CHECK_INIT_GFX
+
             float textureIndex = 0;
 
             {
@@ -103,6 +111,8 @@ namespace GFX
 
         void DrawTexturedRectangle(const glm::vec2& position, const Image& texture, const float& width, const float& height)
         {
+            CHECK_INIT_GFX
+
             float textureIndex = 0;
 
             {
@@ -128,6 +138,8 @@ namespace GFX
 
         void DrawTexturedRectangle(const glm::vec2& position, const Sprite& sprite, const float& width, const float& height)
         {
+            CHECK_INIT_GFX
+
             float textureIndex = 0;
 
             {
@@ -156,6 +168,8 @@ namespace GFX
                       const glm::vec4& color,
                       const float& lineWidth)
         {
+            CHECK_INIT_GFX
+
             float textureIndex = 0;
 
             {
@@ -205,6 +219,8 @@ namespace GFX
                                 const float &height,
                                 const float &lineWidth)
         {
+            CHECK_INIT_GFX
+
             float textureIndex = 0;
 
             {
@@ -222,6 +238,8 @@ namespace GFX
 
         void render(Shader &shader)
         {
+            CHECK_INIT_GFX
+
             BatchHandler::RenderBatches(shader);
         }
 
