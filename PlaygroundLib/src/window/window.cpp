@@ -681,6 +681,10 @@ namespace Window
 			glfwWindowHint(GLFW_REFRESH_RATE, win.mSettings.refreshRate);
 		}
 
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, mSettings.openGLMajor);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, mSettings.openGLMinor);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
 		if (mMakeBorderless)
 		{
 			glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);

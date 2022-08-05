@@ -27,11 +27,6 @@ int main()
 {
     Window::Init();
 
-    //TODO: move to window.cpp
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
     Window::Window win = Window::WindowBuilder
             .setSize(900, 600)
             .setRGBBufferSize(8, 8, 8)
