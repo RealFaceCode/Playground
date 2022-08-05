@@ -490,7 +490,7 @@ namespace GFX
                 if(name.first == sheetName)
                 {
 
-                    log_fmt_warning("Failed to add image with image path'%s'. File already added", sheetPath);
+                    log_fmt_warning("Failed to add sheet with path'%s'. File already added", sheetPath);
                     return;
                 }
             }
@@ -503,7 +503,7 @@ namespace GFX
             CHECK_INIT_GFX
             if(!FHandle::checkExistDir(dirPath))
             {
-                log_fmt_warning("Failed to add sheet with path'%s'", sheetPath);
+                log_fmt_warning("Failed to add sheets from path'%s'", dirPath);
                 return;
             }
 
@@ -518,7 +518,7 @@ namespace GFX
                     if(name.first == sheetName)
                     {
 
-                        log_fmt_warning("Failed to add image with image path'%s'. File already added", path.c_str());
+                        log_fmt_warning("Failed to add sheet with path'%s'. File already added", path.c_str());
                         return;
                     }
                 }
@@ -532,7 +532,7 @@ namespace GFX
             CHECK_INIT_GFX
             if(!FHandle::checkExistDir(dirPath))
             {
-                log_fmt_warning("Failed to add sheet with path'%s'", sheetPath);
+                log_fmt_warning("Failed to create sheet from path'%s'", dirPath);
                 return;
             }
 
