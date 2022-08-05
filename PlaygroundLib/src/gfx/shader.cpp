@@ -403,4 +403,72 @@ namespace GFX
             log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
         }
 	}
+
+    namespace ShaderHandler
+    {
+	    std::unordered_map<std::string, Shader> shaders;
+
+        void AddShader(const char* shaderName)
+        {
+            CHECK_INIT_GFX
+            if(GetShader(shaderName) != nullptr)
+            {
+                log_fmt_warning("Failed to add shader with name'%s'. Shader already exist!", shaderName);
+                return;
+            }
+            shaders.emplace(std::string(shaderName), Shader());
+        }
+
+        void AddCompileSource(const char* shaderName, const char* sourcePath, ui32 shaderType)
+        {
+            CHECK_INIT_GFX
+            if(sourcePath == nullptr)
+            {
+                log_fmt_warning("Failed to add shader source, source path is nullptr!");
+                return;
+            }
+
+            auto* shader = GetShader(shaderName);
+            if(shader == nullptr)
+            {
+                log_fmt_warning("Failed to add shader source, no shader with shader name'%s' found!", shaderName);
+                return;
+            }
+            shader->compile(sourcePath, shaderType);
+        }
+
+        void BuildShader(const char* shaderName)
+        {
+            CHECK_INIT_GFX
+            auto* shader = GetShader(shaderName);
+            if(shader == nullptr)
+            {
+                log_fmt_warning("Failed to build shader, no shader with shader name'%s' found!", shaderName);
+                return;
+            }
+            shader->build();
+        }
+
+        void BindShader(const char* shaderName)
+        {
+            CHECK_INIT_GFX
+            auto* shader = GetShader(shaderName);
+            if(shader == nullptr)
+            {
+                log_fmt_warning("Failed to bind shader, no shader with shader name'%s' found!", shaderName);
+                return;
+            }
+            shader->bind();
+        }
+
+        Shader* GetShader(const char* shaderName)
+        {
+            CHECK_INIT_GFX
+            if(shaders.find(std::string(shaderName)) != shaders.end())
+            {
+                return &shaders.at(std::string(shaderName));
+            }
+            return nullptr;
+        }
+    }
 }

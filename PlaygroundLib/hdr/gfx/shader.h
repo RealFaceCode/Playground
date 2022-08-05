@@ -40,6 +40,15 @@ namespace GFX
 		void setUniform3ui(const char* uniformName, ui32 ui0, ui32 ui1, ui32 ui2);
 		void setUniform4ui(const char* uniformName, ui32 ui0, ui32 ui1, ui32 ui2, ui32 ui3);
 	};
+
+	namespace ShaderHandler
+    {
+	    void AddShader(const char* shaderName);
+	    void AddCompileSource(const char* shaderName, const char* sourcePath, ui32 shaderType);
+	    void BuildShader(const char* shaderName);
+	    void BindShader(const char* shaderName);
+	    Shader* GetShader(const char* shaderName);
+    }
 }
 
 #endif

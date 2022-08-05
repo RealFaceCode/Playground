@@ -74,11 +74,12 @@ int main()
     }
     auto sheet = GFX::SpriteSheetBuilder::CreateSpriteSheet("../assets/spritesheets/sheet.png", true);
 
-    GFX::Shader shader;
-    shader.compile("../assets/shader/shader.vert", GL_VERTEX_SHADER);
-    shader.compile("../assets/shader/shader.frag", GL_FRAGMENT_SHADER);
-    shader.build();
-    shader.bind();
+    GFX::ShaderHandler::AddShader("batchShader");
+    GFX::ShaderHandler::AddCompileSource("batchShader", "../assets/shader/shader.vert", GL_VERTEX_SHADER);
+    GFX::ShaderHandler::AddCompileSource("batchShader", "../assets/shader/shader.frag", GL_FRAGMENT_SHADER);
+    GFX::ShaderHandler::BuildShader("batchShader");
+    GFX::ShaderHandler::BindShader("batchShader");
+    auto* shader = GFX::ShaderHandler::GetShader("batchShader");
 
     GFX::ImageHandler::AddImage("../assets/images/bricks.png");
     GFX::ImageHandler::AddImage("../assets/images/dirt.png");
@@ -88,8 +89,8 @@ int main()
 
     glm::mat4 proj = glm::ortho(-aspect * scale, aspect * scale, -1.0f * scale, 1.0f * scale, -1.0f, 1.0f);
     glm::mat4 view = glm::lookAt(glm::vec3{0.0f, 0.0f, 0.0f}, glm::vec3{ 0.0f, 0.0f, -1.0f }, glm::vec3{ 0.0f, 1.0f, 0.0f });
-    shader.setUniformMat4("uProj", proj);
-    shader.setUniformMat4("uView", view);
+    shader->setUniformMat4("uProj", proj);
+    shader->setUniformMat4("uView", view);
 
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
@@ -101,14 +102,14 @@ int main()
             win.close();
         }
 
-        shader.bind();
+        shader->bind();
         aspect = (float)win.mSettings.width / (float)win.mSettings.height;
         proj = glm::ortho(-aspect * scale, aspect * scale, -1.0f * scale, 1.0f * scale, -1.0f, 1.0f);
-        shader.setUniformMat4("uProj", proj);
+        shader->setUniformMat4("uProj", proj);
 
         GFX::Renderer::DrawTexturedRectangle({0, 0}, GFX::ImageHandler::GetImage("bricks"), 1, 1);
         GFX::Renderer::DrawTexturedRectangle({0, 1}, &sheet.mSprites["chiseled_stone_bricks"], .5, .5);
-        GFX::Renderer::render(shader);
+        GFX::Renderer::render(*shader);
 
         Input::Update();
         win.swapBuffers();
