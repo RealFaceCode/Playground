@@ -61,6 +61,31 @@ typedef uint64_t	ui64;
 typedef float		f32;
 typedef double		f64;
 
+//Structs
+template<typename T>
+struct Result
+{
+public:
+    T type;
+    bool result;
+
+public:
+    T unwrap();
+
+public:
+    explicit operator bool() const noexcept;
+};
+
+template<typename T>
+T Result<T>::unwrap() {
+    return type;
+}
+
+template<typename T>
+Result<T>::operator bool() const noexcept {
+    return result;
+}
+
 //FUNCTIONS
 std::string GetTime();
 std::string GetDate();
