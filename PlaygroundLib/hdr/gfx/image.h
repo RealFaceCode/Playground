@@ -9,6 +9,59 @@
 
 namespace GFX
 {
+    namespace ImageSettingsBuilder
+    {
+        enum ImageType
+        {
+            IMAGE2D
+        };
+
+        enum ImageInternalFormat
+        {
+            RGB32F,
+            RGBA32F
+        };
+
+        enum ImageFormat
+        {
+            RGB,
+            RGBA
+        };
+
+        enum ImageWrap
+        {
+            REPEAT
+        };
+
+        enum ImageFilter
+        {
+            LINEAR,
+            NEAREST
+        };
+
+        struct ImageBuildingSettings
+        {
+        public:
+            ImageType mType;
+            ImageInternalFormat mInternalFormat;
+            ImageFormat mFormat;
+            ImageWrap mWrapS;
+            ImageWrap mWrapT;
+            ImageFilter mFilterMin;
+            ImageFilter mFilterMag;
+        };
+
+        void AddNewBuildingSettings(const char* settingsName);
+        void SetImageType(const char* settingsName, const ImageType& imageType);
+        void SetImageInternalFormat(const char* settingsName, const ImageInternalFormat& internalFormat);
+        void SetImageFormat(const char* settingsName, const ImageFormat& imageFormat);
+        void SetImageWrapS(const char* settingsName, const ImageWrap& wrapS);
+        void SetImageWrapT(const char* settingsName, const ImageWrap& wrapT);
+        void SetImageFilterMin(const char* settingsName, const ImageFilter& min);
+        void SetImageFilterMag(const char* settingsName, const ImageFilter& mag);
+        Result<ImageBuildingSettings&> GetImageBuildingSettings(const char* settingsName);
+    }
+
     struct Image
     {
     public:

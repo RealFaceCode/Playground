@@ -9,6 +9,147 @@
 
 namespace GFX
 {
+    namespace ImageSettingsBuilder
+    {
+        static std::unordered_map<std::string, ImageBuildingSettings> imgBuildingSettings;
+
+        static ImageBuildingSettings defaultImageBuildingSetting
+        {
+            .mType              = ImageType::IMAGE2D,
+            .mInternalFormat    = ImageInternalFormat::RGBA32F,
+            .mFormat            = ImageFormat::RGBA,
+            .mWrapS             = ImageWrap::REPEAT,
+            .mWrapT             = ImageWrap::REPEAT,
+            .mFilterMin         = ImageFilter::LINEAR,
+            .mFilterMag         = ImageFilter::LINEAR
+        };
+
+        void AddNewBuildingSettings(const char* settingsName)
+        {
+            if(settingsName == nullptr)
+            {
+                log_warning("Failed to add a new building setting! settings name was nullptr!")
+                return;
+            }
+
+            for(const auto& settings : imgBuildingSettings)
+            {
+                if(settings.first == std::string(settingsName))
+                {
+                    log_fmt_warning("Failed to add a new building setting with name'%s'! settings name is already used!", settingsName);
+                    return;
+                }
+            }
+
+            imgBuildingSettings.emplace(std::string(settingsName), defaultImageBuildingSetting);
+        }
+
+        void SetImageType(const char* settingsName, const ImageType& imageType)
+        {
+            auto result = GetImageBuildingSettings(settingsName);
+            if(!result)
+            {
+                log_fmt_warning("Failed to set image type to image building settings with name'%s'! The default buildings setting was returned!", settingsName);
+                return;
+            }
+
+            auto& settings = result.unwrap();
+            settings.mType = imageType;
+        }
+
+        void SetImageInternalFormat(const char* settingsName, const ImageInternalFormat& internalFormat)
+        {
+            auto result = GetImageBuildingSettings(settingsName);
+            if(!result)
+            {
+                log_fmt_warning("Failed to set image internal format to image building settings with name'%s'! The default buildings setting was returned!", settingsName);
+                return;
+            }
+
+            auto& settings = result.unwrap();
+            settings.mInternalFormat = internalFormat;
+        }
+
+        void SetImageFormat(const char* settingsName, const ImageFormat& imageFormat)
+        {
+            auto result = GetImageBuildingSettings(settingsName);
+            if(!result)
+            {
+                log_fmt_warning("Failed to set image format to image building settings with name'%s'! The default buildings setting was returned!", settingsName);
+                return;
+            }
+
+            auto& settings = result.unwrap();
+            settings.mFormat = imageFormat;
+        }
+
+        void SetImageWrapS(const char* settingsName, const ImageWrap& wrapS)
+        {
+            auto result = GetImageBuildingSettings(settingsName);
+            if(!result)
+            {
+                log_fmt_warning("Failed to set image warp s to image building settings with name'%s'! The default buildings setting was returned!", settingsName);
+                return;
+            }
+
+            auto& settings = result.unwrap();
+            settings.mWrapS = wrapS;
+        }
+
+        void SetImageWrapT(const char* settingsName, const ImageWrap& wrapT)
+        {
+            auto result = GetImageBuildingSettings(settingsName);
+            if(!result)
+            {
+                log_fmt_warning("Failed to set image warp t to image building settings with name'%s'! The default buildings setting was returned!", settingsName);
+                return;
+            }
+
+            auto& settings = result.unwrap();
+            settings.mWrapT = wrapT;
+        }
+
+        void SetImageFilterMin(const char* settingsName, const ImageFilter& min)
+        {
+            auto result = GetImageBuildingSettings(settingsName);
+            if(!result)
+            {
+                log_fmt_warning("Failed to set image min filter to image building settings with name'%s'! The default buildings setting was returned!", settingsName);
+                return;
+            }
+
+            auto& settings = result.unwrap();
+            settings.mFilterMin = min;
+        }
+
+        void SetImageFilterMag(const char* settingsName, const ImageFilter& mag)
+        {
+            auto result = GetImageBuildingSettings(settingsName);
+            if(!result)
+            {
+                log_fmt_warning("Failed to set image mag filter to image building settings with name'%s'! The default buildings setting was returned!", settingsName);
+                return;
+            }
+
+            auto& settings = result.unwrap();
+            settings.mFilterMag = mag;
+        }
+
+        Result<ImageBuildingSettings&> GetImageBuildingSettings(const char* settingsName)
+        {
+            for(auto& settings : imgBuildingSettings)
+            {
+                if(settings.first == std::string(settingsName))
+                {
+                    return {settings.second, true};
+                }
+            }
+
+            log_fmt_warning("Failed to get image building settings with name'%s'! default image building settings was returned!")
+            return {defaultImageBuildingSetting, false};
+        }
+    }
+
     Image::Image(const char* path)
     {
         CHECK_INIT_GFX
