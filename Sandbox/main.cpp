@@ -7,11 +7,13 @@
 #include "gfx/renderer.h"
 
 // ---------- TODO SECTION ----------
+//TODO: implement image creation settings
+//TODO: implement image creation with settings
 //TODO: implement setting save and load for window
 //TODO: implement load function for sprite sheet loading
 //TODO: implement text rendering
 //TODO: implement gui system
-//TODO: implement shader management
+//TODO: implement camera
 //TODO: |-> buttons
 //TODO: |-> sliders
 //TODO: |-> loading/progress bar
@@ -82,7 +84,7 @@ int main()
     auto* shader = GFX::ShaderHandler::GetShader("batchShader");
 
     GFX::ImageHandler::AddImage("../assets/images/bricks.png");
-    GFX::ImageHandler::AddImage("../assets/images/dirt.png");
+    GFX::ImageHandler::AddImage("../assets/images/chiseled_stone_bricks.png");
 
     float scale = 1.5f;
     float aspect = (float)win.mSettings.width / (float)win.mSettings.height;
@@ -107,8 +109,10 @@ int main()
         proj = glm::ortho(-aspect * scale, aspect * scale, -1.0f * scale, 1.0f * scale, -1.0f, 1.0f);
         shader->setUniformMat4("uProj", proj);
 
-        GFX::Renderer::DrawTexturedRectangle({0, 0}, GFX::ImageHandler::GetImage("bricks"), 1, 1);
-        GFX::Renderer::DrawTexturedRectangle({0, 1}, &sheet.mSprites["chiseled_stone_bricks"], .5, .5);
+        GFX::Renderer::DrawTexturedRectangle({0, 0}, &sheet.mSprites["bricks"], 1, 1);
+        GFX::Renderer::DrawTexturedRectangle({0, 1}, &sheet.mSprites["chiseled_stone_bricks"], 1, 1);
+        GFX::Renderer::DrawTexturedRectangle({-1.25, 0}, GFX::ImageHandler::GetImage("bricks"), 1, 1);
+        GFX::Renderer::DrawTexturedRectangle({-1.25, 1}, GFX::ImageHandler::GetImage("chiseled_stone_bricks"), 1, 1);
         GFX::Renderer::render(*shader);
 
         Input::Update();

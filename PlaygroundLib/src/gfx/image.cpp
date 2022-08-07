@@ -12,7 +12,7 @@ namespace GFX
     Image::Image(const char* path)
     {
         CHECK_INIT_GFX
-
+        stbi_set_flip_vertically_on_load(true);
         unsigned char* texData = stbi_load(path, &mWidth, &mHeight, &mComp, 0);
         if (texData == nullptr)
         {
@@ -275,8 +275,35 @@ namespace GFX
             return Position{.x = -1, .y = -1};
         }
 
-        SpriteSheet LoadSpriteSheet(const char *filePath) {
+        static SpriteSheet LoadSpriteSheet(const char *filePath) {
             return SpriteSheet();
+        }
+
+        static void AddToSpriteSheet(SpriteSheet& sheet,
+                                     const FileData& image,
+                                     const Position& pos,
+                                     const ui32& maxImageWidth,
+                                     const ui32& maxImageHeight)
+        {
+
+            f32 x0 = (float) ((float)pos.x + 0.0) / (float) maxImageWidth;
+            f32 y0 = (float) ((float)pos.y + 0.0)/ (float) maxImageHeight;
+            f32 x1 = (float) ((float)(pos.x + image.mWidth) - 0.0) / (float) maxImageWidth;
+            f32 y1 = (float) ((float)pos.y + 0.0) / (float) maxImageHeight;
+            f32 x2 = (float) ((float)(pos.x + image.mWidth) - 0.0) / (float) maxImageWidth;
+            f32 y2 = (float) ((float)(pos.y + image.mHeight) - 0.0) / (float) maxImageHeight;
+            f32 x3 = (float) ((float)pos.x + 0.0)/ (float) maxImageWidth;
+            f32 y3 = (float) ((float)(pos.y + image.mHeight) - 0.0) / (float) maxImageHeight;
+
+            Sprite sprite
+            {
+                .uv0 = {x0, y0},
+                .uv1 = {x1, y1},
+                .uv2 = {x2, y2},
+                .uv3 = {x3, y3},
+            };
+
+            sheet.mSprites.emplace(image.mName, sprite);
         }
 
         SpriteSheet CreateSpriteSheet(const char* name, const bool& forceOverWrite)
@@ -310,10 +337,10 @@ namespace GFX
                 fileQueue.emplace(image);
             }
 
-            SpriteSheet spSh;
-            spSh.image.mWidth = maxImageWidth;
-            spSh.image.mHeight = maxImageHeight;
-            spSh.image.mComp = 4;
+            SpriteSheet sheet;
+            sheet.image.mWidth = maxImageWidth;
+            sheet.image.mHeight = maxImageHeight;
+            sheet.image.mComp = 4;
 
             while(!fileQueue.empty())
             {
@@ -328,30 +355,13 @@ namespace GFX
                     memcpy(imageBuffer + ((i + pos.y) * (maxImageWidth * 4) + (pos.x * 4)),
                            image.mData + (i * image.mWidth * 4), image.mWidth * 4);
                 }
-
-                {
-                    Sprite sprite
-                    {
-                        .uv0 = {(float) ((float) pos.x / (float) maxImageWidth),
-                                (float) ((float) pos.y / (float) maxImageHeight)},
-                        .uv1 = {(float) ((float) (pos.x + image.mWidth) / (float) maxImageWidth),
-                                (float) ((float) pos.y / (float) maxImageHeight)},
-                        .uv2 = {(float) ((float) (pos.x + image.mWidth) / (float) maxImageWidth),
-                                (float) ((float) (pos.y + image.mHeight) / (float) maxImageHeight)},
-                        .uv3 = {(float) ((float) pos.x / (float) maxImageWidth),
-                                (float) ((float) (pos.y + image.mHeight) / (float) maxImageHeight)},
-                    };
-
-                    auto r = spSh.mSprites.emplace(image.mName, sprite);
-                }
+                AddToSpriteSheet(sheet, image, pos, maxImageWidth, maxImageHeight);
             }
 
+            sheet.image = Image(imageBuffer, maxImageWidth, maxImageHeight, 4);
+            for(auto& sprite : sheet.mSprites)
             {
-                spSh.image = Image(imageBuffer, maxImageWidth, maxImageHeight, 4);
-                for(auto& sprite : spSh.mSprites)
-                {
-                    sprite.second.mId = spSh.image.mId;
-                }
+                sprite.second.mId = sheet.image.mId;
             }
 
             stbi_write_png(name, maxImageWidth, maxImageHeight, 4, imageBuffer, 0);
@@ -366,7 +376,7 @@ namespace GFX
                 delete[] imageBuffer;
                 delete[] trackBuffer;
             }
-            return spSh;
+            return sheet;
         }
     }
 
