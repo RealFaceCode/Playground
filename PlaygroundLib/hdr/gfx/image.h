@@ -49,6 +49,15 @@ namespace GFX
             ImageWrap mWrapT;
             ImageFilter mFilterMin;
             ImageFilter mFilterMag;
+
+        public:
+            const i32 convertType() const;
+            const i32 convertInternalFormat() const;
+            const i32 convertFormat() const;
+            const i32 convertWrapS() const;
+            const i32 convertWrapT() const;
+            const i32 convertMin() const;
+            const i32 convertMag() const;
         };
 
         void AddNewBuildingSettings(const char* settingsName);
@@ -71,8 +80,8 @@ namespace GFX
         i32 mComp;
 
         Image() = default;
-        Image(const char* path);
-        Image(const unsigned char* data, ui32 width, ui32 height, ui32 comp);
+        Image(const char* path, const char* settingsName = nullptr);
+        Image(const unsigned char* data, ui32 width, ui32 height, ui32 comp, const char* settingsName = nullptr);
         Image(const Image& image);
         ~Image() = default;
 

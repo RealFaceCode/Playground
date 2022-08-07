@@ -24,6 +24,87 @@ namespace GFX
             .mFilterMag         = ImageFilter::LINEAR
         };
 
+        const i32 ImageBuildingSettings::convertType() const
+        {
+            switch (mType) {
+                case IMAGE2D:
+                    return GL_IMAGE_2D;
+                    break;
+            }
+        }
+
+        const i32 ImageBuildingSettings::convertInternalFormat() const
+        {
+            switch (mInternalFormat) {
+
+                case RGB32F:
+                    return GL_RGB32F;
+                    break;
+                case RGBA32F:
+                    return GL_RGBA32F;
+                    break;
+            }
+        }
+
+        const i32 ImageBuildingSettings::convertFormat() const
+        {
+            switch (mFormat) {
+
+                case RGB:
+                    return GL_RGB;
+                    break;
+                case RGBA:
+                    return GL_RGBA;
+                    break;
+            }
+        }
+
+        const i32 ImageBuildingSettings::convertWrapS() const
+        {
+            switch (mWrapS) {
+
+                case REPEAT:
+                    return GL_REPEAT;
+                    break;
+            }
+        }
+
+        const i32 ImageBuildingSettings::convertWrapT() const
+        {
+            switch (mWrapT) {
+
+                case REPEAT:
+                    return GL_REPEAT;
+                    break;
+            }
+        }
+
+        const i32 ImageBuildingSettings::convertMin() const
+        {
+            switch (mFilterMin) {
+
+                case LINEAR:
+                    return GL_LINEAR;
+                    break;
+                case NEAREST:
+                    return GL_NEAREST;
+                    break;
+            }
+        }
+
+        const i32 ImageBuildingSettings::convertMag() const
+        {
+            switch (mFilterMag) {
+
+                case LINEAR:
+                    return GL_LINEAR;
+                    break;
+                case NEAREST:
+                    return GL_NEAREST;
+                    break;
+            }
+        }
+
         void AddNewBuildingSettings(const char* settingsName)
         {
             if(settingsName == nullptr)
@@ -150,7 +231,7 @@ namespace GFX
         }
     }
 
-    Image::Image(const char* path)
+    Image::Image(const char* path, const char* settingsName)
     {
         CHECK_INIT_GFX
         stbi_set_flip_vertically_on_load(true);
@@ -160,7 +241,6 @@ namespace GFX
             log_fmt_error("Failed to create Texture with path'%s'", path);
             return;
         }
-
 
         ui32 format = mComp == 3 ? GL_RGB : GL_RGBA;
         ui32 internalType = mComp == 3 ? GL_RGB32F : GL_RGBA32F;
@@ -177,7 +257,7 @@ namespace GFX
         stbi_image_free(texData);
     }
 
-    Image::Image(const unsigned char* data, ui32 width, ui32 height, ui32 comp)
+    Image::Image(const unsigned char* data, ui32 width, ui32 height, ui32 comp, const char* settingsName)
             :mWidth(width), mHeight(height), mComp(comp)
     {
         CHECK_INIT_GFX
