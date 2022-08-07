@@ -100,7 +100,6 @@ namespace FHandle
 
 	bool checkIfDirContainsFiles(const char* dir)
 	{
-
 		return !std::filesystem::is_empty(dir);
 	}
 
@@ -164,5 +163,4 @@ namespace FHandle
 		}
 		return filePaths;
 	}
-
 }

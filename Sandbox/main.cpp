@@ -5,15 +5,15 @@
 #include "gfx/gfx.h"
 #include "gfx/shader.h"
 #include "gfx/renderer.h"
+#include "util/hotloader.h"
 
 // ---------- TODO SECTION ----------
-//TODO: implement image creation settings
-//TODO: implement image creation with settings
 //TODO: implement setting save and load for window
 //TODO: implement load function for sprite sheet loading
 //TODO: implement text rendering
 //TODO: implement gui system
 //TODO: implement camera
+//TODO: implement hot reloading shader
 //TODO: |-> buttons
 //TODO: |-> sliders
 //TODO: |-> loading/progress bar
@@ -96,12 +96,20 @@ int main()
 
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
+    HotLoader::AddFileToWatch("../assets/shader/shader.frag");
+
     while (win.isWindowValid())
     {
         glClear(GL_COLOR_BUFFER_BIT);
         if (Input::IsKeyPressed(GLFW_KEY_ESCAPE))
         {
             win.close();
+        }
+
+        if(HotLoader::IsModified("../assets/shader/shader.frag"))
+        {
+            auto* f = HotLoader::GetFile("../assets/shader/shader.frag");
+            log_info("");
         }
 
         shader->bind();
@@ -118,6 +126,7 @@ int main()
         Input::Update();
         win.swapBuffers();
         Window::pollEvents();
+        HotLoader::CheckFiles();
     }
 
     win.clear();
