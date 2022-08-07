@@ -263,7 +263,7 @@ namespace GFX
             CHECK_INIT_GFX
 
             const unsigned char whiteImage[4] = { 255, 255, 255, 255 };
-			Image image(whiteImage, 1, 1, 1);
+			Image image(whiteImage, 1, 1, 1, "defaultWhiteSetting");
 			defaultImage = image;
 		}
 

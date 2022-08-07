@@ -16,8 +16,8 @@ namespace GFX
         static ImageBuildingSettings defaultImageBuildingSetting
         {
             .mType              = ImageType::IMAGE2D,
-            .mInternalFormat    = ImageInternalFormat::RGBA32F,
-            .mFormat            = ImageFormat::RGBA,
+            .mInternalFormat    = ImageInternalFormat::AUTO,
+            .mFormat            = ImageFormat::AUTO,
             .mWrapS             = ImageWrap::REPEAT,
             .mWrapT             = ImageWrap::REPEAT,
             .mFilterMin         = ImageFilter::LINEAR,
@@ -27,8 +27,8 @@ namespace GFX
         const i32 ImageBuildingSettings::convertType() const
         {
             switch (mType) {
-                case IMAGE2D:
-                    return GL_IMAGE_2D;
+                case ImageType::IMAGE2D:
+                    return GL_TEXTURE_2D;
                     break;
             }
         }
@@ -36,11 +36,19 @@ namespace GFX
         const i32 ImageBuildingSettings::convertInternalFormat() const
         {
             switch (mInternalFormat) {
-
-                case RGB32F:
+                case ImageInternalFormat::AUTO:
+                    return -1;
+                    break;
+                case ImageInternalFormat::RGB8:
+                    return GL_RGB8;
+                    break;
+                case ImageInternalFormat::RGBA8:
+                    return GL_RGBA8;
+                    break;
+                case ImageInternalFormat::RGB32F:
                     return GL_RGB32F;
                     break;
-                case RGBA32F:
+                case ImageInternalFormat::RGBA32F:
                     return GL_RGBA32F;
                     break;
             }
@@ -49,11 +57,13 @@ namespace GFX
         const i32 ImageBuildingSettings::convertFormat() const
         {
             switch (mFormat) {
-
-                case RGB:
+                case ImageFormat::AUTO:
+                    return -1;
+                    break;
+                case ImageFormat::RGB:
                     return GL_RGB;
                     break;
-                case RGBA:
+                case ImageFormat::RGBA:
                     return GL_RGBA;
                     break;
             }
@@ -62,8 +72,7 @@ namespace GFX
         const i32 ImageBuildingSettings::convertWrapS() const
         {
             switch (mWrapS) {
-
-                case REPEAT:
+                case ImageWrap::REPEAT:
                     return GL_REPEAT;
                     break;
             }
@@ -72,8 +81,7 @@ namespace GFX
         const i32 ImageBuildingSettings::convertWrapT() const
         {
             switch (mWrapT) {
-
-                case REPEAT:
+                case ImageWrap::REPEAT:
                     return GL_REPEAT;
                     break;
             }
@@ -82,11 +90,10 @@ namespace GFX
         const i32 ImageBuildingSettings::convertMin() const
         {
             switch (mFilterMin) {
-
-                case LINEAR:
+                case ImageFilter::LINEAR:
                     return GL_LINEAR;
                     break;
-                case NEAREST:
+                case ImageFilter::NEAREST:
                     return GL_NEAREST;
                     break;
             }
@@ -95,11 +102,10 @@ namespace GFX
         const i32 ImageBuildingSettings::convertMag() const
         {
             switch (mFilterMag) {
-
-                case LINEAR:
+                case ImageFilter::LINEAR:
                     return GL_LINEAR;
                     break;
-                case NEAREST:
+                case ImageFilter::NEAREST:
                     return GL_NEAREST;
                     break;
             }
@@ -226,7 +232,6 @@ namespace GFX
                 }
             }
 
-            log_fmt_warning("Failed to get image building settings with name'%s'! default image building settings was returned!")
             return {defaultImageBuildingSetting, false};
         }
     }
@@ -242,17 +247,35 @@ namespace GFX
             return;
         }
 
-        ui32 format = mComp == 3 ? GL_RGB : GL_RGBA;
-        ui32 internalType = mComp == 3 ? GL_RGB32F : GL_RGBA32F;
+        auto result = ImageSettingsBuilder::GetImageBuildingSettings(settingsName);
+        auto& s = result.unwrap();
+
+        auto type           = s.convertType();
+        auto internalFormat = s.convertInternalFormat();
+        auto format         = s.convertFormat();
+        auto wrapS          = s.convertWrapS();
+        auto wrapT          = s.convertWrapT();
+        auto min            = s.convertMin();
+        auto mag            = s.convertMag();
+
+        if(internalFormat == -1)
+        {
+            internalFormat = mComp == 3 ? GL_RGB32F : GL_RGBA32F;
+        }
+
+        if(format == -1)
+        {
+            format = mComp == 3 ? GL_RGB : GL_RGBA;
+        }
 
         glGenTextures(1, &mId);
-        glBindTexture(GL_TEXTURE_2D, mId);
-        glTexImage2D(GL_TEXTURE_2D, 0, internalType, mWidth, mHeight, 0, format, GL_UNSIGNED_BYTE, texData);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glBindTexture(GL_TEXTURE_2D, 0);
+        glBindTexture(type, mId);
+        glTexImage2D(type, 0, internalFormat, mWidth, mHeight, 0, format, GL_UNSIGNED_BYTE, texData);
+        glTexParameteri(type, GL_TEXTURE_WRAP_S, wrapS);
+        glTexParameteri(type, GL_TEXTURE_WRAP_T, wrapT);
+        glTexParameteri(type, GL_TEXTURE_MIN_FILTER, min);
+        glTexParameteri(type, GL_TEXTURE_MAG_FILTER, mag);
+        glBindTexture(type, 0);
 
         stbi_image_free(texData);
     }
@@ -268,18 +291,35 @@ namespace GFX
             return;
         }
 
-        ui32 format = GL_RGBA;
-        ui32 internalType = GL_RGBA8;
+        auto result = ImageSettingsBuilder::GetImageBuildingSettings(settingsName);
+        auto& s = result.unwrap();
+
+        auto type           = s.convertType();
+        auto internalFormat = s.convertInternalFormat();
+        auto format         = s.convertFormat();
+        auto wrapS          = s.convertWrapS();
+        auto wrapT          = s.convertWrapT();
+        auto min            = s.convertMin();
+        auto mag            = s.convertMag();
+
+        if(internalFormat == -1)
+        {
+            internalFormat = mComp == 3 ? GL_RGB32F : GL_RGBA32F;
+        }
+
+        if(format == -1)
+        {
+            format = mComp == 3 ? GL_RGB : GL_RGBA;
+        }
 
         glGenTextures(1, &mId);
-        glBindTexture(GL_TEXTURE_2D, mId);
-        glTexImage2D(GL_TEXTURE_2D, 0, internalType, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glBindTexture(GL_TEXTURE_2D, 0);
-
+        glBindTexture(type, mId);
+        glTexImage2D(type, 0, internalFormat, mWidth, mHeight, 0, format, GL_UNSIGNED_BYTE, data);
+        glTexParameteri(type, GL_TEXTURE_WRAP_S, wrapS);
+        glTexParameteri(type, GL_TEXTURE_WRAP_T, wrapT);
+        glTexParameteri(type, GL_TEXTURE_MIN_FILTER, min);
+        glTexParameteri(type, GL_TEXTURE_MAG_FILTER, mag);
+        glBindTexture(type, 0);
     }
 
     Image::Image(const Image& image)
@@ -579,7 +619,7 @@ namespace GFX
                 AddToSpriteSheet(sheet, image, pos, maxImageWidth, maxImageHeight);
             }
 
-            sheet.image = Image(imageBuffer, maxImageWidth, maxImageHeight, 4);
+            sheet.image = Image(imageBuffer, maxImageWidth, maxImageHeight, 4, "defaultSpriteSheetSetting");
             for(auto& sprite : sheet.mSprites)
             {
                 sprite.second.mId = sheet.image.mId;
@@ -618,7 +658,7 @@ namespace GFX
             return nullptr;
         }
 
-        void AddImage(const char* imagePath)
+        void AddImage(const char* imagePath, const char* settingsName)
         {
             CHECK_INIT_GFX
             if(!FHandle::checkExistFile(imagePath))
@@ -639,10 +679,10 @@ namespace GFX
                 }
             }
 
-            images.emplace(imgName, Image(imagePath));
+            images.emplace(imgName, Image(imagePath, settingsName));
         }
 
-        void AddImages(const char* dirPath)
+        void AddImages(const char* dirPath, const char* settingsName)
         {
             CHECK_INIT_GFX
             if(!FHandle::checkExistDir(dirPath))
@@ -669,7 +709,7 @@ namespace GFX
 
                 if(add)
                 {
-                    images.emplace(imgName, Image(path.c_str()));
+                    images.emplace(imgName, Image(path.c_str(), settingsName));
                 }
             }
         }

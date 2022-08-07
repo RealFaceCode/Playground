@@ -11,29 +11,33 @@ namespace GFX
 {
     namespace ImageSettingsBuilder
     {
-        enum ImageType
+        enum class ImageType
         {
             IMAGE2D
         };
 
-        enum ImageInternalFormat
+        enum class ImageInternalFormat
         {
+            AUTO,
+            RGB8,
+            RGBA8,
             RGB32F,
             RGBA32F
         };
 
-        enum ImageFormat
+        enum class ImageFormat
         {
+            AUTO,
             RGB,
             RGBA
         };
 
-        enum ImageWrap
+        enum class ImageWrap
         {
             REPEAT
         };
 
-        enum ImageFilter
+        enum class ImageFilter
         {
             LINEAR,
             NEAREST
@@ -120,8 +124,8 @@ namespace GFX
     namespace ImageHandler
     {
         const Image* GetImage(const char* imageName);
-        void AddImage(const char* imagePath);
-        void AddImages(const char* dirPath);
+        void AddImage(const char* imagePath, const char* settingsName = "");
+        void AddImages(const char* dirPath, const char* settingsName = "");
     }
 
     namespace SpriteSheetHandler

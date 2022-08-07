@@ -1,6 +1,8 @@
 #include "../../hdr/core.h"
 #include "../../hdr/gfx/gfx.h"
 #include "../../hdr/gfx/batch.h"
+#include "../../hdr/gfx/image.h"
+
 namespace GFX
 {
     bool INIT = false;
@@ -17,6 +19,19 @@ namespace GFX
             fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
                     ("** GL ERROR **"), type, severity, message);
         }
+    }
+
+    static void PreDefineImageSettings()
+    {
+        ImageSettingsBuilder::AddNewBuildingSettings("defaultSpriteSheetSetting");
+        ImageSettingsBuilder::SetImageInternalFormat("defaultSpriteSheetSetting", ImageSettingsBuilder::ImageInternalFormat::RGBA8);
+        ImageSettingsBuilder::SetImageFormat("defaultSpriteSheetSetting", ImageSettingsBuilder::ImageFormat::RGBA);
+        ImageSettingsBuilder::SetImageFilterMin("defaultSpriteSheetSetting", ImageSettingsBuilder::ImageFilter::NEAREST);
+        ImageSettingsBuilder::SetImageFilterMag("defaultSpriteSheetSetting", ImageSettingsBuilder::ImageFilter::NEAREST);
+
+        ImageSettingsBuilder::AddNewBuildingSettings("defaultWhiteSetting");
+        ImageSettingsBuilder::SetImageInternalFormat("defaultWhiteSetting", ImageSettingsBuilder::ImageInternalFormat::AUTO);
+        ImageSettingsBuilder::SetImageFormat("defaultWhiteSetting", ImageSettingsBuilder::ImageFormat::AUTO);
     }
 
 	void Init(RenderApi api)
@@ -43,6 +58,7 @@ namespace GFX
         glEnable(GL_DEBUG_OUTPUT);
         glDebugMessageCallback( GLErrorCallback, 0 );
 #endif
+        PreDefineImageSettings();
 
 		BatchHandler::Init();
 	}
