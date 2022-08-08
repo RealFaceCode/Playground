@@ -816,5 +816,4 @@ namespace GFX
             sheets.emplace(std::string(sheetName), SpriteSheetBuilder::CreateSpriteSheet(sheetName));
         }
     }
-
 }

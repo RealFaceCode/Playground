@@ -13,6 +13,7 @@
 //TODO: implement text rendering
 //TODO: implement gui system
 //TODO: implement camera
+//TODO: change shader to pipeline instead of program
 //TODO: implement hot reloading shader
 //TODO: |-> buttons
 //TODO: |-> sliders
@@ -32,7 +33,7 @@ int main()
     Window::Window win = Window::WindowBuilder
             .setSize(900, 600)
             .setRGBBufferSize(8, 8, 8)
-            .setOpacity(1.0f)
+            .setOpacity(0.9f)
             .setRefreshRate(60)
             .centerWindowOnScreen()
             .setStandartCursor(Window::CrosshairCursor)
@@ -69,6 +70,8 @@ int main()
     GFX::Init();
 
     {
+        GFX::SpriteSheetBuilder::AddFile("../assets/images/red_peper.jpg");
+        GFX::SpriteSheetBuilder::AddFile("../assets/images/images.png");
         GFX::SpriteSheetBuilder::AddFile("../assets/images/bricks.png");
         GFX::SpriteSheetBuilder::AddFile("../assets/images/dirt.png");
         GFX::SpriteSheetBuilder::AddFile("../assets/images/chiseled_stone_bricks.png");

@@ -20,5 +20,4 @@ namespace HotLoader
     FHandle::File* GetFile(const char* filePath);
     void CheckFiles();
 }
-
 #endif //PLAYGROUNDLIB_HOTLOADER_H
