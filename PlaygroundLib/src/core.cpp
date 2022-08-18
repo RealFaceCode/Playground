@@ -27,7 +27,7 @@ std::string GetDate()
 std::string GetFileName(const char* fileName)
 {
     std::string name(fileName);
-    ui32 pos = name.find_last_of("\\") + 1;
+    ui32 pos = name.find_last_of('\\') + 1;
     name.erase(name.begin(), name.begin() + pos);
     return name;
 }
@@ -88,6 +88,8 @@ bool EndsWith(const char* filepath, const char* ending)
     path.erase(path.begin(), path.begin() + pos);
     return (strcmp(path.c_str(), ending) == 0);
 }
+
+
 
 void PrintColorPattern()
 {

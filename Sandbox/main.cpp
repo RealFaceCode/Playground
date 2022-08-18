@@ -6,6 +6,7 @@
 #include "gfx/shader.h"
 #include "gfx/renderer.h"
 #include "util/hotloader.h"
+#include "logger.h"
 
 // ---------- TODO SECTION ----------
 //TODO: implement setting save and load for window
@@ -28,6 +29,8 @@
 
 int main()
 {
+    PREP_CONSOLE_LOG
+
     Window::Init();
 
     Window::Window win = Window::WindowBuilder

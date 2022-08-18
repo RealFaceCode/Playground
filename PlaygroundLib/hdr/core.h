@@ -8,6 +8,22 @@
 	#define STB_IMAGE_IMPLEMENTATION
 #endif
 
+#ifdef WIN32
+    #define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
+    #define DISABLE_NEWLINE_AUTO_RETURN  0x0008
+    #include <windows.h>
+    #define PREP_CONSOLE_LOG { \
+        HANDLE handleOut = GetStdHandle(STD_OUTPUT_HANDLE);\
+        DWORD consoleMode;\
+        GetConsoleMode( handleOut , &consoleMode);\
+        consoleMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;\
+        consoleMode |= DISABLE_NEWLINE_AUTO_RETURN;\
+        SetConsoleMode( handleOut , consoleMode );\
+    };
+#else
+    #define PREP_CONSOLE_LOG
+#endif
+
 //GLFW INCLUDES
 #include <GLFW/glfw3.h>
 
@@ -61,6 +77,8 @@ typedef uint64_t	ui64;
 typedef float		f32;
 typedef double		f64;
 
+//ENUMS
+
 //Structs
 template<typename T>
 struct Result
@@ -99,12 +117,9 @@ std::string ToString(float f);
 std::string ToString(double d);
 bool EndsWith(const char* filepath, const char* ending);
 
-void PrintColorPattern();
-
 //C STRING HELPER
 int vasprintf(char** strp, const char* fmt, va_list ap);
 
-//DEFINES
 static const char* LogPath_				= "log.txt";
 static FILE* LogFile_					= fopen(LogPath_, "a");
 
