@@ -105,6 +105,8 @@ Result<T>::operator bool() const noexcept {
 }
 
 //FUNCTIONS
+void CoreInit();
+
 std::string GetTime();
 std::string GetDate();
 std::string GetFileName(const char* fileName);

@@ -1,6 +1,11 @@
 #include "../hdr/core.h"
 #include "../hdr/util/memory.h"
 
+void CoreInit()
+{
+    PREP_CONSOLE_LOG
+}
+
 std::string GetTime()
 {
     time_t rawtime;
