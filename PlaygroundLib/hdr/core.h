@@ -52,7 +52,7 @@
 #include <vector>
 #include <queue>
 #include <ctime>
-#include <stdarg.h>
+#include <cstdarg>
 #include <chrono>
 #include <map>
 #include <unordered_map>
