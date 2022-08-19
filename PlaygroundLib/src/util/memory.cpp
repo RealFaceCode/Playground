@@ -81,12 +81,7 @@ void*   MemoryRegister(void* buffer, const char* file, const int& line)
     return buffer;
 }
 
-void    MemoryZero(void* buffer, size_t bytes)
-{
-    memset(buffer, 0, bytes);
-}
-
-void    MemoryFree(void* buffer)
+void*   MemoryDeRegister(void* buffer)
 {
     if(trackMemory)
     {
@@ -95,11 +90,21 @@ void    MemoryFree(void* buffer)
             if(stackTrace.at(i).mPtr == buffer)
             {
                 stackTrace.erase(stackTrace.begin() + i);
-                return;
+                break;
             }
         }
     }
-    free(buffer);
+    return buffer;
+}
+
+void    MemoryZero(void* buffer, size_t bytes)
+{
+    memset(buffer, 0, bytes);
+}
+
+void    MemoryFree(void* buffer)
+{
+    free(MemoryDeRegister(buffer));
 }
 
 void    MemoryPrintStack()
