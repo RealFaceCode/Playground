@@ -4,6 +4,7 @@
 
 #include "../hdr/core.h"
 #include "../hdr/logger.h"
+#include "../hdr/util/memory.h"
 
 const char* GetAnsiColor(const ConsoleOutPutColor& color)
 {
@@ -54,6 +55,15 @@ void Log(const char* type,
          const char* format,
          ...)
 {
+    char* str;
+    va_list args;
+    va_start(args, format);
+    vasprintf(&str, format, args);
+    va_end(args);
+
+    std::string userFormat(str);
+    Free(str);
+
     const char* color       = GetAnsiColor(logColor);
     const auto fName        = GetFileName(filePath);
     const auto date         = GetDate();
@@ -62,9 +72,9 @@ void Log(const char* type,
     const char* cDate       = date.c_str();
     const char* cTime       = time.c_str();
 
-    std::string logInfo = GetFormatedString("%s[%s][FILE:%s][LINE:%i][%s][%s]%s",
-                                            color, type,fileName,line, cDate, cTime, ANSI_END);
-    std::string userFormat(format);
+    asprintf(&str,
+        "%s[%s][FILE:%s][LINE:%i][%s][%s]%s",
+        color, type,fileName,line, cDate, cTime, ANSI_END);
 
     for(auto i = 0; i < highlights.size(); i++)
     {
@@ -75,9 +85,6 @@ void Log(const char* type,
         Highlighter(userFormat, highlights.at(i));
     }
 
-    va_list args;
-    va_start(args, format);
-    userFormat = GetFormatedString(userFormat.c_str(), args);
-    va_end(args);
-    printf("%s\n%s", logInfo.c_str(), userFormat.c_str());
+    printf("%s\n%s", str, userFormat.c_str());
+    Free(str);
 }

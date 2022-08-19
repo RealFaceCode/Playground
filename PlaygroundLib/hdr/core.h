@@ -119,6 +119,8 @@ bool EndsWith(const char* filepath, const char* ending);
 
 //C STRING HELPER
 int vasprintf(char** strp, const char* fmt, va_list ap);
+int asprintf(char **strp, const char *fmt, ...);
+
 
 static const char* LogPath_				= "log.txt";
 static FILE* LogFile_					= fopen(LogPath_, "a");

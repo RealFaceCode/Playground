@@ -1,4 +1,5 @@
 #include "../hdr/core.h"
+#include "../hdr/util/memory.h"
 
 std::string GetTime()
 {
@@ -34,19 +35,18 @@ std::string GetFileName(const char* fileName)
 
 std::string GetFormatedString(const char* fmt, ...)
 {
-    char* str;
     va_list args;
     va_start(args, fmt);
-
-    if (0 > vasprintf(&str, fmt, args))
+    char* str;
+    if (0 > asprintf(&str, fmt, args))
     {
         return std::string("");
     }
-
     va_end(args);
+
     std::string string;
     string.append(str);
-    free(str);
+    Free(str);
 
     return string;
 }
@@ -89,62 +89,43 @@ bool EndsWith(const char* filepath, const char* ending)
     return (strcmp(path.c_str(), ending) == 0);
 }
 
+void PrintColorPattern(){}
 
-
-void PrintColorPattern()
+int vasprintf(char **strp, const char *fmt, va_list ap)
 {
-    log_msg("some msg");
-    log_info("some info");
-    log_warning("some warning");
-    log_error("some error");
-    log_assert(true, "some assert");
+    int r = -1, size;
 
-    printf("\n");
-    printf("\x1B[31mTexting\033[0m\t\t");
-    printf("\x1B[32mTexting\033[0m\t\t");
-    printf("\x1B[33mTexting\033[0m\t\t");
-    printf("\x1B[34mTexting\033[0m\t\t");
-    printf("\x1B[35mTexting\033[0m\n");
+    va_list ap2;
+    va_copy(ap2, ap);
 
-    printf("\x1B[36mTexting\033[0m\t\t");
-    printf("\x1B[36mTexting\033[0m\t\t");
-    printf("\x1B[36mTexting\033[0m\t\t");
-    printf("\x1B[37mTexting\033[0m\t\t");
-    printf("\x1B[93mTexting\033[0m\n");
+    size = vsnprintf(0, 0, fmt, ap2);
 
-    printf("\033[3;42;30mTexting\033[0m\t\t");
-    printf("\033[3;43;30mTexting\033[0m\t\t");
-    printf("\033[3;44;30mTexting\033[0m\t\t");
-    printf("\033[3;104;30mTexting\033[0m\t\t");
-    printf("\033[3;100;30mTexting\033[0m\n");
+    if ((size >= 0) && (size < INT_MAX))
+    {
+        *strp = (char *)Malloc(size+1); //+1 for null
+        if (*strp)
+        {
+            r = vsnprintf(*strp, size+1, fmt, ap);  //+1 for null
+            if ((r < 0) || (r > size))
+            {
+                free(*strp);
+                r = -1;
+            }
+        }
+    }
+    else { *strp = 0; }
 
-    printf("\033[3;47;35mTexting\033[0m\t\t");
-    printf("\033[2;47;35mTexting\033[0m\t\t");
-    printf("\033[1;47;35mTexting\033[0m\t\t");
-    printf("\t\t");
-    printf("\n");
+    va_end(ap2);
+
+    return(r);
 }
 
-int vasprintf(char** strp, const char* fmt, va_list ap) {
-
-    int len = _vscprintf(fmt, ap);
-    if (len == -1)
-    {
-        return -1;
-    }
-    size_t size = (size_t)len + 1;
-    char* str = (char*)malloc(size);
-    if (!str)
-    {
-        return -1;
-    }
-
-    int r = vsprintf(str, fmt, ap);
-    if (r == -1)
-    {
-        free(str);
-        return -1;
-    }
-    *strp = str;
-    return r;
+int asprintf(char **strp, const char *fmt, ...)
+{
+    int r;
+    va_list ap;
+    va_start(ap, fmt);
+    r = vasprintf(strp, fmt, ap);
+    va_end(ap);
+    return(r);
 }
