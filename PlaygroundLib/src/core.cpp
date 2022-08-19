@@ -33,54 +33,6 @@ std::string GetFileName(const char* fileName)
     return name;
 }
 
-std::string GetFormatedString(const char* fmt, ...)
-{
-    va_list args;
-    va_start(args, fmt);
-    char* str;
-    if (0 > asprintf(&str, fmt, args))
-    {
-        return std::string("");
-    }
-    va_end(args);
-
-    std::string string;
-    string.append(str);
-    Free(str);
-
-    return string;
-}
-
-std::string ToString(const char* str)
-{
-    return std::string(str);
-}
-
-std::string ToString(std::string str)
-{
-    return str;
-}
-
-std::string ToString(int i)
-{
-    return std::string(std::to_string(i));
-}
-
-std::string ToString(unsigned int ui)
-{
-    return std::string(std::to_string(ui));
-}
-
-std::string ToString(float f)
-{
-    return std::string(std::to_string(f));
-}
-
-std::string ToString(double d)
-{
-    return std::string(std::to_string(d));
-}
-
 bool EndsWith(const char* filepath, const char* ending)
 {
     std::string path(filepath);

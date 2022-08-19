@@ -1,8 +1,10 @@
 #include "../../hdr/window/window.h"
 #include "../../hdr/window/input.h"
+#include "../../hdr/logger.h"
+#include "../../hdr/util/memory.h"
 
 #ifdef _DEBUG
-#define CHECK_INIT {if(!INIT){log_assert(false, "Window::Init() was never called!");}};
+#define CHECK_INIT {if(!INIT){ LOG_ASSERT(false, {}, "Window::Init() was never called!");}};
 #else
 #define CHECK_INIT
 #endif
@@ -21,10 +23,10 @@ namespace Window
 	{
 		if (!glfwInit())
 		{
-			log_assert(false, "Failed to init GLFW!");
+		    LOG_ASSERT(false, {}, "Failed to init GLFW!");
 		}
 		glfwSetErrorCallback([](int error, const char* discription) {
-			log_fmt_error("GLFW error[%i] '%s'", error, discription);
+		    LOG_ERROR({}, "GLFW error[%i] '%s'", error, discription);
 			}
 		);
 		INIT = true;
@@ -48,24 +50,24 @@ namespace Window
 		glfwSetCursor(mHandle, nullptr);
 		if (mImageCursor.pixels != nullptr)
 		{
-			delete mImageCursor.pixels;
+			Free(mImageCursor.pixels);
 		}
-
 		mImageCursor.pixels = nullptr;
 
 		if (mCursor)
 		{
-			glfwDestroyCursor(mCursor);
+		    glfwDestroyCursor((GLFWcursor*)MemDeReg(mCursor));
 		}
 
 		if (mHandle)
 		{
-			glfwDestroyWindow(mHandle);
+			glfwDestroyWindow((GLFWwindow*)MemDeReg(mHandle));
 		}
 
 		for (auto monitor : mMonitors)
 		{
-			delete monitor.vidModes;
+			Free((void*)monitor.vidModes);
+			Free((void*)monitor.monitor);
 		}
 		mMonitors.clear();
 	}
@@ -108,7 +110,7 @@ namespace Window
         CHECK_INIT
 		if (monitor >= mMonitors.size())
 		{
-			log_fmt_warning("Window monitor setting'%i' is greater than the number of monitors'%i'!", monitor, mMonitors.size() -1);
+		    LOG_WARNING({}, "Window monitor setting'%i' is greater than the number of monitors'%i'!", monitor, mMonitors.size() -1);
 			mSettings.monitor = mMonitors.size() - 1;
 		}
 		else {
@@ -124,7 +126,9 @@ namespace Window
         CHECK_INIT
 		if (videoMode >= mMonitors[mSettings.monitor].countVidModes)
 		{
-			log_fmt_warning("Window video mode setting'%i' is greater than the number of video modes'%i'!", videoMode, mMonitors[mSettings.monitor].countVidModes);
+		    LOG_WARNING({},
+                        "Window video mode setting'%i' is greater than the number of video modes'%i'!",
+                        videoMode, mMonitors[mSettings.monitor].countVidModes);
 			mSettings.videoMode = mMonitors[mSettings.monitor].countVidModes - 1;
 		}
 		else
@@ -142,12 +146,12 @@ namespace Window
 		float opc = opacity;
 		if (opc > 1.0f)
 		{
-			log_fmt_warning("Window opacity'%f' cannot be greater than 1.0f!", opacity);
+		    LOG_WARNING({}, "Window opacity'%f' cannot be greater than 1.0f!", opacity);
 			opc = 1.0f;
 		}
 		else if (opacity < 0.0f)
 		{
-			log_fmt_warning("Window opacity'%i' cannot be less than 0.0f!", opacity);
+		    LOG_WARNING({}, "Window opacity'%f' cannot be less than 1.0f!", opacity);
 			opc = 0.0f;
 		}
 		mSettings.opacity = opc;
@@ -167,11 +171,15 @@ namespace Window
         CHECK_INIT
 		if (x > mMonitors[mSettings.monitor].maxWidth)
 		{
-			log_fmt_warning("window x position'%i' is larger than the screen resolution in width'%i'!", x, mMonitors[mSettings.monitor].maxWidth);
+		    LOG_WARNING({},
+                        "window x position'%i' is larger than the screen resolution in width'%i'!",
+                        x, mMonitors[mSettings.monitor].maxWidth);
 		}
 		if (y > mMonitors[mSettings.monitor].MaxHeight)
 		{
-			log_fmt_warning("window y position'%i' is larger than the screen resolution in height'%i'!", y, mMonitors[mSettings.monitor].MaxHeight);
+		    LOG_WARNING({},
+                        "window y position'%i' is larger than the screen resolution in height'%i'!",
+                        y, mMonitors[mSettings.monitor].MaxHeight);
 		}
 
 		mSettings.winPosX = x;
@@ -184,12 +192,12 @@ namespace Window
         CHECK_INIT
 		if (x > mSettings.width)
 		{
-			log_fmt_warning("Cursor position x is larger than the window with!")
+		    LOG_WARNING({}, "Cursor position x is larger than the window with!");
 		}
 
 		if (y > mSettings.height)
 		{
-			log_fmt_warning("Cursor position y is larger than the window with!")
+		    LOG_WARNING({}, "Cursor position y is larger than the window with!");
 		}
 
 		glfwSetCursorPos(mHandle, x, y);
@@ -251,7 +259,7 @@ namespace Window
         CHECK_INIT
 		if(mCursor)
 		{
-			glfwDestroyCursor(mCursor);
+		    glfwDestroyCursor((GLFWcursor*)MemDeReg(mCursor));
 			mCursor = nullptr;
 		}
 
@@ -279,7 +287,7 @@ namespace Window
 			break;
 		}
 		
-		mCursor = glfwCreateStandardCursor(c);
+		mCursor = (GLFWcursor*)MemReg(glfwCreateStandardCursor(c));
 		glfwSetCursor(mHandle, mCursor);
 	}
 
@@ -288,19 +296,19 @@ namespace Window
         CHECK_INIT
 		if (strlen((const char*)pixels) != 16 * 16 * 4)
 		{
-			log_error("Failed to set glfw cursor! Cursor size is 16 * 16 and 4 * 8 bit for RGBA channels");
+		    LOG_ERROR({}, "Failed to set glfw cursor! Cursor size is 16 * 16 and 4 * 8 bit for RGBA channels");
 			return;
 		}
 
 		if (hotX > 15)
 		{
-			log_fmt_error("Failed to set glfw cursor! hotX'%i' max is 15", hotX);
+		    LOG_ERROR({}, "Failed to set glfw cursor! hotX'%i' max is 15", hotX);
 			return;
 		}
 
 		if (hotY > 15)
 		{
-			log_fmt_error("Failed to set glfw cursor! hotY'%i' max is 15", hotY);
+		    LOG_ERROR({}, "Failed to set glfw cursor! hotY'%i' max is 15", hotY);
 			return;
 		}
 
@@ -309,20 +317,20 @@ namespace Window
 
 		if (mImageCursor.pixels != nullptr)
 		{
-			delete mImageCursor.pixels;
+			Free(mImageCursor.pixels);
 			mImageCursor.pixels = nullptr;
 		}
 
-		mImageCursor.pixels = new unsigned char[16 * 16 * 4];
+		mImageCursor.pixels = (unsigned char*)Malloc(16 * 16 * 4 * sizeof(unsigned char));
 		memcpy(mImageCursor.pixels, pixels, 16 * 16 * 4);
 
 		if (mCursor)
 		{
-			glfwDestroyCursor(mCursor);
+		    glfwDestroyCursor((GLFWcursor*)MemDeReg(mCursor));
 			mCursor = nullptr;
 		}
 
-		mCursor = glfwCreateCursor(&mImageCursor, hotX, hotY);
+		mCursor = (GLFWcursor*)MemReg(glfwCreateCursor(&mImageCursor, hotX, hotY));
 		glfwSetCursor(mHandle, mCursor);
 	}
 
@@ -331,19 +339,19 @@ namespace Window
         CHECK_INIT
 		if (strlen((const char*)pixels) != 32 * 32 * 4)
 		{
-			log_error("Failed to set glfw cursor! Cursor size is 32 * 32 and 4 * 8 bit for RGBA channels");
+		    LOG_ERROR({}, "Failed to set glfw cursor! Cursor size is 32 * 32 and 4 * 8 bit for RGBA channels");
 			return;
 		}
 
 		if (hotX > 31)
 		{
-			log_fmt_error("Failed to set glfw cursor! hotX'%i' max is 31", hotX);
+		    LOG_ERROR({}, "Failed to set glfw cursor! hotX'%i' max is 31", hotX);
 			return;
 		}
 
 		if (hotY > 31)
 		{
-			log_fmt_error("Failed to set glfw cursor! hotY'%i' max is 31", hotY);
+		    LOG_ERROR({}, "Failed to set glfw cursor! hotY'%i' max is 31", hotY);
 			return;
 		}
 
@@ -352,20 +360,20 @@ namespace Window
 
 		if (mImageCursor.pixels != nullptr)
 		{
-			delete mImageCursor.pixels;
+			Free(mImageCursor.pixels);
 			mImageCursor.pixels = nullptr;
 		}
 
-		mImageCursor.pixels = new unsigned char[32 * 32 * 4];
+		mImageCursor.pixels = (unsigned char*)Malloc(32 * 32 * 4 * sizeof(unsigned char));
 		memcpy(mImageCursor.pixels, pixels, 32 * 32 * 4);
 
 		if (mCursor)
 		{
-			glfwDestroyCursor(mCursor);
+		    glfwDestroyCursor((GLFWcursor*)MemDeReg(mCursor));
 			mCursor = nullptr;
 		}
 
-		mCursor = glfwCreateCursor(&mImageCursor, hotX, hotY);
+		mCursor = (GLFWcursor*)MemReg(glfwCreateCursor(&mImageCursor, hotX, hotY));
 		glfwSetCursor(mHandle, mCursor);
 	}
 
@@ -374,19 +382,19 @@ namespace Window
         CHECK_INIT
 		if (strlen((const char*)pixels) != 64 * 64 * 4)
 		{
-			log_error("Failed to set glfw cursor! Cursor size is 64 * 64 and 4 * 8 bit for RGBA channels");
+		    LOG_ERROR({}, "Failed to set glfw cursor! Cursor size is 64 * 64 and 4 * 8 bit for RGBA channels");
 			return;
 		}
 
 		if (hotX > 63)
 		{
-			log_fmt_error("Failed to set glfw cursor! hotX'%i' max is 63", hotX);
+		    LOG_ERROR({}, "Failed to set glfw cursor! hotX'%i' max is 63", hotX);
 			return;
 		}
 
 		if (hotY > 63)
 		{
-			log_fmt_error("Failed to set glfw cursor! hotY'%i' max is 63", hotY);
+		    LOG_ERROR({}, "Failed to set glfw cursor! hotY'%i' max is 63", hotY);
 			return;
 		}
 
@@ -395,20 +403,20 @@ namespace Window
 
 		if (mImageCursor.pixels != nullptr)
 		{
-			delete mImageCursor.pixels;
+			Free(mImageCursor.pixels);
 			mImageCursor.pixels = nullptr;
 		}
 
-		mImageCursor.pixels = new unsigned char[64 * 64 * 4];
+		mImageCursor.pixels = (unsigned char*)Malloc(64 * 64 * 4 * sizeof(unsigned char));
 		memcpy(mImageCursor.pixels, pixels, 64 * 64 * 4);
 
 		if (mCursor)
 		{
-			glfwDestroyCursor(mCursor);
+		    glfwDestroyCursor((GLFWcursor*)MemDeReg(mCursor));
 			mCursor = nullptr;
 		}
 
-		mCursor = glfwCreateCursor(&mImageCursor, hotX, hotY);
+		mCursor = (GLFWcursor*)MemReg(glfwCreateCursor(&mImageCursor, hotX, hotY));
 		glfwSetCursor(mHandle, mCursor);
 	}
 
@@ -422,8 +430,8 @@ namespace Window
 		for (int i = 0; i < countMonitors; i++)
 		{
 			Monitor m;
-			m.monitor = monitors[i];
-			m.vidModes = glfwGetVideoModes(monitors[i], &countVidModes);
+			m.monitor = (GLFWmonitor*)MemReg((void*)monitors[i]);
+			m.vidModes = (GLFWvidmode*)MemReg((void*)glfwGetVideoModes(monitors[i], &countVidModes));
 			m.countVidModes = countVidModes;
 			m.maxWidth = m.vidModes[countVidModes - 1].width;
 			m.MaxHeight = m.vidModes[countVidModes - 1].height;
@@ -648,15 +656,18 @@ namespace Window
 
 		if (win.mSettings.monitor >= win.mMonitors.size())
 		{
-			log_fmt_warning("Window monitor setting'%i' is greater than the number of monitors'%i'!", win.mSettings.monitor, win.mMonitors.size() - 1);
-			win.mSettings.monitor = win.mMonitors.size() - 1;
-			
+		    LOG_WARNING({},
+                        "Window monitor setting'%i' is greater than the number of monitors'%i'!",
+                        win.mSettings.monitor, win.mMonitors.size() - 1);
+		    win.mSettings.monitor = win.mMonitors.size() - 1;
 		}
 
 		if (win.mSettings.videoMode >= win.mMonitors[win.mSettings.monitor].countVidModes)
 		{
-			log_fmt_warning("Window video mode setting'%i' is greater than the number of video modes'%i'!", win.mSettings.videoMode, win.mMonitors[win.mSettings.monitor].countVidModes);
-			win.mSettings.videoMode = win.mMonitors[win.mSettings.monitor].countVidModes - 1;
+		    LOG_WARNING({},
+                        "Window video mode setting'%i' is greater than the number of video modes'%i'!",
+                        win.mSettings.videoMode, win.mMonitors[win.mSettings.monitor].countVidModes);
+		    win.mSettings.videoMode = win.mMonitors[win.mSettings.monitor].countVidModes - 1;
 		}
 
 		GLFWmonitor* monitor = nullptr;
@@ -690,7 +701,7 @@ namespace Window
 			glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
 		}
 
-		win.mHandle = glfwCreateWindow(win.mSettings.width, win.mSettings.height, title, monitor, nullptr);
+		win.mHandle = (GLFWwindow*)MemReg(glfwCreateWindow(win.mSettings.width, win.mSettings.height, title, monitor, nullptr));
 		glfwMakeContextCurrent(win.mHandle);
 
 		//calbacks

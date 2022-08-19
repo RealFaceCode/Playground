@@ -124,8 +124,10 @@ void    MemoryPrintStack()
         Highlighter(fmt, h);
         h = CreateHighlighter("%i", Yellow);
         Highlighter(fmt, h);
-        leaks.append(GetFormatedString(fmt.c_str(),
-                                       trace.mPtr, GetFileName(trace.mFile).c_str(), trace.mLine));
+        char* str;
+        asprintf(&str, fmt.c_str(), trace.mPtr, GetFileName(trace.mFile).c_str(), trace.mLine);
+        leaks.append(str);
+        Free(str);
     }
     LOG_WARNING({}, leaks.c_str());
 }

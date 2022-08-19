@@ -3,6 +3,7 @@
 //
 
 #include "../../hdr/core.h"
+#include "../../hdr/logger.h"
 #include "../../hdr/gfx/image.h"
 #include <stb_image.h>
 #include <stb_image_write.h>
@@ -115,7 +116,7 @@ namespace GFX
         {
             if(settingsName == nullptr)
             {
-                log_warning("Failed to add a new building setting! settings name was nullptr!")
+                LOG_WARNING({}, "Failed to add a new building setting! settings name was nullptr!");
                 return;
             }
 
@@ -123,7 +124,7 @@ namespace GFX
             {
                 if(settings.first == std::string(settingsName))
                 {
-                    log_fmt_warning("Failed to add a new building setting with name'%s'! settings name is already used!", settingsName);
+                    LOG_WARNING({}, "Failed to add a new building setting with name'%s'! settings name is already used!", settingsName);
                     return;
                 }
             }
@@ -136,7 +137,9 @@ namespace GFX
             auto result = GetImageBuildingSettings(settingsName);
             if(!result)
             {
-                log_fmt_warning("Failed to set image type to image building settings with name'%s'! The default buildings setting was returned!", settingsName);
+                LOG_WARNING({},
+                            "Failed to set image type to image building settings with name'%s'! The default buildings setting was returned!",
+                            settingsName);
                 return;
             }
 
@@ -149,7 +152,9 @@ namespace GFX
             auto result = GetImageBuildingSettings(settingsName);
             if(!result)
             {
-                log_fmt_warning("Failed to set image internal format to image building settings with name'%s'! The default buildings setting was returned!", settingsName);
+                LOG_WARNING({},
+                            "Failed to set image internal format to image building settings with name'%s'! The default buildings setting was returned!",
+                            settingsName);
                 return;
             }
 
@@ -162,7 +167,9 @@ namespace GFX
             auto result = GetImageBuildingSettings(settingsName);
             if(!result)
             {
-                log_fmt_warning("Failed to set image format to image building settings with name'%s'! The default buildings setting was returned!", settingsName);
+                LOG_WARNING({},
+                            "Failed to set image format to image building settings with name'%s'! The default buildings setting was returned!",
+                            settingsName);
                 return;
             }
 
@@ -175,7 +182,9 @@ namespace GFX
             auto result = GetImageBuildingSettings(settingsName);
             if(!result)
             {
-                log_fmt_warning("Failed to set image warp s to image building settings with name'%s'! The default buildings setting was returned!", settingsName);
+                LOG_WARNING({},
+                            "Failed to set image warp s to image building settings with name'%s'! The default buildings setting was returned!",
+                            settingsName);
                 return;
             }
 
@@ -188,7 +197,9 @@ namespace GFX
             auto result = GetImageBuildingSettings(settingsName);
             if(!result)
             {
-                log_fmt_warning("Failed to set image warp t to image building settings with name'%s'! The default buildings setting was returned!", settingsName);
+                LOG_WARNING({},
+                            "Failed to set image warp t to image building settings with name'%s'! The default buildings setting was returned!",
+                            settingsName);
                 return;
             }
 
@@ -201,7 +212,9 @@ namespace GFX
             auto result = GetImageBuildingSettings(settingsName);
             if(!result)
             {
-                log_fmt_warning("Failed to set image min filter to image building settings with name'%s'! The default buildings setting was returned!", settingsName);
+                LOG_WARNING({},
+                            "Failed to set image min filter to image building settings with name'%s'! The default buildings setting was returned!",
+                            settingsName);
                 return;
             }
 
@@ -214,7 +227,9 @@ namespace GFX
             auto result = GetImageBuildingSettings(settingsName);
             if(!result)
             {
-                log_fmt_warning("Failed to set image mag filter to image building settings with name'%s'! The default buildings setting was returned!", settingsName);
+                LOG_WARNING({},
+                            "Failed to set image mag filter to image building settings with name'%s'! The default buildings setting was returned!",
+                            settingsName);
                 return;
             }
 
@@ -243,7 +258,7 @@ namespace GFX
         unsigned char* texData = stbi_load(path, &mWidth, &mHeight, &mComp, 0);
         if (texData == nullptr)
         {
-            log_fmt_error("Failed to create Texture with path'%s'", path);
+            LOG_ERROR({}, "Failed to create Texture with path'%s'", path);
             return;
         }
 
@@ -287,7 +302,7 @@ namespace GFX
 
         if (data == nullptr)
         {
-            log_error("Failed to create Texture!")
+            LOG_ERROR({}, "Failed to create Texture!");
             return;
         }
 
@@ -377,7 +392,7 @@ namespace GFX
             {
                 if(path == std::string(filePath))
                 {
-                    log_fmt_warning("File with path'%s' was already in list", filePath);
+                    LOG_WARNING({}, "File with path'%s' was already in list", filePath);
                     return;
                 }
             }
@@ -467,7 +482,7 @@ namespace GFX
                     dat.mData = stbi_load(path.c_str(), &dat.mWidth, &dat.mHeight, &dat.mComp, STBI_rgb_alpha);
                     if(dat.mData == nullptr)
                     {
-                        log_fmt_error("Failed to load file in to sprite sheet: '%s", path.c_str());
+                        LOG_ERROR({}, "Failed to load file in to sprite sheet: '%s", path.c_str());
                         continue;
                     }
                     data.emplace_back(dat);
@@ -477,7 +492,8 @@ namespace GFX
 
             if(data.empty())
             {
-                log_fmt_error("Failed to generate sprite sheet no source given");
+                LOG_ERROR({}, "Failed to generate sprite sheet no source given");
+                return;
             }
 
 
@@ -654,7 +670,7 @@ namespace GFX
                 return &images.at(std::string(imageName));
             }
 
-            log_fmt_warning("Failed to get image with image name'%s'", imageName);
+            LOG_WARNING({}, "Failed to get image with image name'%s'", imageName);
             return nullptr;
         }
 
@@ -663,7 +679,7 @@ namespace GFX
             CHECK_INIT_GFX
             if(!FHandle::checkExistFile(imagePath))
             {
-                log_fmt_warning("Failed to add image with image path'%s'", imagePath);
+                LOG_WARNING({}, "Failed to add image with image path'%s'", imagePath);
                 return;
             }
 
@@ -673,8 +689,7 @@ namespace GFX
             {
                 if(name.first == imgName)
                 {
-
-                    log_fmt_warning("Failed to add image with image path'%s'. File already added", imagePath);
+                    LOG_WARNING({}, "Failed to add image with image path'%s'. File already added", imagePath);
                     return;
                 }
             }
@@ -687,7 +702,7 @@ namespace GFX
             CHECK_INIT_GFX
             if(!FHandle::checkExistDir(dirPath))
             {
-                log_fmt_warning("Failed to add images from dir path'%s'", dirPath);
+                LOG_WARNING({}, "Failed to add images from dir path'%s'", dirPath);
                 return;
             }
 
@@ -702,7 +717,7 @@ namespace GFX
                     if(name.first == imgName)
                     {
                         add = false;
-                        log_fmt_warning("Failed to add image with image path'%s'. File already added", path.c_str());
+                        LOG_WARNING({}, "Failed to add image with image path'%s'. File already added", path.c_str());
                         break;
                     }
                 }
@@ -750,7 +765,7 @@ namespace GFX
             CHECK_INIT_GFX
             if(!FHandle::checkExistFile(sheetPath))
             {
-                log_fmt_warning("Failed to add sheet with path'%s'", sheetPath);
+                LOG_WARNING({}, "Failed to add sheet with path'%s'", sheetPath);
                 return;
             }
 
@@ -760,8 +775,7 @@ namespace GFX
             {
                 if(name.first == sheetName)
                 {
-
-                    log_fmt_warning("Failed to add sheet with path'%s'. File already added", sheetPath);
+                    LOG_WARNING({}, "Failed to add sheet with path'%s'. File already added", sheetPath);
                     return;
                 }
             }
@@ -774,7 +788,7 @@ namespace GFX
             CHECK_INIT_GFX
             if(!FHandle::checkExistDir(dirPath))
             {
-                log_fmt_warning("Failed to add sheets from path'%s'", dirPath);
+                LOG_WARNING({}, "Failed to add sheets from path'%s'", dirPath);
                 return;
             }
 
@@ -788,8 +802,7 @@ namespace GFX
                 {
                     if(name.first == sheetName)
                     {
-
-                        log_fmt_warning("Failed to add sheet with path'%s'. File already added", path.c_str());
+                        LOG_WARNING({}, "Failed to add sheet with path'%s'. File already added", path.c_str());
                         return;
                     }
                 }
@@ -803,7 +816,7 @@ namespace GFX
             CHECK_INIT_GFX
             if(!FHandle::checkExistDir(dirPath))
             {
-                log_fmt_warning("Failed to create sheet from path'%s'", dirPath);
+                LOG_WARNING({}, "Failed to create sheet from path'%s'", dirPath);
                 return;
             }
 

@@ -1,4 +1,5 @@
 #include "../../hdr/core.h"
+#include "../../hdr/logger.h"
 #include "../../hdr/gfx/shader.h"
 #include "../../hdr/gfx/gfx.h"
 
@@ -40,7 +41,7 @@ namespace GFX
 
 		if (source.getData() == nullptr)
 		{
-			log_error("Failed to load shader");
+		    LOG_ERROR({}, "Failed to load shader");
 			return false;
 		}
 
@@ -55,7 +56,7 @@ namespace GFX
 		glGetShaderInfoLog(shaderId, sizeof(buffer), &length, buffer);
 		if (length)
 		{
-			log_fmt_assert(false, "Failed to build shader: '%s'", buffer);
+		    LOG_ASSERT(false, {}, "Failed to build shader: '%s'", buffer);
 			return false;
 		}
 
@@ -85,7 +86,7 @@ namespace GFX
 		glGetProgramInfoLog(mId, sizeof(buffer), &length, buffer);
 		if (length)
 		{
-			log_fmt_error("Failed to build shader: '%s'", buffer);
+		    LOG_ERROR({}, "Failed to build shader: '%s'", buffer);
 			return false;
 		}
 
@@ -134,7 +135,7 @@ namespace GFX
 		}
         else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -148,7 +149,7 @@ namespace GFX
 		}
         else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -162,7 +163,7 @@ namespace GFX
 		}
         else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -176,7 +177,7 @@ namespace GFX
 		}
         else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -190,7 +191,7 @@ namespace GFX
 		}
         else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -204,7 +205,7 @@ namespace GFX
 		}
         else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -218,7 +219,7 @@ namespace GFX
 		}
         else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -232,7 +233,7 @@ namespace GFX
 		}
         else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -246,7 +247,7 @@ namespace GFX
 		}
         else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -260,7 +261,7 @@ namespace GFX
 		}
         else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -274,7 +275,7 @@ namespace GFX
 		}
         else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -288,7 +289,7 @@ namespace GFX
 		}
         else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -302,7 +303,7 @@ namespace GFX
 		}
         else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -316,7 +317,7 @@ namespace GFX
 		}
         else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -330,7 +331,7 @@ namespace GFX
 		}
         else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -344,7 +345,7 @@ namespace GFX
 		}
 		else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+		    LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -358,7 +359,7 @@ namespace GFX
 		}
         else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -372,7 +373,7 @@ namespace GFX
 		}
         else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -386,7 +387,7 @@ namespace GFX
 		}
         else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -400,7 +401,7 @@ namespace GFX
 		}
         else
         {
-            log_fmt_assert(false ,"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -413,7 +414,7 @@ namespace GFX
             CHECK_INIT_GFX
             if(GetShader(shaderName) != nullptr)
             {
-                log_fmt_warning("Failed to add shader with name'%s'. Shader already exist!", shaderName);
+                LOG_WARNING({}, "Failed to add shader with name'%s'. Shader already exist!", shaderName);
                 return;
             }
             shaders.emplace(std::string(shaderName), Shader());
@@ -424,14 +425,14 @@ namespace GFX
             CHECK_INIT_GFX
             if(sourcePath == nullptr)
             {
-                log_fmt_warning("Failed to add shader source, source path is nullptr!");
+                LOG_WARNING({}, "Failed to add shader source, source path is nullptr!");
                 return;
             }
 
             auto* shader = GetShader(shaderName);
             if(shader == nullptr)
             {
-                log_fmt_warning("Failed to add shader source, no shader with shader name'%s' found!", shaderName);
+                LOG_WARNING({}, "Failed to add shader source, no shader with shader name'%s' found!", shaderName);
                 return;
             }
             shader->compile(sourcePath, shaderType);
@@ -443,7 +444,7 @@ namespace GFX
             auto* shader = GetShader(shaderName);
             if(shader == nullptr)
             {
-                log_fmt_warning("Failed to build shader, no shader with shader name'%s' found!", shaderName);
+                LOG_WARNING({}, "Failed to build shader, no shader with shader name'%s' found!", shaderName);
                 return;
             }
             shader->build();
@@ -455,7 +456,7 @@ namespace GFX
             auto* shader = GetShader(shaderName);
             if(shader == nullptr)
             {
-                log_fmt_warning("Failed to bind shader, no shader with shader name'%s' found!", shaderName);
+                LOG_WARNING({}, "Failed to bind shader, no shader with shader name'%s' found!", shaderName);
                 return;
             }
             shader->bind();

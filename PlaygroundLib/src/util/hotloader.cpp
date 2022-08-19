@@ -1,8 +1,8 @@
 //
 // Created by Kevin-Laptop on 07.08.2022.
 //
-
 #include "../../hdr/core.h"
+#include "../../hdr/logger.h"
 #include "../../hdr/util/hotloader.h"
 
 namespace HotLoader
@@ -26,13 +26,13 @@ namespace HotLoader
     {
         if(filePath == nullptr)
         {
-            log_warning("Failed to add file to watch! file path was nullptr!");
+            LOG_WARNING({}, "Failed to add file to watch! file path was nullptr!");
             return;
         }
 
         if(!FHandle::checkExistFile(filePath))
         {
-            log_fmt_warning("Failed to add file to watch with path'%s'! File do not exist!", filePath);
+            LOG_WARNING({}, "Failed to add file to watch with path'%s'! File do not exist!", filePath);
             return;
         }
 
@@ -40,7 +40,7 @@ namespace HotLoader
         {
             if(std::string(fileWatch.second.mFile.path) == std::string(filePath))
             {
-                log_fmt_warning("Failed to add file to watch with path'%s'!, File is already watched", filePath);
+                LOG_WARNING({}, "Failed to add file to watch with path'%s'!, File is already watched", filePath);
                 return;
             }
         }
@@ -58,8 +58,9 @@ namespace HotLoader
 
     void RemoveFileToWatch(const char *filePath)
     {
-        if (filePath == nullptr) {
-            log_warning("Failed to remove file watcher! file path was nullptr!");
+        if (filePath == nullptr)
+        {
+            LOG_WARNING({}, "Failed to remove file watcher! file path was nullptr!");
             return;
         }
 
@@ -77,7 +78,7 @@ namespace HotLoader
                 return fileWatch.second.mChanged;
             }
         }
-        log_fmt_warning("No file watch with path'%s'", filePath);
+        LOG_WARNING({}, "No file watch with path'%s'", filePath);
         return false;
     }
 
@@ -91,7 +92,7 @@ namespace HotLoader
                 return &fileWatch.second.mFile;
             }
         }
-        log_fmt_warning("No file watch with path'%s'", filePath);
+        LOG_WARNING({}, "No file watch with path'%s'", filePath);
         return nullptr;
     }
 
@@ -101,7 +102,7 @@ namespace HotLoader
         {
             if(fileWatch.second.mCheckTime != GetLastModifiedTime(fileWatch.first.c_str()))
             {
-                log_fmt_info("Detected modified file with path'%s'", fileWatch.first.c_str());
+                LOG_INFO({}, "Detected modified file with path'%s'", fileWatch.first.c_str());
                 FHandle::File* file = &fileWatch.second.mFile;
                 if(file->data == nullptr)
                 {

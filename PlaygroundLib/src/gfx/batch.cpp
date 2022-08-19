@@ -2,6 +2,7 @@
 #include "../../hdr/gfx/image.h"
 #include "../../hdr/gfx/shader.h"
 #include "../../hdr/gfx/batch.h"
+#include "../../hdr/logger.h"
 
 namespace GFX
 {
@@ -50,7 +51,7 @@ namespace GFX
 
         if(mNumTextures >= 8)
 		{
-			log_warning("Failed to bind texture to batch, max textures is 8");
+            LOG_WARNING({}, "Failed to bind texture to batch, max textures is 8");
 			return;
 		}
 		mTextures[mNumTextures] = image.mId;
@@ -64,7 +65,7 @@ namespace GFX
 
         if (mNumTextures >= 8)
 		{
-			log_warning("Failed to bind texture to batch, max textures is 8");
+            LOG_WARNING({}, "Failed to bind texture to batch, max textures is 8");
 			return;
 		}
 		mTextures[mNumTextures] = image;

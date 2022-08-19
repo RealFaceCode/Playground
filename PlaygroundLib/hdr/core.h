@@ -108,87 +108,10 @@ Result<T>::operator bool() const noexcept {
 std::string GetTime();
 std::string GetDate();
 std::string GetFileName(const char* fileName);
-std::string GetFormatedString(const char* fmt, ...);
-std::string ToString(const char* str);
-std::string ToString(std::string str);
-std::string ToString(int i);
-std::string ToString(unsigned int ui);
-std::string ToString(float f);
-std::string ToString(double d);
 bool EndsWith(const char* filepath, const char* ending);
 
 //C STRING HELPER
 int vasprintf(char** strp, const char* fmt, va_list ap);
 int asprintf(char **strp, const char *fmt, ...);
 
-
-static const char* LogPath_				= "log.txt";
-static FILE* LogFile_					= fopen(LogPath_, "a");
-
-#define LOG_COLOR_BLUE					"\x1B[34m"
-#define LOG_COLOR_GREEN					"\x1B[32m"
-#define LOG_COLOR_YELLOW				"\x1B[33m"
-#define LOG_COLOR_RED					"\x1B[31m"
-#define LOG_COLOR_PURPLE				"\x1B[35m"
-
-#define LOG_COLOR_FMT_FULL				"%s[%s][FILE:%s][LINE:%i][%s][%s]\n%s\n\033[0m"
-#define LOG_COLOR_FMT					"%s[%s][FILE:%s][LINE:%i][%s][%s]\033[0m\n%s\n"
-#define LOG_COLOR_FMT_FULL_WITHOUT_DATE	"%s[%s][FILE:%s][LINE:%i][%s][%s]\n%s\n\033[0m"
-#define LOG_COLOR_FMT_WITHOUT_DATE		"%s[%s][FILE:%s][LINE:%i][%s][%s]\033[0m\n%s\n"
-#define LOG_TO_FILE_FMT					"[%s][FILE:%s][LINE:%i][%s][%s]\n%s\n"
-
-#define log_to_file(msg) {\
-	if(!LogFile_)\
-	{\
-		assert(false);\
-	}\
-	fwrite(msg, 1, sizeof(char) * strlen(msg), LogFile_);\
-	fflush(LogFile_);\
-}
-
-#ifdef LOG_TO_FILE
-	#define log_and_write(color, type, fmt, msg) {\
-		std::string outC = GetFormatedString(fmt, color, type, GetFileName(__FILE__).c_str(), __LINE__, GetTime().c_str(), GetDate().c_str(), msg);\
-		printf(outC.c_str());\
-		std::string outF = GetFormatedString(LOG_TO_FILE_FMT, type, GetFileName(__FILE__).c_str(), __LINE__, GetTime().c_str(), GetDate().c_str(), msg);\
-		log_to_file(outF.c_str());\
-	    _flushall();\
-	}
-#else
-	#define log_and_write(color, type, fmt, msg) {\
-		std::string outC = GetFormatedString(fmt, color, type, GetFileName(__FILE__).c_str(), __LINE__, GetTime().c_str(), GetDate().c_str(), msg);\
-		printf(outC.c_str());\
-	    _flushall();\
-	}
-#endif // LOG_TO_FILE
-
-#ifdef LOG_COLOR_FULL
-	#define log_(color, type, msg)		log_and_write(color, type, LOG_COLOR_FMT_FULL, ToString(msg).c_str());
-#else
-	#define log_(color, type, msg)		log_and_write(color, type, LOG_COLOR_FMT, ToString(msg).c_str());
-#endif // LOG_FULL_COLOR
-
-#ifdef _DEBUG
-	#define log_msg(msg)					log_(LOG_COLOR_BLUE, "MSG", msg);
-	#define log_info(msg)					log_(LOG_COLOR_GREEN,"INFO", msg);
-	#define log_warning(msg)				log_(LOG_COLOR_YELLOW, "WARNING", msg);
-	#define log_error(msg)					log_(LOG_COLOR_RED, "ERROR", msg);
-	#define log_assert(boolean, msg)		log_(LOG_COLOR_PURPLE, "ASSERT", msg); assert(boolean);
-	#define log_fmt_msg(fmt, ...)			log_(LOG_COLOR_BLUE, "MSG", GetFormatedString(fmt, __VA_ARGS__));
-	#define log_fmt_info(fmt, ...)			log_(LOG_COLOR_GREEN,"INFO", GetFormatedString(fmt, __VA_ARGS__));
-	#define log_fmt_warning(fmt,...)		log_(LOG_COLOR_YELLOW, "WARNING", GetFormatedString(fmt, __VA_ARGS__));
-	#define log_fmt_error(fmt, ...)			log_(LOG_COLOR_RED, "ERROR", GetFormatedString(fmt, __VA_ARGS__));
-	#define log_fmt_assert(boolean,fmt,...)	log_(LOG_COLOR_PURPLE, "ASSERT", GetFormatedString(fmt, __VA_ARGS__)); assert(boolean);
-#else
-	#define log_msg(msg)
-	#define log_info(msg)
-	#define log_warning(msg)
-	#define log_error(msg)
-	#define log_assert(boolean, msg)		assert(boolean);
-	#define log_fmt_msg(fmt,...)
-	#define log_fmt_info(fmt,...)
-	#define log_fmt_warning(fmt, ...)
-	#define log_fmt_error(fmt, ...)
-	#define log_fmt_assert(boolean,fmt,...)	assert(boolean);
-#endif // DEBUG
 #endif // !CORE_H

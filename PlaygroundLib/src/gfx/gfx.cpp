@@ -1,4 +1,5 @@
 #include "../../hdr/core.h"
+#include "../../hdr/logger.h"
 #include "../../hdr/gfx/gfx.h"
 #include "../../hdr/gfx/batch.h"
 #include "../../hdr/gfx/image.h"
@@ -50,7 +51,7 @@ namespace GFX
 
 		if (!result)
 		{
-			log_assert(false, "Failed to init glad!");
+		    LOG_ASSERT(false, {}, "Failed to init glad!");
 		}
         INIT = true;
 
