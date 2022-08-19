@@ -12,7 +12,7 @@ void*   MemoryRegister(void* buffer, const char* file, const int& line);
 void*   MemoryDeRegister(void* buffer);
 void    MemoryZero(void* buffer, size_t bytes);
 void    MemoryFree(void* buffer);
-void    MemoryPrintStack();
+bool    MemoryPrintStack();
 
 #ifdef _DEBUG
     #define Malloc(bytes)           MemoryMalloc(bytes, __FILE__, __LINE__)

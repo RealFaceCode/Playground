@@ -107,11 +107,11 @@ void    MemoryFree(void* buffer)
     free(MemoryDeRegister(buffer));
 }
 
-void    MemoryPrintStack()
+bool    MemoryPrintStack()
 {
     if(stackTrace.empty())
     {
-        return;
+        return false;
     }
 
     std::string leaks;
@@ -130,4 +130,5 @@ void    MemoryPrintStack()
         Free(str);
     }
     LOG_WARNING({}, leaks.c_str());
+    return true;
 }
