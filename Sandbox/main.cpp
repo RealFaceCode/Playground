@@ -1,4 +1,5 @@
 #include <gfx/image.h>
+#include <util/memory.h>
 #include "core.h"
 #include "window/window.h"
 #include "window/input.h"
@@ -9,12 +10,12 @@
 #include "logger.h"
 
 // ---------- TODO SECTION ----------
-//TODO: implement setting save and load for window
 //TODO: implement load function for sprite sheet loading
 //TODO: implement text rendering
 //TODO: implement gui system
 //TODO: implement camera
 //TODO: change shader to pipeline instead of program
+//TODO: implement text rendering
 //TODO: implement hot reloading shader
 //TODO: |-> buttons
 //TODO: |-> sliders
@@ -24,22 +25,23 @@
 //TODO: |-> checkbox
 //TODO: scripting support?
 //TODO: |-> lua?
-//TODO: check UV´s sprite sheet creator
 // ---------- TODO SECTION ----------
 
 int main()
 {
-    PREP_CONSOLE_LOG
-
+    CoreInit();
     Window::Init();
+
+    MemoryEnableTracking(true);
 
     Window::Window win = Window::WindowBuilder
             .setSize(900, 600)
             .setRGBBufferSize(8, 8, 8)
-            .setOpacity(0.9f)
+            .setOpacity(1.0f)
             .setRefreshRate(60)
             .centerWindowOnScreen()
             .setStandartCursor(Window::CrosshairCursor)
+            .setSettingsFileName("window.node")
             .build("playground");
 
     win.init();
@@ -71,9 +73,10 @@ int main()
     }
 
     GFX::Init();
+    GFX::Renderer::Init(&win);
 
     {
-        GFX::SpriteSheetBuilder::AddFile("../assets/images/red_peper.jpg");
+        //GFX::SpriteSheetBuilder::AddFile("../assets/images/red_peper.jpg");
         GFX::SpriteSheetBuilder::AddFile("../assets/images/images.png");
         GFX::SpriteSheetBuilder::AddFile("../assets/images/bricks.png");
         GFX::SpriteSheetBuilder::AddFile("../assets/images/dirt.png");
@@ -82,20 +85,30 @@ int main()
     }
     auto sheet = GFX::SpriteSheetBuilder::CreateSpriteSheet("../assets/spritesheets/sheet.png", true);
 
-    GFX::ShaderHandler::AddShader("batchShader");
-    GFX::ShaderHandler::AddCompileSource("batchShader", "../assets/shader/shader.vert", GL_VERTEX_SHADER);
-    GFX::ShaderHandler::AddCompileSource("batchShader", "../assets/shader/shader.frag", GL_FRAGMENT_SHADER);
-    GFX::ShaderHandler::BuildShader("batchShader");
-    GFX::ShaderHandler::BindShader("batchShader");
+    {
+        GFX::ShaderHandler::AddShader("batchShader");
+        GFX::ShaderHandler::AddCompileSource("batchShader", "../assets/shader/shader.vert", GL_VERTEX_SHADER);
+        GFX::ShaderHandler::AddCompileSource("batchShader", "../assets/shader/shader.frag", GL_FRAGMENT_SHADER);
+        GFX::ShaderHandler::BuildShader("batchShader");
+        GFX::ShaderHandler::BindShader("batchShader");
+    }
     auto* shader = GFX::ShaderHandler::GetShader("batchShader");
 
-    GFX::ImageHandler::AddImage("../assets/images/bricks.png");
-    GFX::ImageHandler::AddImage("../assets/images/chiseled_stone_bricks.png");
+    {
+        GFX::ImageHandler::AddImage("../assets/images/bricks.png");
+        GFX::ImageHandler::AddImage("../assets/images/chiseled_stone_bricks.png");
+    }
 
-    float scale = 1.5f;
+
     float aspect = (float)win.mSettings.width / (float)win.mSettings.height;
 
-    glm::mat4 proj = glm::ortho(-aspect * scale, aspect * scale, -1.0f * scale, 1.0f * scale, -1.0f, 1.0f);
+    float scale = 0.0075;
+    float left = (float)win.mSettings.width / -2.0f * scale;
+    float right = (float)win.mSettings.width / 2.0f * scale;
+    float bottom = (float)win.mSettings.height / -2.0f * scale;
+    float top = (float)win.mSettings.height / 2.0f * scale;
+
+    glm::mat4 proj = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
     glm::mat4 view = glm::lookAt(glm::vec3{0.0f, 0.0f, 0.0f}, glm::vec3{ 0.0f, 0.0f, -1.0f }, glm::vec3{ 0.0f, 1.0f, 0.0f });
     shader->setUniformMat4("uProj", proj);
     shader->setUniformMat4("uView", view);
@@ -115,18 +128,26 @@ int main()
         if(HotLoader::IsModified("../assets/shader/shader.frag"))
         {
             auto* f = HotLoader::GetFile("../assets/shader/shader.frag");
-            log_info("");
+            LOG_INFO({}, "");
         }
 
         shader->bind();
-        aspect = (float)win.mSettings.width / (float)win.mSettings.height;
-        proj = glm::ortho(-aspect * scale, aspect * scale, -1.0f * scale, 1.0f * scale, -1.0f, 1.0f);
+
+        left = (float)win.mSettings.width / -2.0f * scale;
+        right = (float)win.mSettings.width / 2.0f * scale;
+        bottom = (float)win.mSettings.height / -2.0f * scale;
+        top = (float)win.mSettings.height / 2.0f * scale;
+
+        proj = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
         shader->setUniformMat4("uProj", proj);
 
-        GFX::Renderer::DrawTexturedRectangle({0, 0}, &sheet.mSprites["bricks"], 1, 1);
-        GFX::Renderer::DrawTexturedRectangle({0, 1}, &sheet.mSprites["chiseled_stone_bricks"], 1, 1);
-        GFX::Renderer::DrawTexturedRectangle({-1.25, 0}, GFX::ImageHandler::GetImage("bricks"), 1, 1);
-        GFX::Renderer::DrawTexturedRectangle({-1.25, 1}, GFX::ImageHandler::GetImage("chiseled_stone_bricks"), 1, 1);
+        GFX::Renderer::DrawTexturedRectangle({win.mSettings.width / -2.0f * scale, win.mSettings.height / 2.0f * scale}, &sheet.mSprites["bricks"], 1, 1);
+        GFX::Renderer::DrawTexturedRectangle({win.mSettings.width / -2.0f * scale + 1, win.mSettings.height / 2.0f * scale}, &sheet.mSprites["chiseled_stone_bricks"], 1, 1);
+        //GFX::Renderer::DrawTexturedRectangle({-1.25, 0}, GFX::ImageHandler::GetImage("bricks"), 1, 1);
+        //GFX::Renderer::DrawTexturedRectangle({-1.25, 1}, GFX::ImageHandler::GetImage("chiseled_stone_bricks"), 1, 1);
+        GFX::Renderer::Gui::GuiObject gui;
+        gui.drawButton(50, 50, 100, 20, "");
+
         GFX::Renderer::render(*shader);
 
         Input::Update();
@@ -136,6 +157,10 @@ int main()
     }
 
     win.clear();
+    if(MemoryPrintStack())
+    {
+        system("pause");
+    }
 
     return 0;
 }

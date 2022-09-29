@@ -11,7 +11,7 @@
 
 namespace Window
 {
-	static const char* dirSavePath = "data/settings/";
+	static const char* dirSavePath = "../assets/settings/";
     static bool INIT = false;
 
 	void SetSavePathDir(const char* dirPath)
@@ -47,6 +47,8 @@ namespace Window
 	void Window::clear()
 	{
         CHECK_INIT
+        saveSettings();
+
 		glfwSetCursor(mHandle, nullptr);
 		if (mImageCursor.pixels != nullptr)
 		{
@@ -76,18 +78,48 @@ namespace Window
 	{
         CHECK_INIT
 
+        std::string path(dirSavePath);
+        path.append(mSettings.fileName);
+
+        FHandle::Node node;
+        node["Window"]["Settings"]["Size"]              = (i32)mSettings.width;
+        node["Window"]["Settings"]["Size"]              = (i32)mSettings.height;
+        node["Window"]["Settings"]["OpenGLVersion"]     = (i32)mSettings.openGLMajor;
+        node["Window"]["Settings"]["OpenGLVersion"]     = (i32)mSettings.openGLMinor;
+        node["Window"]["Settings"]["RefreshRate"]       = (i32)mSettings.refreshRate;
+        node["Window"]["Settings"]["Monitor"]           = (i32)mSettings.monitor;
+        node["Window"]["Settings"]["VideoMode"]         = (i32)mSettings.videoMode;
+        node["Window"]["Settings"]["WinPos"]            = (i32)mSettings.winPosX;
+        node["Window"]["Settings"]["WinPos"]            = (i32)mSettings.winPosY;
+        node["Window"]["Settings"]["Bits"]              = (i32)mSettings.redBit ;
+        node["Window"]["Settings"]["Bits"]              = (i32)mSettings.greenBit;
+        node["Window"]["Settings"]["Bits"]              = (i32)mSettings.blueBit;
+        node["Window"]["Settings"]["Opacity"]           = mSettings.opacity;
+        node.write(path.c_str());
+
 	}
 
 	void Window::loadSettings()
 	{
         CHECK_INIT
 		std::string path(dirSavePath);
-		path.assign(mSettings.fileName);
+		path.append(mSettings.fileName);
 		FHandle::Node node = FHandle::Node::loadNode(path.c_str());
 		if (!node.empty())
 		{
-			mSettings.width = node["Window"]["Settings"]["Width"].getAsInt(0);
-			mSettings.height = node["Window"]["Settings"]["Height"].getAsInt(0);
+			mSettings.width         = node["Window"]["Settings"]["Size"].getAsInt(0);
+			mSettings.height        = node["Window"]["Settings"]["Size"].getAsInt(1);
+			mSettings.openGLMajor   = node["Window"]["Settings"]["OpenGLVersion"].getAsInt(0);
+			mSettings.openGLMinor   = node["Window"]["Settings"]["OpenGLVersion"].getAsInt(1);
+			mSettings.refreshRate   = node["Window"]["Settings"]["RefreshRate"].getAsInt(0);
+			mSettings.monitor       = node["Window"]["Settings"]["Monitor"].getAsInt(0);
+			mSettings.videoMode     = node["Window"]["Settings"]["VideoMode"].getAsInt(0);
+			mSettings.winPosX       = node["Window"]["Settings"]["WinPos"].getAsInt(0);
+			mSettings.winPosY       = node["Window"]["Settings"]["WinPos"].getAsInt(1);
+			mSettings.redBit        = node["Window"]["Settings"]["Bits"].getAsInt(0);
+			mSettings.greenBit      = node["Window"]["Settings"]["Bits"].getAsInt(1);
+			mSettings.blueBit       = node["Window"]["Settings"]["Bits"].getAsInt(2);
+			mSettings.opacity       = node["Window"]["Settings"]["Opacity"].getAsInt(0);
 		}
 	}
 
