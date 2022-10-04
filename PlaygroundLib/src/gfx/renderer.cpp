@@ -6,12 +6,21 @@
 #include "../../hdr/gfx/renderer.h"
 #include "../../hdr/gfx/batch.h"
 #include "../../hdr/gfx/image.h"
+#include "../../hdr/window/window.h"
+#include "../../hdr/window/input.h"
 
 namespace GFX
 {
     namespace Renderer
     {
         static glm::vec4 white(1.0f, 1.0f, 1.0f, 1.0f);
+
+        ::Window::Settings* wSettings;
+
+        void Init(Window::Window* win)
+        {
+            wSettings = &win->mSettings;
+        }
 
         void DrawTriangle(const glm::vec2& position, const glm::vec4& color, const float& width, const float& height)
         {
@@ -241,13 +250,6 @@ namespace GFX
         {
             CHECK_INIT_GFX
 
-            float textureIndex = 0;
-
-            {
-                Batch* batch = BatchHandler::GetBatchHasSpaceMatchTexture(3, BatchHandler::defaultImage.mId);
-                textureIndex =(float)batch->getMapedTextureIndex(BatchHandler::defaultImage.mId);
-            }
-
             float w = lineWidth / 2;
 
             DrawLine({position.x, position.y - w}, {position.x + width, position.y - w}, color, lineWidth);
@@ -265,6 +267,39 @@ namespace GFX
 
         namespace Gui
         {
+            GuiObjectValues GuiObject::drawButton(
+                                 const ui32 &x,
+                                 const ui32 &y,
+                                 const ui32 &width,
+                                 const ui32 &height,
+                                 const char *text)
+            {
+                float xPos  = ((float)x/ (float)wSettings->width)   - 1.5f;
+                float yPos  = ((float)y / (float)wSettings->height) + 1.5f;
+                float w     = ((float)x / (float)wSettings->width)  ;
+                float h     = ((float)y / (float)wSettings->height) ;
+
+                DrawRectangle({xPos, yPos}, mGuiSettings.windowColor, w, h);
+                DrawLinedRectangle({xPos, yPos}, mGuiSettings.lineColor, w, h, mGuiSettings.lineWidth);
+                GuiObjectValues gov
+                {
+                    .mHoovered = false,
+                    .mPressedRight = false,
+                    .mPressedLeft = false,
+                    .mValue = 0.0f,
+                };
+
+                float mouseX = Input::GetMouseXFloat() * 1.5f;
+                float mouseY = Input::GetMouseYFloat() * 1.5f;
+
+                if(xPos >= mouseX && xPos + w <= mouseX && yPos >= mouseY && yPos + h <= mouseY)
+                {
+                    LOG_INFO({}, "YEAY");
+                }
+
+                return gov;
+            }
+
         }
     }
 }

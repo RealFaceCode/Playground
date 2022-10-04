@@ -13,7 +13,7 @@ add_subdirectory("vendor/glfw")
 add_compile_definitions(GLFW_INCLUDE_NONE)
 
 include_directories("vendor/fhandle")
-include_directories("vendor/glad/include/")
+include_directories("PlaygroundLib/glad/include/")
 include_directories("vendor/glm/glm/")
 
 add_subdirectory(PlaygroundLib)

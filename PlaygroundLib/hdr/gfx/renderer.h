@@ -3,6 +3,7 @@
 //
 
 #include "../../hdr/core.h"
+#include "../../hdr/window/window.h"
 
 #ifndef PLAYGROUND_RENDERER_H
 #define PLAYGROUND_RENDERER_H
@@ -12,10 +13,11 @@ namespace GFX
     struct Image;
     struct Sprite;
     struct Shader;
+    struct BatchVertex;
 
     namespace Renderer
     {
-        void Init();
+        void Init(Window::Window* win);
 
         void DrawTriangle(const glm::vec2& position, const glm::vec4& color, const float& width, const float& height);
         void DrawTexturedTriangle(const glm::vec2& position, const Image* texture, const float& width, const float& height);
@@ -41,9 +43,18 @@ namespace GFX
             {
             public:
                 float lineWidth = 0.01;
-                glm::vec4 windowColor = { 36.0f, 44.0f, 56.0f, 255.0f};
-                glm::vec4 lineColor = {22.0f, 2.0f, 94.0f, 255.0f};
+                glm::vec4 windowColor = { 36.0f / 255.0f, 44.0f / 255.0f, 56.0f / 255.0f, 255.0f / 255.0f};
+                glm::vec4 lineColor = {22.0f / 255.0f, 2.0f / 255.0f, 94.0f / 255.0f, 255.0f / 255.0f};
             };
+
+            struct GuiObjectValues
+                    {
+                    public:
+                        bool mHoovered;
+                        bool mPressedRight;
+                        bool mPressedLeft;
+                        float mValue;
+                    };
 
             struct GuiObject
             {
@@ -51,12 +62,10 @@ namespace GFX
                 GuiSettings mGuiSettings;
 
             public:
-                bool DrawButton(const ui32& x, const ui32& y,
+                GuiObjectValues drawButton(const ui32& x, const ui32& y,
                                 const ui32& width, const ui32& height,
                                 const char* text);
-                bool DrawButton(const ui32& x, const ui32& y,
-                                const ui32& width, const ui32& height,
-                                const Image& image, const char* text);
+
             };
 
             GuiObject* CreateGuiObject();
