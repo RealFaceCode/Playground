@@ -61,10 +61,10 @@ void Log(const char* type,
 //FUNCTIONAL DEFINES
 #ifdef _DEBUG
     #define C_HiLi(toHighlight, color) CreateHighlighter(toHighlight, color)
-    #define LOG_INFO(highlights, fmt, ...)              { Log("INFO", LightGreen, __FILE__, __LINE__, highlights, fmt, __VA_ARGS__); }
-    #define LOG_WARNING(highlights, fmt, ...)           { Log("WARNING", Orange, __FILE__, __LINE__, highlights, fmt, __VA_ARGS__); }
-    #define LOG_ERROR(highlights, fmt, ...)             { Log("ERROR", Red, __FILE__, __LINE__, highlights, fmt, __VA_ARGS__); }
-    #define LOG_ASSERT(boolean, highlights, fmt, ...)   { Log("ASSERT", LightPurple, __FILE__, __LINE__, highlights, fmt, __VA_ARGS__); assert(boolean); }
+    #define LOG_INFO(highlights, fmt, ...)              { Log("INFO", LightGreen, __FILE__, __LINE__, highlights, fmt, ##__VA_ARGS__); }
+    #define LOG_WARNING(highlights, fmt, ...)           { Log("WARNING", Orange, __FILE__, __LINE__, highlights, fmt, ##__VA_ARGS__); }
+    #define LOG_ERROR(highlights, fmt, ...)             { Log("ERROR", Red, __FILE__, __LINE__, highlights, fmt, ##__VA_ARGS__); }
+    #define LOG_ASSERT(boolean, highlights, fmt, ...)   { Log("ASSERT", LightPurple, __FILE__, __LINE__, highlights, fmt, ##__VA_ARGS__); assert(boolean); }
 #else
     #define C_HiLi(toHighlight, color)
     #define LOG_INFO(highlights, fmt, ...)

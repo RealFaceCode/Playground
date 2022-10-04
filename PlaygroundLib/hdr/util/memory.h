@@ -4,6 +4,7 @@
 
 #ifndef PLAYGROUNDLIB_MEMORY_H
 #define PLAYGROUNDLIB_MEMORY_H
+#include <stdint.h>
 
 void    MemoryEnableTracking(const bool& track);
 void*   MemoryMalloc(size_t bytes, const char* file, const int& line);

@@ -4,6 +4,7 @@
 #include "../../hdr/core.h"
 #include "../../hdr/logger.h"
 #include "../../hdr/util/hotloader.h"
+#include <sys/stat.h>
 
 namespace HotLoader
 {

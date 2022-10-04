@@ -552,7 +552,7 @@ namespace GFX
             return Position{.x = -1, .y = -1};
         }
 
-        static SpriteSheet LoadSpriteSheet(const char *filePath) {
+        SpriteSheet LoadSpriteSheet(const char *filePath) {
             return SpriteSheet();
         }
 
@@ -595,6 +595,11 @@ namespace GFX
 
             std::vector<FileData> data;
             loadAndSort(data, mFilePaths);
+
+            if(data.empty())
+            {
+                return SpriteSheet();
+            }
 
             i32 maxImageWidth = 0;
             i32 maxImageHeight = 0;

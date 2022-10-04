@@ -41,7 +41,7 @@ namespace GFX
 		switch (api)
 		{
 		case RenderApi::GL:
-			result = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+			result = gladLoadGL(glfwGetProcAddress);
 			break;
 		case RenderApi::VK:
 			break;

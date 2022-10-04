@@ -85,6 +85,6 @@ void Log(const char* type,
         Highlighter(userFormat, highlights.at(i));
     }
 
-    printf("%s\n%s", str, userFormat.c_str());
+    printf("%s\n%s\n", str, userFormat.c_str());
     Free(str);
 }

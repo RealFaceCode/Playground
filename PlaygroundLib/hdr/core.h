@@ -1,6 +1,10 @@
 #ifndef CORE_H
 #define CORE_H
 
+#if !defined(NDEBUG)
+#define _DEBUG
+#endif
+
 #ifndef DEFINE_CORE_DEFINES
 #define DEFINE_CORE_DEFINES
 	#define _CRT_SECURE_NO_WARNINGS
@@ -28,7 +32,7 @@
 #include <GLFW/glfw3.h>
 
 //GLAD INCLUDES
-#include <glad/glad.h>
+#include "OpenGL.h"
 
 //GLM INCLUDES
 #include <glm.hpp>

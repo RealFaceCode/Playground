@@ -1,6 +1,6 @@
+#include "core.h"
 #include <gfx/image.h>
 #include <util/memory.h>
-#include "core.h"
 #include "window/window.h"
 #include "window/input.h"
 #include "gfx/gfx.h"
