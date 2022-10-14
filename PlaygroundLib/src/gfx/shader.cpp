@@ -2,6 +2,7 @@
 #include "../../hdr/logger.h"
 #include "../../hdr/gfx/shader.h"
 #include "../../hdr/gfx/gfx.h"
+#include <OpenGL.h>
 
 namespace GFX
 {

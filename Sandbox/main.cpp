@@ -8,6 +8,7 @@
 #include "gfx/renderer.h"
 #include "util/hotloader.h"
 #include "logger.h"
+#include <OpenGL.h>
 
 // ---------- TODO SECTION ----------
 //TODO: implement load function for sprite sheet loading

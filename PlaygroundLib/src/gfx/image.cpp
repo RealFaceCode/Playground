@@ -1,12 +1,9 @@
-//
-// Created by Kevin-Laptop on 02.08.2022.
-//
-
 #include "../../hdr/core.h"
 #include "../../hdr/logger.h"
 #include "../../hdr/gfx/image.h"
 #include <stb_image.h>
 #include <stb_image_write.h>
+#include <OpenGL.h>
 
 namespace GFX
 {

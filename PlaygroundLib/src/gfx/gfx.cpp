@@ -3,6 +3,7 @@
 #include "../../hdr/gfx/gfx.h"
 #include "../../hdr/gfx/batch.h"
 #include "../../hdr/gfx/image.h"
+#include <OpenGL.h>
 
 namespace GFX
 {

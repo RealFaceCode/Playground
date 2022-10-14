@@ -3,6 +3,7 @@
 #include "../../hdr/gfx/shader.h"
 #include "../../hdr/gfx/batch.h"
 #include "../../hdr/logger.h"
+#include <OpenGL.h>
 
 namespace GFX
 {

@@ -32,7 +32,7 @@
 #include <GLFW/glfw3.h>
 
 //GLAD INCLUDES
-#include "OpenGL.h"
+//#include <OpenGL.h>
 
 //GLM INCLUDES
 #include <glm.hpp>

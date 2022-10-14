@@ -2,6 +2,7 @@
 #include "../../hdr/window/input.h"
 #include "../../hdr/logger.h"
 #include "../../hdr/util/memory.h"
+#include <OpenGL.h>
 
 #ifdef _DEBUG
 #define CHECK_INIT {if(!INIT){ LOG_ASSERT(false, {}, "Window::Init() was never called!");}};
