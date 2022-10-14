@@ -113,7 +113,7 @@ int main()
     glm::mat4 view = glm::lookAt(glm::vec3{0.0f, 0.0f, 0.0f}, glm::vec3{ 0.0f, 0.0f, -1.0f }, glm::vec3{ 0.0f, 1.0f, 0.0f });
     shader->setUniformMat4("uProj", proj);
     shader->setUniformMat4("uView", view);
-
+    glViewport(0, 0, 900, 600);
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
     HotLoader::AddFileToWatch("../assets/shader/shader.frag");
