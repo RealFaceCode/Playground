@@ -55,13 +55,26 @@ void Log(const char* type,
          const char* format,
          ...)
 {
+    std::string userFormat(format);
+
+    for(auto i = 0; i < highlights.size(); i++)
+    {
+        if(i != 0)
+        {
+            highlights.at(i).mPrevColor = highlights.at(i - 1).mHighlightColor;
+        }
+        Highlighter(userFormat, highlights.at(i));
+    }
+
     char* str;
     va_list args;
-    va_start(args, format);
-    vasprintf(&str, format, args);
+    va_start(args, userFormat.data());
+    vasprintf(&str, userFormat.data(), args);
     va_end(args);
 
-    std::string userFormat(str);
+    userFormat.clear();
+    userFormat.append(str);
+
     Free(str);
 
     const char* color       = GetAnsiColor(logColor);
@@ -73,17 +86,8 @@ void Log(const char* type,
     const char* cTime       = time.c_str();
 
     asprintf(&str,
-        "%s[%s][FILE:%s][LINE:%i][%s][%s]%s",
-        color, type,fileName,line, cDate, cTime, ANSI_END);
-
-    for(auto i = 0; i < highlights.size(); i++)
-    {
-        if(i != 0)
-        {
-            highlights.at(i).mPrevColor = highlights.at(i - 1).mHighlightColor;
-        }
-        Highlighter(userFormat, highlights.at(i));
-    }
+             "%s[%s][FILE:%s][LINE:%i][%s][%s]%s",
+             color, type,fileName,line, cDate, cTime, ANSI_END);
 
     printf("%s\n%s\n", str, userFormat.c_str());
     Free(str);
