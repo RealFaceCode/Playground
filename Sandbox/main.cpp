@@ -3,12 +3,13 @@
 #include <util/memory.h>
 #include "window/window.h"
 #include "window/input.h"
-#include "gfx/gfx.h"
 #include "gfx/shader.h"
 #include "gfx/renderer.h"
 #include "util/hotloader.h"
 #include "logger.h"
+#include "util/systeminfo.h"
 #include <OpenGL.h>
+
 
 // ---------- TODO SECTION ----------
 //TODO: implement load function for sprite sheet loading
@@ -28,12 +29,13 @@
 //TODO: |-> lua?
 // ---------- TODO SECTION ----------
 
+
+
 int main()
 {
+    MemoryEnableTracking(true);
     CoreInit();
     Window::Init();
-
-    MemoryEnableTracking(true);
 
     Window::Window win = Window::WindowBuilder
             .setSize(900, 600)
@@ -124,6 +126,25 @@ int main()
         if (Input::IsKeyPressed(GLFW_KEY_ESCAPE))
         {
             win.close();
+        }
+
+        if(Input::IsKeyDown(GLFW_KEY_W))
+        {
+            auto system_info = GetSystemInfo();
+            LOG_INFO({}, "ProcessorCores: %i\n"
+                         "Total physical memory in MB: %.1f\n"
+                         "Available physical memory in MB: %.1f\n"
+                         "Used physical memory by process in MB: %.1f\n"
+                         "Used virtual memory by process in MB: %.1f\n"
+                         "Used virtual memory by process in MB: %.1f\n",
+                         system_info.mCPU_Info.mProcessorCores,
+                         system_info.mRAM_Info.mPhysicalMemory.mTotalPhysMemInMB,
+                         system_info.mRAM_Info.mPhysicalMemory.mTotalPhysMemInMB
+                         - system_info.mRAM_Info.mPhysicalMemory.mPhysMemUsedInMB,
+                         system_info.mRAM_Info.mPhysicalMemory.mPhysMemUsedByProgressInMB,
+                         system_info.mRAM_Info.mVirtualMemory.mVirtualMemUsedByProgressInMB,
+                         system_info.mRAM_Info.mVirtualMemory.mVirtualMemUsedByProgressInMB
+                         - system_info.mRAM_Info.mPhysicalMemory.mPhysMemUsedByProgressInMB);
         }
 
         if(HotLoader::IsModified("../assets/shader/shader.frag"))

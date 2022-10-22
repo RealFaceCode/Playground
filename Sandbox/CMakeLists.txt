@@ -10,5 +10,8 @@ include_directories("../PlaygroundLib/vendor/glm/glm/")
 include_directories("../PlaygroundLib/vendor/stb/")
 add_compile_definitions(GLFW_INCLUDE_NONE)
 
+set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -static-libstdc++ -lwsock32 -lws2_32 ${CMAKE_CXX_STANDARD_LIBRARIES}")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive")
+
 add_executable(Sandbox ${SOURCE_FILES} ${GLAD_FILES} ${FHANDLE_FILES})
 target_link_libraries(Sandbox PlaygroundLib)

@@ -31,25 +31,10 @@
 //GLFW INCLUDES
 #include <GLFW/glfw3.h>
 
-//GLAD INCLUDES
-//#include <OpenGL.h>
-
 //GLM INCLUDES
 #include <glm.hpp>
 #include <gtx/transform.hpp>
 #include <gtc/type_ptr.hpp>
-
-//STBI INCLUDES
-
-//IMGUI INCLUDES
-
-//PROFILING INCLUDES
-
-//ASSIMP INCLUDES
-
-//TASKFLOW INCLUDES
-
-//MESHOPTIMIZER INCLUDES
 
 //STD INCLUDES
 #include <string>
