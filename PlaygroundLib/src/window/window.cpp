@@ -242,7 +242,7 @@ namespace Window
 		glfwSetWindowSizeLimits(mHandle, minWidth, minHeight, maxWidth, maxHeight);
 	}
 
-	void Window::hideCoursor(const bool hide)
+	void Window::hideCursor(const bool hide)
 	{
         CHECK_INIT
 		if (hide)
@@ -255,7 +255,7 @@ namespace Window
 		}
 	}
 
-	void Window::disableCourser(const bool disable)
+	void Window::disableCursor(const bool disable)
 	{
         CHECK_INIT
 		if (disable)
@@ -287,7 +287,7 @@ namespace Window
 		Input::SetWindowPositionPointer(&mSettings.winPosX, &mSettings.winPosY);
 	}
 
-	void Window::setStandartCursor(CursorForm cursorForm)
+	void Window::setStandardCursor(CursorForm cursorForm)
 	{
         CHECK_INIT
 		if(mCursor)
@@ -300,7 +300,7 @@ namespace Window
 
 		switch (cursorForm)
 		{
-		case CursorForm::StandarCursor:
+		case CursorForm::StandardCursor:
 			c = GLFW_ARROW_CURSOR;
 			break;
 		case CursorForm::CrosshairCursor:
@@ -478,7 +478,7 @@ namespace Window
 		return !glfwWindowShouldClose(mHandle);
 	}
 
-	void Window::attantion()
+	void Window::attention()
 	{
         CHECK_INIT
 		glfwRequestWindowAttention(mHandle);
@@ -647,7 +647,7 @@ namespace Window
 		return *this;
 	}
 
-	WindowBuildObj& WindowBuildObj::hideCoursor()
+	WindowBuildObj& WindowBuildObj::hideCursor()
 	{
         CHECK_INIT
 		mHide = true;
@@ -669,7 +669,7 @@ namespace Window
 		return *this;
 	}
 
-	WindowBuildObj& WindowBuildObj::disableCoursor()
+	WindowBuildObj& WindowBuildObj::disableCursor()
 	{
         CHECK_INIT
 		mDisable = true;
@@ -814,7 +814,7 @@ namespace Window
 		}
 		else
 		{
-			win.setStandartCursor(mCursorForm);
+			win.setStandardCursor(mCursorForm);
 		}
 
 		if (mHideWindow)

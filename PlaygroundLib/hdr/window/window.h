@@ -39,7 +39,7 @@ namespace Window
 
 	enum CursorForm
 	{
-		StandarCursor,
+		StandardCursor,
 		CrosshairCursor,
 		HandCursor,
 		HResizeCursor,
@@ -82,13 +82,13 @@ namespace Window
 		void setCursorPosition(const ui32 x, const ui32 y);
 		void setSizeLimits(ui32 minWidth, ui32 minHeight, ui32 maxWidth, ui32 maxHeight);
 
-		void hideCoursor(const bool hide);
-		void disableCourser(const bool disable);
+		void hideCursor(const bool hide);
+		void disableCursor(const bool disable);
 		void hide(bool hideWindow);
 
 		void setInputPointer();
 
-		void setStandartCursor(CursorForm cursorForm = CursorForm::StandarCursor);
+		void setStandardCursor(CursorForm cursorForm = CursorForm::StandardCursor);
 		void setCursor16(const unsigned char* pixels, ui8 hotX, ui8 hotY);
 		void setCursor32(const unsigned char* pixels, ui8 hotX, ui8 hotY);
 		void setCursor64(const unsigned char* pixels, ui8 hotX, ui8 hotY);
@@ -98,7 +98,7 @@ namespace Window
 		bool isWindowValid();
 
 		//stuff
-		void attantion();
+		void attention();
 		void maximize();
 		void minimize();
 		void restore();
@@ -136,7 +136,7 @@ namespace Window
 		bool mHideWindow				= false;
 		bool mMakeBorderless			= false;
 		CustomCursorForm mCustomForm	= None;
-		CursorForm mCursorForm			= StandarCursor;
+		CursorForm mCursorForm			= StandardCursor;
 		ui32 mCoursorPosX				= 0;
 		ui32 mCoursorPosY				= 0;
 		const unsigned char* mPixels	= nullptr;
@@ -161,10 +161,10 @@ namespace Window
 		WindowBuildObj& setWindowSizeLimits(ui32 minWidth, ui32 minHeight, ui32 maxWidth, ui32 maxHeight);
 		WindowBuildObj& setSettingsFileName(const char* fileName);
 		WindowBuildObj& centerWindowOnScreen();
-		WindowBuildObj& hideCoursor();
+		WindowBuildObj& hideCursor();
 		WindowBuildObj& hideWindow();
 		WindowBuildObj& makeBorderless();
-		WindowBuildObj& disableCoursor();
+		WindowBuildObj& disableCursor();
 		Window build(const char* title);
 	} static WindowBuilder;
 };
