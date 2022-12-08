@@ -1,10 +1,95 @@
-//
-// Created by Kevin-Laptop on 13.11.2022.
-//
+#include "../../../hdr/util/buffer/string.h"
+#include "../../../hdr/util/memory.h"
+#include "../../../hdr/logger.h"
 
-#include "../../hdr/util/string.h"
-#include "../../hdr/util/memory.h"
-#include "../../hdr/logger.h"
+String toString(i8 integer)
+{
+    char str[32];
+    snprintf(str, 32, "%d", integer);
+    return str;
+}
+
+String toString(i16 integer)
+{
+    char str[32];
+    snprintf(str, 32, "%d", integer);
+    return str;
+}
+
+String toString(i32 integer)
+{
+    char str[32];
+    snprintf(str, 32, "%d", integer);
+    return str;
+}
+
+String toString(i64 integer)
+{
+    char str[32];
+    snprintf(str, 32, "%d", integer);
+    return str;
+}
+
+String toString(ui8 integer)
+{
+    char str[32];
+    snprintf(str, 32, "%d", integer);
+    return str;
+}
+
+String toString(ui16 integer)
+{
+    char str[32];
+    snprintf(str, 32, "%d", integer);
+    return str;
+}
+
+String toString(ui32 integer)
+{
+    char str[32];
+    snprintf(str, 32, "%d", integer);
+    return str;
+}
+
+String toString(ui64 integer)
+{
+    char str[32];
+    snprintf(str, 32, "%d", integer);
+    return str;
+}
+
+String toString(f32 f)
+{
+    char str[32];
+    snprintf(str, 32, "%f", f);
+    return str;
+}
+
+String toString(f64 f)
+{
+    char str[64];
+    snprintf(str, 64, "%f", f);
+    return str;
+}
+
+String toString(bool boolean, bool asNum)
+{
+    if(asNum)
+    {
+        char str[32];
+        snprintf(str, 32, "%d", boolean);
+        return str;
+    }
+
+    if(boolean)
+    {
+        return "true";
+    }
+    else
+    {
+        return "false";
+    }
+}
 
 String::String() :mCap(0), mLen(0), mSource(nullptr) {}
 
@@ -42,45 +127,97 @@ String::~String()
 
 void String::add(const String& string)
 {
-    ui64 strLen = string.mLen;
-
-    if(!checkCap(strLen))
-    {
-        strLen -= mCap;
-        reserve(strLen);
-    }
     insert(mLen, string);
 }
 
 void String::add(const std::string& string)
 {
-    ui64 strLen = string.size();
-    if(!checkCap(strLen))
-    {
-        strLen -= mCap;
-        reserve(strLen);
-    }
     insert(mLen, string);
 }
 
 void String::add(const char* string)
 {
-    ui64 strLen = strlen(string);
-    if(!checkCap(strLen))
-    {
-        strLen -= mCap;
-        reserve(strLen);
-    }
     insert(mLen, string);
 }
 
+void String::add(i8 integer)
+{
+    add(toString(integer));
+}
+
+void String::add(i16 integer)
+{
+    add(toString(integer));
+}
+
+void String::add(i32 integer)
+{
+    add(toString(integer));
+}
+
+void String::add(i64 integer)
+{
+    add(toString(integer));
+}
+
+void String::add(ui8 integer)
+{
+    add(toString(integer));
+}
+
+void String::add(ui16 integer)
+{
+    add(toString(integer));
+}
+
+void String::add(ui32 integer)
+{
+    add(toString(integer));
+}
+
+void String::add(ui64 integer)
+{
+    add(toString(integer));
+}
+
+void String::add(f32 f)
+{
+    add(toString(f));
+}
+
+void String::add(f64 f)
+{
+    add(toString(f));
+}
+
+void String::add(bool boolean, bool asNum)
+{
+    if(asNum)
+    {
+        char str[32];
+        snprintf(str, 32, "%d", boolean);
+        add(str);
+        return;
+    }
+
+    if(boolean)
+    {
+        add("true");
+    }
+    else
+    {
+        add("false");
+    }
+
+}
 
 void String::replaceWith(const String& string, const String& rString)
 {
     std::vector<ui64> pos = find(string);
-    if(!checkCap((pos.size() * rString.mLen) - (pos.size() * string.mLen)))
+    ui64 cap = (pos.size() * rString.mLen) - (pos.size() * string.mLen);
+    if(!checkCap(cap))
     {
-        reserve((pos.size() * rString.mLen) - (pos.size() * string.mLen));
+        makeFit(cap);
     }
 
     for(ui64 p : pos)
@@ -92,6 +229,8 @@ void String::replaceWith(const String& string, const String& rString)
 
 void String::replaceWith(const ui64& posBegin, const ui64& posEnd, const String& string)
 {
+    remove(posBegin, posEnd);
+    insert(posBegin, string);
 }
 
 void String::replaceWith(const String& string, const std::string& rString)
@@ -100,8 +239,7 @@ void String::replaceWith(const String& string, const std::string& rString)
     ui64 cap = (pos.size() * rString.size()) - (pos.size() * string.mLen);
     if(!checkCap(cap))
     {
-        cap -= (mCap - mLen);
-        reserve(cap);
+        makeFit(cap);
     }
 
     ui64 offSet = 0;
@@ -116,6 +254,8 @@ void String::replaceWith(const String& string, const std::string& rString)
 
 void String::replaceWith(const ui64& posBegin, const ui64& posEnd, const std::string& string)
 {
+    remove(posBegin, posEnd);
+    insert(posBegin, string);
 }
 
 void String::replaceWith(const String& string, const char* rString)
@@ -124,8 +264,7 @@ void String::replaceWith(const String& string, const char* rString)
     ui64 cap = (pos.size() * strlen(rString)) - (pos.size() * string.mLen);
     if(!checkCap(cap))
     {
-        cap -= (mCap - mLen);
-        reserve(cap);
+        makeFit(cap);
     }
 
     ui64 offSet = 0;
@@ -140,6 +279,8 @@ void String::replaceWith(const String& string, const char* rString)
 
 void String::replaceWith(const ui64& posBegin, const ui64& posEnd, const char* string)
 {
+    remove(posBegin, posEnd);
+    insert(posBegin, string);
 }
 
 void String::replaceWith(const std::string& string, const String& rString)
@@ -148,8 +289,7 @@ void String::replaceWith(const std::string& string, const String& rString)
     ui64 cap = (pos.size() * rString.mLen) - (pos.size() * string.size());
     if(!checkCap(cap))
     {
-        cap -= (mCap - mLen);
-        reserve(cap);
+        makeFit(cap);
     }
 
     ui64 offSet = 0;
@@ -168,8 +308,7 @@ void String::replaceWith(const std::string& string, const std::string& rString)
     ui64 cap = (pos.size() * rString.size()) - (pos.size() * string.size());
     if(!checkCap(cap))
     {
-        cap -= (mCap - mLen);
-        reserve(cap);
+        makeFit(cap);
     }
 
     ui64 offSet = 0;
@@ -188,8 +327,7 @@ void String::replaceWith(const std::string& string, const char* rString)
     ui64 cap = (pos.size() * strlen(rString)) - (pos.size() * string.size());
     if(!checkCap(cap))
     {
-        cap -= (mCap - mLen);
-        reserve(cap);
+        makeFit(cap);
     }
 
     ui64 offSet = 0;
@@ -208,8 +346,7 @@ void String::replaceWith(const char* string, const String& rString)
     ui64 cap = (pos.size() * rString.mLen) - (pos.size() * strlen(string));
     if(!checkCap(cap))
     {
-        cap -= (mCap - mLen);
-        reserve(cap);
+        makeFit(cap);
     }
 
     ui64 offSet = 0;
@@ -228,8 +365,7 @@ void String::replaceWith(const char* string, const std::string& rString)
     ui64 cap = (pos.size() * rString.size()) - (pos.size() * strlen(string));
     if(!checkCap(cap))
     {
-        cap -= (mCap - mLen);
-        reserve(cap);
+        makeFit(cap);
     }
 
     ui64 offSet = 0;
@@ -248,8 +384,7 @@ void String::replaceWith(const char* string, const char* rString)
     ui64 cap = (pos.size() * strlen(rString)) - (pos.size() * strlen(string));
     if(!checkCap(cap))
     {
-        cap -= (mCap - mLen);
-        reserve(cap);
+        makeFit(cap);
     }
 
     ui64 offSet = 0;
@@ -267,7 +402,7 @@ void String::insert(const ui64& pos, const String& string)
     ui64 strLen = string.mLen;
     if(!checkCap(strLen))
     {
-        reserve(strLen);
+        makeFit(strLen);
     }
 
     ui64 bufLen = mLen - pos;
@@ -284,7 +419,7 @@ void String::insert(const ui64& pos, const std::string& string)
     ui64 strLen = string.size();
     if(!checkCap(strLen))
     {
-        reserve(strLen);
+        makeFit(strLen);
     }
 
     ui64 bufLen = mLen - pos;
@@ -301,7 +436,7 @@ void String::insert(const ui64& pos, const char* string)
     ui64 strLen = strlen(string);
     if(!checkCap(strLen))
     {
-        reserve(strLen);
+        makeFit(strLen);
     }
 
     ui64 bufLen = mLen - pos;
@@ -618,7 +753,7 @@ void String::toLower(const char* string)
 const std::vector<ui64> String::find(const String& string) const
 {
     std::vector<ui64> pos = {};
-    ui64 strLen = string.getLength();
+    ui64 strLen = string.length();
     for(ui64 i = 0; i < mLen; i++)
     {
         if(mSource[i] == string.getSource()[0])
@@ -674,7 +809,7 @@ const std::vector<ui64> String::find(const char* string) const
 const std::vector<ui64> String::find(const ui64& posBegin, const ui64& posEnd, const String& string) const
 {
     std::vector<ui64> pos = {};
-    ui64 strLen = string.getLength();
+    ui64 strLen = string.length();
     StringView strView(posBegin, posEnd, *this);
     for(ui64 i = 0; i < mLen; i++)
     {
@@ -761,12 +896,12 @@ void String::clear()
     mSource[mLen] = '\0';
 }
 
-const ui64 String::getCapacity() const
+const ui64 String::capacity() const
 {
     return mCap;
 }
 
-const ui64 String::getLength() const
+const ui64 String::length() const
 {
     return mLen;
 }
@@ -851,6 +986,12 @@ bool String::checkCap(const ui64& size)
     return mCap - mLen >= size ? true : false;
 }
 
+void String::makeFit(const ui64 &size) {
+    ui64 strLen = size;
+    strLen -= (mCap - mLen);
+    reserve(strLen);
+}
+
 StringView::StringView(const ui64& posBegin, const ui64& posEnd, const String& string)
 {
     ui64 strLen = posEnd - posBegin;
@@ -897,7 +1038,7 @@ StringView::~StringView()
     mLen = 0;
 }
 
-const ui64 StringView::getLen() const
+const ui64& StringView::length() const
 {
     return mLen;
 }

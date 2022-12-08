@@ -1,10 +1,21 @@
-//
-// Created by Kevin-Laptop on 13.11.2022.
-//
-#include "../core.h"
+#include "../../core.h"
 
 #ifndef PLAYGROUNDLIB_STRING_H
 #define PLAYGROUNDLIB_STRING_H
+
+struct String;
+
+String toString(i8 integer);
+String toString(i16 integer);
+String toString(i32 integer);
+String toString(i64 integer);
+String toString(ui8 integer);
+String toString(ui16 integer);
+String toString(ui32 integer);
+String toString(ui64 integer);
+String toString(f32 f);
+String toString(f64 f);
+String toString(bool , bool asNum = false);
 
 struct String
 {
@@ -19,6 +30,17 @@ public:
     void add(const String& string);
     void add(const std::string& string);
     void add(const char* string);
+    void add(i8 integer);
+    void add(i16 integer);
+    void add(i32 integer);
+    void add(i64 integer);
+    void add(ui8 integer);
+    void add(ui16 integer);
+    void add(ui32 integer);
+    void add(ui64 integer);
+    void add(f32 f);
+    void add(f64 f);
+    void add(bool , bool asNum = false);
 
     void replaceWith(const String& string, const String& rString);
     void replaceWith(const ui64& posBegin, const ui64& posEnd, const String& string);
@@ -73,8 +95,8 @@ public:
     const bool reserve(const ui64& size);
     void clear();
 
-    const ui64 getCapacity() const;
-    const ui64 getLength() const;
+    const ui64 capacity() const;
+    const ui64 length() const;
     ui8* getSource() const;
     const ui8& at(const ui64 index) const;
 
@@ -91,7 +113,7 @@ public:
     String& operator+=(const char* string);
 private:
     bool checkCap(const ui64& size);
-
+    void makeFit(const ui64& size);
 private:
     ui64 mCap;
     ui64 mLen;
@@ -107,7 +129,7 @@ public:
     StringView(const ui64& posBegin, const ui64& posEnd, const StringView& string);
     ~StringView();
 
-    const ui64 getLen() const;
+    const ui64& length() const;
     const ui8* getView() const;
 private:
     ui64 mLen;

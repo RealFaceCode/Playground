@@ -1,9 +1,18 @@
 #include "../hdr/core.h"
 #include "../hdr/util/memory.h"
 
+void exitFunc()
+{
+    if(MemoryPrintStack())
+    {
+        system("pause");
+    }
+}
+
 void CoreInit()
 {
     PREP_CONSOLE_LOG
+    atexit(exitFunc);
 }
 
 std::string GetTime()
