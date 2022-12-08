@@ -9,6 +9,8 @@
 #include "logger.h"
 #include "util/systeminfo.h"
 #include <OpenGL.h>
+#include <util/buffer/string.h>
+#include <util/buffer/binarybuffer.h>
 
 
 // ---------- TODO SECTION ----------
@@ -27,14 +29,27 @@
 //TODO: |-> checkbox
 //TODO: scripting support?
 //TODO: |-> lua?
+//TODO: Rewriting with own string class
 // ---------- TODO SECTION ----------
 
 
 
 int main()
 {
-    MemoryEnableTracking(true);
     CoreInit();
+    MemoryEnableTracking(true);
+
+    String s = "hallo";
+
+    BinaryBuffer bBuffer(24);
+    bBuffer.add((ui32)1234);
+    bBuffer.add((f64)1234.1234);
+    bBuffer.add(String("hallo welt!"));
+
+    auto a1 = bBuffer.getUi32();
+    auto a2 = bBuffer.getF64();
+    auto a3 = bBuffer.getSTD_str();
+
     Window::Init();
 
     Window::Window win = Window::WindowBuilder
@@ -179,10 +194,5 @@ int main()
     }
 
     win.clear();
-    if(MemoryPrintStack())
-    {
-        system("pause");
-    }
-
     return 0;
 }
