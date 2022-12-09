@@ -1,5 +1,6 @@
 #ifndef CORE_H
 #define CORE_H
+//TODO: rewrite
 
 #if !defined(NDEBUG)
 #define _DEBUG
@@ -16,13 +17,14 @@
     #define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
     #define DISABLE_NEWLINE_AUTO_RETURN  0x0008
     #include <windows.h>
+    /**@brief Prepares the console for colored text output*/
     #define PREP_CONSOLE_LOG { \
         HANDLE handleOut = GetStdHandle(STD_OUTPUT_HANDLE);\
         DWORD consoleMode;\
-        GetConsoleMode( handleOut , &consoleMode);\
+        GetConsoleMode(handleOut, &consoleMode);\
         consoleMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;\
         consoleMode |= DISABLE_NEWLINE_AUTO_RETURN;\
-        SetConsoleMode( handleOut , consoleMode );\
+        SetConsoleMode(handleOut, consoleMode );\
     };
 #else
     #define PREP_CONSOLE_LOG
@@ -69,6 +71,7 @@ typedef double		f64;
 //ENUMS
 
 //Structs
+/**@brief Class for checking results*/
 template<typename T>
 struct Result
 {
@@ -77,9 +80,17 @@ public:
     bool result;
 
 public:
+    /**@brief Unwraps the given value
+         * @returns
+         * Returns a given result with a given type
+         */
     T unwrap();
 
 public:
+    /**@brief Checks if the result is valid
+         * @returns
+         * Returns if the result is valid or not based on the result
+         */
     explicit operator bool() const noexcept;
 };
 
@@ -94,11 +105,32 @@ Result<T>::operator bool() const noexcept {
 }
 
 //FUNCTIONS
+/**@brief Initialized all core related functions
+ * @returns
+ * VOID
+ */
 void CoreInit();
 
+/**@brief Gets the time as a std::string
+ * @returns
+ * Returns a std::string with the actual time
+ */
 std::string GetTime();
+/**@brief Gets the date as a std::string
+ * @returns
+ * Returns a std::string with the actual date
+ */
 std::string GetDate();
+/**@brief Gets a file name from a file path
+ * @param[in] fileName
+ * @returns
+ * Returns a std::string with a file name from a given file path
+ */
 std::string GetFileName(const char* fileName);
+/**@brief Checks if a file path end with a given file extension
+ * @retval TRUE if the file ends with the file extension
+ * @retval FALSE if the file dont ends with the file extension
+ */
 bool EndsWith(const char* filepath, const char* ending);
 
 //C STRING HELPER

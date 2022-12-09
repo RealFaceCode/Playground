@@ -57,9 +57,9 @@ namespace Input
 
 	bool wasMaximizedBMinimized								= false;
 
-	float ToFloatCoord(const int coord, const int maxLen, const bool flip)
+	float ToFloatCoord(const int& coord, const int& maxLen, const bool& flip)
 	{
-		return flip == true
+		return flip
 			? ((float)((float)(coord * 2) / (float)maxLen) - 1.0f) * -1.0f
 			: (float)((float)(coord * 2) / (float)maxLen) - 1.0f;
 	}
@@ -224,22 +224,22 @@ namespace Input
 		windowPosY = y;
 	}
 
-	bool IsKeyPressed(const int key)
+	bool IsKeyPressed(const int& key)
 	{
 		return keys[key].isPressed();
 	}
 
-	bool IsKeyDown(const int key)
+	bool IsKeyDown(const int& key)
 	{
 		return keys[key].isDown();
 	}
 
-	bool IsKeyReleased(const int key)
+	bool IsKeyReleased(const int& key)
 	{
 		return keys[key].isReleased();
 	}
 
-	bool IsKeyState(const State state, const int key)
+	bool IsKeyState(const State& state, const int& key)
 	{
 		switch (state)
 		{
@@ -265,22 +265,22 @@ namespace Input
 		return false;
 	}
 
-	bool IsMouseButtonPressed(const int button)
+	bool IsMouseButtonPressed(const int& button)
 	{
 		return buttons[button].isPressed();
 	}
 
-	bool IsMouseButtonDown(const int button)
+	bool IsMouseButtonDown(const int& button)
 	{
 		return buttons[button].isDown();
 	}
 
-	bool IsMouseButtonReleased(const int button)
+	bool IsMouseButtonReleased(const int& button)
 	{
 		return buttons[button].isReleased();
 	}
 
-	bool IsMouseButtonState(const State state, const int button)
+	bool IsMouseButtonState(const State& state, const int& button)
 	{
 		switch (state)
 		{

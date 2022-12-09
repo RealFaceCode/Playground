@@ -3,6 +3,7 @@
 
 #include "../core.h"
 
+/**@brief Defines with architectures are supported*/
 enum class ProcessorArchitecture
 {
     UNKNOWN             = 0,
@@ -13,14 +14,17 @@ enum class ProcessorArchitecture
     INTEL_ITANIUM_BASED = 5,
 };
 
+/**@brief Holds the information about how many processor core the cpu has and witch architecture it has*/
 struct CPU_Info
 {
     const ui16                  mProcessorCores;
     const ProcessorArchitecture mProcessorArchitecture;
 };
 
+/**@brief Holds the information about the physical and the virtual memory*/
 struct RAM_Info
 {
+    /**@brief holds the information about the virtual memory*/
     struct VirtualMemory
     {
         const ui64  mTotalVirtualMemInBytes;
@@ -37,6 +41,7 @@ struct RAM_Info
         const f64   mVirtualMemUsedByProgressInGB;
     };
 
+    /**@brief Holds the information of the physical memory*/
     struct PhysicalMemory
     {
         const ui64  mTotalPhysMemInBytes;
@@ -58,16 +63,41 @@ struct RAM_Info
     PhysicalMemory  mPhysicalMemory;
 };
 
+/**@brief Holds the information over the memory and the cpu*/
 struct System_Info
 {
     CPU_Info mCPU_Info;
     RAM_Info mRAM_Info;
 };
 
+/**@brief Gets the amount of processor cores the cpu has
+ * @returns
+ * Returns the amount of processor cores the cpu has without virtual cores
+ */
 const ui16 GetAmountProcessorCores();
+/**@brief Gets the architecture of the cpu
+ * @retval UNKNOWN
+ * @retval X64_AMD_INTEL
+ * @retval ARM
+ * @retval ARM64
+ * @retval X86
+ * @retval INTEL_ITANIUM_BASED
+ */
 const ProcessorArchitecture GetProcessorArchitecture();
+/**@brief Gets the cpu information
+ * @returns
+ * Returns the information of the cpu as a struct
+ */
 const CPU_Info GetCPUInfo();
+/**@brief Gets the memory information
+ * @returns
+ * Returns the information of the memory as a struct
+ */
 const RAM_Info GetRAMInfo();
+/**@brief Gets the system information
+ * @returns
+ * Returns the information of the system as a struct
+ */
 const System_Info GetSystemInfo();
 
 #endif //PLAYGROUNDLIB_SYSTEMINFO_H

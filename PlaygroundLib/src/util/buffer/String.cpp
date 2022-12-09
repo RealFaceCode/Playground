@@ -876,7 +876,7 @@ const bool String::reserve(const ui64& size)
     }
     else
     {
-        mSource = (ui8*)Realloca(mSource, mCap + size + 1);
+        mSource = (ui8*)Realloc(mSource, mCap + size + 1);
         mCap += size;
     }
 
@@ -911,7 +911,7 @@ ui8* String::getSource() const
     return mSource;
 }
 
-const ui8& String::at(const ui64 index) const
+const ui8& String::at(const ui64& index) const
 {
    if(index >= mLen || index < 0 || mLen == 0)
    {
@@ -1001,7 +1001,7 @@ StringView::StringView(const ui64& posBegin, const ui64& posEnd, const String& s
     mLen = strLen;
 }
 
-StringView::StringView(const ui64& posBegin, const ui64& posEnd, const std::string string)
+StringView::StringView(const ui64& posBegin, const ui64& posEnd, const std::string& string)
 {
     ui64 strLen = posEnd - posBegin;
     mSource = (ui8*)Malloc(strLen + 1);

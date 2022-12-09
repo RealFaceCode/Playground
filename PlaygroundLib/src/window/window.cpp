@@ -130,15 +130,15 @@ namespace Window
 		glfwSetWindowTitle(mHandle, title);
 	}
 
-	void Window::setSize(const ui32 width, const ui32 height)
+	void Window::setSize(const ui32& width, const ui32& height)
 	{
         CHECK_INIT
 		mSettings.width = width;
 		mSettings.height = height;
-		glfwSetWindowSize(mHandle, width, height);
+		glfwSetWindowSize(mHandle, (i32)width, (i32)height);
 	}
 
-	void Window::setMonitor(const ui32 monitor)
+	void Window::setMonitor(const ui32& monitor)
 	{
         CHECK_INIT
 		if (monitor >= mMonitors.size())
@@ -154,7 +154,7 @@ namespace Window
 		glfwSetWindowMonitor(mHandle, mMonitors[mSettings.monitor].monitor, 0, 0, vMode->width, vMode->height, vMode->refreshRate);
 	}
 
-	void Window::setVideoMode(const ui32 videoMode)
+	void Window::setVideoMode(const ui32& videoMode)
 	{
         CHECK_INIT
 		if (videoMode >= mMonitors[mSettings.monitor].countVidModes)
@@ -173,7 +173,7 @@ namespace Window
 		glfwSetWindowMonitor(mHandle, mMonitors[mSettings.monitor].monitor, 0, 0, vMode->width, vMode->height, vMode->refreshRate);
 	}
 
-	void Window::setOpacity(const f32 opacity)
+	void Window::setOpacity(const f32& opacity)
 	{
         CHECK_INIT
 		float opc = opacity;
@@ -191,7 +191,7 @@ namespace Window
 		glfwSetWindowOpacity(mHandle, mSettings.opacity);
 	}
 
-	void Window::setRefreshrate(const ui32 refreshRate)
+	void Window::setRefreshrate(const ui32& refreshRate)
 	{
         CHECK_INIT
 		mSettings.refreshRate = refreshRate;
@@ -199,7 +199,7 @@ namespace Window
 		glfwSetWindowMonitor(mHandle, mMonitors[mSettings.monitor].monitor, 0, 0, vMode->width, vMode->height, vMode->refreshRate);
 	}
 
-	void Window::setPosition(const ui32 x, const ui32 y)
+	void Window::setPosition(const ui32& x, const ui32& y)
 	{
         CHECK_INIT
 		if (x > mMonitors[mSettings.monitor].maxWidth)
@@ -217,10 +217,10 @@ namespace Window
 
 		mSettings.winPosX = x;
 		mSettings.winPosY = y;
-		glfwSetWindowPos(mHandle, mSettings.winPosX, mSettings.winPosY);
+		glfwSetWindowPos(mHandle, (i32)mSettings.winPosX, (i32)mSettings.winPosY);
 	}
 
-	void Window::setCursorPosition(const ui32 x, const ui32 y)
+	void Window::setCursorPosition(const ui32& x, const ui32& y)
 	{
         CHECK_INIT
 		if (x > mSettings.width)
@@ -236,13 +236,13 @@ namespace Window
 		glfwSetCursorPos(mHandle, x, y);
 	}
 
-	void Window::setSizeLimits(ui32 minWidth, ui32 minHeight, ui32 maxWidth, ui32 maxHeight)
+	void Window::setSizeLimits(const ui32& minWidth, const ui32& minHeight, const ui32& maxWidth, const ui32& maxHeight)
 	{
         CHECK_INIT
-		glfwSetWindowSizeLimits(mHandle, minWidth, minHeight, maxWidth, maxHeight);
+		glfwSetWindowSizeLimits(mHandle, (i32)minWidth, (i32)minHeight, (i32)maxWidth, (i32)maxHeight);
 	}
 
-	void Window::hideCursor(const bool hide)
+	void Window::hideCursor(const bool& hide)
 	{
         CHECK_INIT
 		if (hide)
@@ -255,7 +255,7 @@ namespace Window
 		}
 	}
 
-	void Window::disableCursor(const bool disable)
+	void Window::disableCursor(const bool& disable)
 	{
         CHECK_INIT
 		if (disable)
@@ -268,7 +268,7 @@ namespace Window
 		}
 	}
 
-	void Window::hide(bool hideWindow)
+	void Window::hide(const bool& hideWindow)
 	{
         CHECK_INIT
 		if (hideWindow)
@@ -287,7 +287,7 @@ namespace Window
 		Input::SetWindowPositionPointer(&mSettings.winPosX, &mSettings.winPosY);
 	}
 
-	void Window::setStandardCursor(CursorForm cursorForm)
+	void Window::setStandardCursor(const CursorForm& cursorForm)
 	{
         CHECK_INIT
 		if(mCursor)
@@ -324,7 +324,7 @@ namespace Window
 		glfwSetCursor(mHandle, mCursor);
 	}
 
-	void Window::setCursor16(const unsigned char* pixels, ui8 hotX, ui8 hotY)
+	void Window::setCursor16(const unsigned char* pixels, const ui8& hotX, const ui8& hotY)
 	{
         CHECK_INIT
 		if (strlen((const char*)pixels) != 16 * 16 * 4)
@@ -367,7 +367,7 @@ namespace Window
 		glfwSetCursor(mHandle, mCursor);
 	}
 
-	void Window::setCursor32(const unsigned char* pixels, ui8 hotX, ui8 hotY)
+	void Window::setCursor32(const unsigned char* pixels, const ui8& hotX, const ui8& hotY)
 	{
         CHECK_INIT
 		if (strlen((const char*)pixels) != 32 * 32 * 4)
@@ -410,7 +410,7 @@ namespace Window
 		glfwSetCursor(mHandle, mCursor);
 	}
 
-	void Window::setCursor64(const unsigned char* pixels, ui8 hotX, ui8 hotY)
+	void Window::setCursor64(const unsigned char* pixels, const ui8& hotX, const ui8& hotY)
 	{
         CHECK_INIT
 		if (strlen((const char*)pixels) != 64 * 64 * 4)
@@ -472,55 +472,55 @@ namespace Window
 		}
 	}
 
-	bool Window::isWindowValid()
+	bool Window::isWindowValid() const
 	{
         CHECK_INIT
 		return !glfwWindowShouldClose(mHandle);
 	}
 
-	void Window::attention()
+	void Window::attention() const
 	{
         CHECK_INIT
 		glfwRequestWindowAttention(mHandle);
 	}
 
-	void Window::maximize()
+	void Window::maximize() const
 	{
         CHECK_INIT
 		glfwMaximizeWindow(mHandle);
 	}
 
-	void Window::minimize()
+	void Window::minimize() const
 	{
         CHECK_INIT
 		glfwIconifyWindow(mHandle);
 	}
 
-	void Window::restore()
+	void Window::restore() const
 	{
         CHECK_INIT
 		glfwRestoreWindow(mHandle);
 	}
 
-	void Window::focus()
+	void Window::focus() const
 	{
         CHECK_INIT
 		glfwFocusWindow(mHandle);
 	}
 
-	void Window::swapBuffers()
+	void Window::swapBuffers() const
 	{
         CHECK_INIT
 		glfwSwapBuffers(mHandle);
 	}
 
-	void Window::close()
+	void Window::close() const
 	{
         CHECK_INIT
 		glfwSetWindowShouldClose(mHandle, true);
 	}
 
-	WindowBuildObj& WindowBuildObj::setSize(const ui32 width, const ui32 height)
+	WindowBuildObj& WindowBuildObj::setSize(const ui32& width, const ui32& height)
 	{
         CHECK_INIT
 		mSettings.width = width;
@@ -528,28 +528,28 @@ namespace Window
 		return *this;
 	}
 
-	WindowBuildObj& WindowBuildObj::setFullscreen(const bool fullscreen)
+	WindowBuildObj& WindowBuildObj::setFullscreen(const bool& fullscreen)
 	{
         CHECK_INIT
 		mSettings.fullscreen = fullscreen;
 		return *this;
 	}
 
-	WindowBuildObj& WindowBuildObj::setMonitor(const ui32 monitor)
+	WindowBuildObj& WindowBuildObj::setMonitor(const ui32& monitor)
 	{
         CHECK_INIT
 		mSettings.monitor = monitor;
 		return *this;
 	}
 	
-	WindowBuildObj& WindowBuildObj::setVideoMode(const ui32 vMode)
+	WindowBuildObj& WindowBuildObj::setVideoMode(const ui32& vMode)
 	{
         CHECK_INIT
 		mSettings.videoMode = vMode;
 		return *this;
 	}
 
-	WindowBuildObj& WindowBuildObj::setRGBBufferSize(const ui32 r, const ui32 g, const ui32 b)
+	WindowBuildObj& WindowBuildObj::setRGBBufferSize(const ui32& r, const ui32& g, const ui32& b)
 	{
         CHECK_INIT
 		mSettings.redBit	= r;
@@ -558,21 +558,21 @@ namespace Window
 		return *this;
 	}
 
-	WindowBuildObj& WindowBuildObj::setOpacity(const f32 opacity)
+	WindowBuildObj& WindowBuildObj::setOpacity(const f32& opacity)
 	{
         CHECK_INIT
 		mSettings.opacity = opacity;
 		return *this;
 	}
 
-	WindowBuildObj& WindowBuildObj::setRefreshRate(const ui32 refreshRate)
+	WindowBuildObj& WindowBuildObj::setRefreshRate(const ui32& refreshRate)
 	{
         CHECK_INIT
 		mSettings.refreshRate = refreshRate;
 		return *this;
 	}
 
-	WindowBuildObj& WindowBuildObj::setWindowPosition(const ui32 x, const ui32 y)
+	WindowBuildObj& WindowBuildObj::setWindowPosition(const ui32& x, const ui32& y)
 	{
         CHECK_INIT
 		mSettings.winPosX = x;
@@ -580,16 +580,16 @@ namespace Window
 		return *this;
 	}
 
-	WindowBuildObj& WindowBuildObj::setCurserPos(const ui32 x, const ui32 y)
+	WindowBuildObj& WindowBuildObj::setCursorPos(const ui32& x, const ui32& y)
 	{
         CHECK_INIT
-		mSetCoursorPos = true;
-		mCoursorPosX = x;
-		mCoursorPosY = y;
+		mSetCursorPos = true;
+		mCursorPosX = x;
+		mCursorPosY = y;
 		return *this;
 	}
 
-	WindowBuildObj& WindowBuildObj::setOpenGLVersion(const ui32 major, ui32 minor)
+	WindowBuildObj& WindowBuildObj::setOpenGLVersion(const ui32& major, const ui32& minor)
 	{
         CHECK_INIT
 		mSettings.openGLMajor = major;
@@ -597,7 +597,7 @@ namespace Window
 		return *this;
 	}
 
-	WindowBuildObj& WindowBuildObj::setWindowCustomCursor(CustomCursorForm cursorForm, const unsigned char* pixels, ui8 hotX, ui8 hotY)
+	WindowBuildObj& WindowBuildObj::setWindowCustomCursor(const CustomCursorForm& cursorForm, const unsigned char* pixels, const ui8& hotX, const ui8& hotY)
 	{
         CHECK_INIT
 		if (cursorForm == CustomCursorForm::None)
@@ -608,21 +608,21 @@ namespace Window
 		{
 			mSetCursorForm = true;
 			mCustomForm = cursorForm;
-			pixels = pixels;
-			hotX = hotX;
-			hotY = hotY;
+			mPixels = pixels;
+			mHotX = hotX;
+			mHotY = hotY;
 		}
 		return *this;
 	}
 
-	WindowBuildObj& WindowBuildObj::setStandartCursor(CursorForm form)
+	WindowBuildObj& WindowBuildObj::setStandardCursor(const CursorForm& form)
 	{
         CHECK_INIT
 		mCursorForm = form;
 		return *this;
 	}
 
-	WindowBuildObj& WindowBuildObj::setWindowSizeLimits(ui32 minWidth, ui32 minHeight, ui32 maxWidth, ui32 maxHeight)
+	WindowBuildObj& WindowBuildObj::setWindowSizeLimits(const ui32& minWidth, const ui32& minHeight, const ui32& maxWidth, const ui32& maxHeight)
 	{
         CHECK_INIT
 		mSetLimits = true;
@@ -768,9 +768,9 @@ namespace Window
 			glfwSetInputMode(win.mHandle, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		}
 
-		if (mSetCoursorPos)
+		if (mSetCursorPos)
 		{
-			win.setCursorPosition(mCoursorPosX, mCoursorPosY);
+			win.setCursorPosition(mCursorPosX, mCursorPosY);
 		}
 
 		win.setOpacity(win.mSettings.opacity);

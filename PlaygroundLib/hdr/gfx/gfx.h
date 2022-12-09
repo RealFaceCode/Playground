@@ -4,6 +4,7 @@
 #include "../core.h"
 #include "../logger.h"
 
+/**@brief Dont use it is not ready yet!*/
 namespace GFX
 {
 #ifdef _DEBUG
