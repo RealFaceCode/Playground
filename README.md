@@ -1,7 +1,7 @@
 # Playground
 An easy way to get a fast project setup for gui apps.
 
-# Dependencies
+## Dependencies
 - stb
 - glfw
 - glad
