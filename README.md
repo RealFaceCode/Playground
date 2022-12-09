@@ -24,7 +24,7 @@ An easy way to get a fast project setup for gui apps.
 - [x] User input system
 
 ## Build instructions
-##cmake
+### cmake
 ```cmake
 cmake_minimum_required(VERSION 3.19)
 project(App)
@@ -48,7 +48,8 @@ add_executable(App ${SOURCE_FILES} ${GLAD_FILES} ${FHANDLE_FILES} src/main.cpp)
 add_subdirectory(vendor/Playground/PlaygroundLib)
 target_link_libraries(App PlaygroundLib)
 ```
-##Examples
+
+## Examples
 
 Using the logging system
 ````cpp
