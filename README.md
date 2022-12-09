@@ -119,3 +119,36 @@ return EXIT_SUCCESS;
 The output:
 
 ![Memory tracking](assets/images/markdown/img_2.png)
+
+### Building a window
+```c++
+#include "core.h"
+#include "window/window.h"
+
+int main(int argc, char** argv)
+{
+    CoreInit();
+    Window::Init();
+    Window::Window win = Window::WindowBuilder
+            .setSize(400, 300)
+            .setRGBBufferSize(8, 8, 8)
+            .setOpacity(1.0f)
+            .setRefreshRate(60)
+            .centerWindowOnScreen()
+            .setStandardCursor(Window::CrosshairCursor)
+            .setSettingsFileName("window.node")
+            .build("playground");
+    win.init();
+
+    while(win.isWindowValid())
+    {
+        win.swapBuffers();
+        Window::pollEvents();
+    }
+    return EXIT_SUCCESS;
+}
+```
+
+The result:
+
+![Window](assets/images/markdown/img_3.png)
