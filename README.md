@@ -51,7 +51,7 @@ target_link_libraries(App PlaygroundLib)
 
 ## Examples
 
-Using the logging system
+### Logging system
 ````cpp
 #include "core.h"
 #include "logger.h"
@@ -70,7 +70,7 @@ The output:
 
 ![Logger Example](assets/images/markdown/img.png)
 
-using the file hot loading
+### Hot loading system
 ````c++
 #include "core.h"
 #include "util/hotloader.h"
@@ -92,7 +92,7 @@ The output when a change is detected:
 
 ![Hot loading](assets/images/markdown/img_1.png)
 
-Using the memory leak detection
+### Memory leak detection
 ```c++
 #include "core.h"
 #include "util/memory.h"
