@@ -24,7 +24,7 @@ An easy way to get a fast project setup for gui apps.
 - [x] User input system
 
 ## Build instructions
-###cmake
+##cmake
 ```cmake
 cmake_minimum_required(VERSION 3.19)
 project(App)
@@ -49,6 +49,7 @@ add_subdirectory(vendor/Playground/PlaygroundLib)
 target_link_libraries(App PlaygroundLib)
 ```
 ##Examples
+
 Using the logging system
 ````cpp
 #include "core.h"
@@ -87,6 +88,7 @@ int main(int argc, char** argv)
 }
 ````
 The output when a change is detected:
+
 ![Hot loading](assets/images/markdown/img_1.png)
 
 Using the memory leak detection
@@ -114,4 +116,5 @@ return EXIT_SUCCESS;
 }
 ```
 The output:
+
 ![Memory tracking](assets/images/markdown/img_2.png)
