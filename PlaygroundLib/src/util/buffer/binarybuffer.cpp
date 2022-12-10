@@ -90,25 +90,35 @@ void BinaryBuffer::add(const f64& f)
     push(sizeof(f64), (void*)&f);
 }
 
-void BinaryBuffer::add(const char* string)
+void BinaryBuffer::add(const char* string, const bool& withoutLen)
 {
     ui64 strLen = strlen(string) + 1;
-    add(strLen);
-    push(strLen, (void*)&string);
+    if(!withoutLen)
+    {
+        add(strLen);
+    }
+    push(strLen, (void*)string);
 }
 
-void BinaryBuffer::add(const std::string& string)
+void BinaryBuffer::add(const std::string& string, const bool& withoutLen)
 {
-    ui64 strLen = string.size() + 1;
-    add(strLen);
+    ui64 strLen = string.length() + 1;
+    if(!withoutLen)
+    {
+        add(strLen);
+    }
     push(strLen, (void*)string.data());
 }
 
-void BinaryBuffer::add(const String& string)
+void BinaryBuffer::add(const String& string, const bool& withoutLen)
 {
     ui64 strLen = string.length() + 1;
-    add(strLen);
+    if(!withoutLen)
+    {
+        add(strLen);
+    }
     push(strLen, (void*)string.getSource());
+
 }
 
 i8 BinaryBuffer::getI8()
@@ -161,23 +171,76 @@ f64 BinaryBuffer::getF64()
     return *(f64*)pop(sizeof(f64));
 }
 
-char* BinaryBuffer::getC_str()
+char* BinaryBuffer::getC_str(const bool& withoutLen)
 {
-    ui64 strLen = getUi64();
-    return (char*)pop(strLen);
+    if(!withoutLen)
+    {
+        ui64 strLen = getUi64();
+        return (char*)pop(strLen);
+    }
+
+    int length = 0;
+    for(ui64 i = mRead; i < mLen; i++)
+    {
+        if(mSource[i] == '\0')
+        {
+            length++;
+            break;
+        }
+        length++;
+    }
+
+    return (char*)pop(length);
 }
 
-std::string BinaryBuffer::getSTD_str()
+std::string BinaryBuffer::getSTD_str(const bool& withoutLen)
 {
-    ui64 strLen = getUi64();
-    std::string string((char*)pop(strLen));
+    if(!withoutLen)
+    {
+        ui64 strLen = getUi64();
+        return {(char*)pop(strLen)};
+    }
+
+    int length = 0;
+    for(ui64 i = mRead; i < mLen; i++)
+    {
+        if(mSource[i] == '\0')
+        {
+            length++;
+            break;
+        }
+        length++;
+    }
+
+    std::string string;
+    char* buffer = (char*)pop(length);
+    string = buffer;
     return string;
 }
 
-String BinaryBuffer::getString()
+String BinaryBuffer::getString(const bool& withoutLen)
 {
-    ui64 strLen = getUi64();
-    return String((char*)pop(strLen));
+    if(!withoutLen)
+    {
+        ui64 strLen = getUi64();
+        return {(char*)pop(strLen)};
+    }
+
+    int length = 0;
+    for(ui64 i = mRead; i < mLen; i++)
+    {
+        if(mSource[i] == '\0')
+        {
+            length++;
+            break;
+        }
+        length++;
+    }
+
+    String string;
+    char* buffer = (char*)pop(length);
+    string.add(buffer);
+    return string;
 }
 
 const ui64 &BinaryBuffer::length() const {
@@ -185,7 +248,12 @@ const ui64 &BinaryBuffer::length() const {
 }
 
 const ui64& BinaryBuffer::capacity() const {
-    return capacity();
+    return mCap;
+}
+
+const ui64 &BinaryBuffer::readOffset() const
+{
+    return mRead;
 }
 
 ui8 *BinaryBuffer::getSource() const {

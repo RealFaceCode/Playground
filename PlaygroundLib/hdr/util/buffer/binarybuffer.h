@@ -94,22 +94,25 @@ public:
     void add(const f64& f);
     /**@brief Adds a c style string and the string length to the buffer. If the buffer to small to add the new data it will automatically allocate mor memory
     * @param[in] string
+    * @param[in] withoutLen
     * @returns
     * VOID
     */
-    void add(const char* string);
+    void add(const char* string, const bool& withoutLen = false);
     /**@brief Adds a std::string and the string length to the buffer. If the buffer to small to add the new data it will automatically allocate mor memory
     * @param[in] string
+    * @param[in] withoutLen
     * @returns
     * VOID
     */
-    void add(const std::string& string);
+    void add(const std::string& string, const bool& withoutLen = false);
     /**@brief Adds a String and the string length to the buffer. If the buffer to small to add the new data it will automatically allocate mor memory
     * @param[in] string
+    * @param[in] withoutLen
     * @returns
     * VOID
     */
-    void add(const String& string);
+    void add(const String& string, const bool& withoutLen = false);
 
     /**@brief Gets a i8 from the buffer
     * @returns
@@ -165,17 +168,18 @@ public:
      * @returns
      * Returns a c style string from the buffer. This should not be freed or modified. For modification it should be allocated a new c style string.
      */
-    char* getC_str();
+    char* getC_str(const bool& withoutLen = false);
     /**@brief Gets a std::string from the buffer
      * @returns
      * Returns a std::string from the buffer
      */
-    std::string getSTD_str();
+    std::string getSTD_str(const bool& withoutLen = false);
     /**@brief Gets a String from the buffer
+     * @param[in] withoutLen
      * @returns
      * Returns a String from the buffer
      */
-    String getString();
+    String getString(const bool& withoutLen = false);
 
     /**@brief Gets the length of the buffer
      * @returns
@@ -187,6 +191,11 @@ public:
      * Returns the capacity of the buffer
      */
     const ui64& capacity() const;
+    /**@brief Gets the read offset of the buffer
+     * @returns
+     * Returns the read offset of the buffer
+     */
+    const ui64& readOffset() const;
     /**@brief Gets the buffer data
      * @returns
      * Returns a ui8* to the buffer data
