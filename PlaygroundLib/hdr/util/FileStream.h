@@ -98,6 +98,21 @@ namespace FS
      * A std::vector<String> with all file path in the directory
     */
     std::vector<String> getFilePathsFromDir(const char* dir);
+    /**@brief Writes to a file
+     * @param[in] data
+     * @param[in] filePath
+     * @retval TRUE if the write was successful
+     * @retval FALSE if the write was not successful
+     */
+    bool WriteToFile(const void* data, const ui64& bufLen, const char* filePath);
+    /**@brief Reads from a file
+     * @param[out] data
+     * @param[in] bufLen
+     * @param[in] filePath
+     * @retval TRUE if the read was successful
+     * @retval FALSE if the read was not successful
+     */
+    bool ReadFromFile(void** data, const char* filePath, const bool& nullTerm = false);
 
     /**@brief A buffer to store data and write it to a file or read from a file*/
     struct File
@@ -147,12 +162,12 @@ namespace FS
          * @returns
          * The actual capacity of the data buffer as a ui64
          */
-        ui64 capacity() const;
+        const ui64& capacity() const;
         /**@brief Gets the length of the data buffer
          * @returns
          * The actual length of the data buffer as a ui64
          */
-        ui64 length() const;
+        const ui64& length() const;
         /**@brief Checks if the file with the given path exist
         * @retval TRUE  if the file exist
         * @retval FALSE if the file dont exist
@@ -164,7 +179,7 @@ namespace FS
         * @returns
         * a ui8* for a given length of bytes
         */
-        ui8* getData(size_t len);
+        ui8* getData(const ui64& len);
         /**@brief Gets a i8
         * @returns
         * Returns a i8 from the data buffer
@@ -221,10 +236,11 @@ namespace FS
          */
         f64 getDouble();
         /**@brief Gets a String
+         * @param[in] withoutLen
          * @returns
          * Returns a String from the data buffer
          */
-        String getString();
+        String getString(const bool& withoutLen = false);
 
         /**@brief Adds data with a given length to the data buffer
          * @param[in] dat
@@ -232,103 +248,103 @@ namespace FS
          * @returns
          * VOID
          */
-        void addData(void* dat, ui64 len);
+        void addData(void* dat, const ui64& len);
         /**@brief Adds a i8 to the data buffer
          * @param[in] dat
          * @returns
          * VOID
          */
-        void addI8(i8 dat);
+        void addI8(const i8& dat);
         /**@brief Adds a ui8 to the data buffer
          * @param[in] dat
          * @returns
          * VOID
          */
-        void addUI8(ui8 dat);
+        void addUI8(const ui8& dat);
         /**@brief Adds a i16 to the data buffer
          * @param[in] dat
          * @returns
          * VOID
          */
-        void addI16(i16 dat);
+        void addI16(const i16& dat);
         /**@brief Adds a ui16 to the data buffer
          * @param[in] dat
          * @returns
          * VOID
          */
-        void addUI16(ui16 dat);
+        void addUI16(const ui16& dat);
         /**@brief Adds a i32 to the data buffer
          * @param[in] dat
          * @returns
          * VOID
          */
-        void addI32(i32 dat);
+        void addI32(const i32& dat);
         /**@brief Adds a ui32 to the data buffer
          * @param[in] dat
          * @returns
          * VOID
          */
-        void addUI32(ui32 dat);
+        void addUI32(const ui32& dat);
         /**@brief Adds a i64 to the data buffer
          * @param[in] dat
          * @returns
          * VOID
          */
-        void addI64(i64 dat);
+        void addI64(const i64& dat);
         /**@brief Adds a ui64 to the data buffer
          * @param[in] dat
          * @returns
          * VOID
          */
-        void addUI64(ui64 dat);
-        /**@brief Adds a bool to the data buffer as number or as string
+        void addUI64(const ui64& dat);
+        /**@brief Adds a bool to the data buffer
          * @param[in] dat
-         * @param[in] asNum
          * @returns
          * VOID
          */
-        void addBool(bool dat, bool asNum = false);
+        void addBool(const bool& dat);
         /**@brief Adds a f32 to the data buffer
          * @param[in] dat
          * @returns
          * VOID
          */
-        void addF32(f32 dat);
+        void addF32(const f32& dat);
         /**@brief Adds a f43 to the data buffer
          * @param[in] dat
          * @returns
          * VOID
          */
-        void addF64(f64 dat);
+        void addF64(const f64& dat);
         /**@brief Adds a String to the data buffer with or without the string length
          * @param[in] dat
          * @param[in] withoutLen
          * @returns
          * VOID
          */
-        void addString(const String& dat, bool withoutLen = true);
+        void addString(const String& dat, const bool& withoutLen = true);
         /**@brief Adds a std::string to the data buffer with or without the string length
          * @param[in] dat
          * @param[in] withoutLen
          * @returns
          * VOID
          */
-        void addString(const std::string& dat, bool withoutLen = true);
+        void addString(const std::string& dat, const bool& withoutLen = true);
         /**@brief Adds a c style string to the data buffer with or without the string length
          * @param[in] dat
          * @param[in] withoutLen
          * @returns
          * VOID
          */
-        void addString(const char* dat, bool withoutLen = true);
+        void addString(const char* dat, const bool& withoutLen = false);
 
+    private:
+        void createDirsAndFile();
     private:
         String mPath;
         String mName;
         String mEnding;
         BinaryBuffer mSource;
         bool mExist;
-        ui64 mReadOffset;
     };
 }
 #endif //PLAYGROUNDLIB_FILESTREAM_H

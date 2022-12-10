@@ -1,42 +1,56 @@
 #include <../../hdr/util/FileStream.h>
 #include "../../hdr/util/buffer/string.h"
+#include "../../hdr/util/memory.h"
 #include <../../hdr/logger.h>
 #include <cstdio>
 #include <direct.h>
 #include <filesystem>
 #include <sys/stat.h>
 #include <io.h>
+#include <share.h>
 
 namespace FS
 {
-    bool createFile(const char* path) {
-        if (path == nullptr) {
+    bool createFile(const char* path)
+    {
+        if (path == nullptr)
+        {
             return false;
         }
         int result = _creat(path, _S_IREAD | _S_IWRITE);
-        if (result == -1 || !checkExistFile(path)) {
+        if (result == -1 || !checkExistFile(path))
+        {
             return false;
         }
         return true;
     }
 
-    bool removeFile(const char* path) {
-        if (path == nullptr || remove(path) != 0) {
+    bool removeFile(const char* path)
+    {
+        if (path == nullptr || remove(path) != 0)
+        {
             return false;
         }
         return true;
     }
 
-    bool checkExistFile(const char* path) {
-        if (path == nullptr) return false;
+    bool checkExistFile(const char* path)
+    {
+        if (path == nullptr)
+        {
+            return false;
+        }
         return _access(path, 00) != -1;
     }
 
-    bool renameFile(const char* path, const char* newName) {
-        if (path == nullptr || newName == nullptr) {
+    bool renameFile(const char* path, const char* newName)
+    {
+        if (path == nullptr || newName == nullptr)
+        {
             return false;
         }
-        if (!checkExistFile(path)) {
+        if (!checkExistFile(path))
+        {
             return false;
         }
         if (rename(path, newName) != 0) {
@@ -45,23 +59,33 @@ namespace FS
         return true;
     }
 
-    uint64_t getFileSize(const char* path) {
+    ui64 getFileSize(const char* path)
+    {
         struct stat buf {};
         int c = stat(path, &buf);
         return c == 0 ? buf.st_size : 0;
     }
 
-    bool createDir(const char* dirPath) {
-        if (checkExistDir(dirPath)) return false;
+    bool createDir(const char* dirPath)
+    {
+        if (checkExistDir(dirPath))
+        {
+            return false;
+        }
         return (_mkdir(dirPath) == 0);
     }
 
-    bool removeDir(const char* dirPath) {
-        if (!checkExistDir(dirPath)) return false;
+    bool removeDir(const char* dirPath)
+    {
+        if (!checkExistDir(dirPath))
+        {
+            return false;
+        }
         return (_rmdir(dirPath) == 0);
     }
 
-    bool checkExistDir(const char* dirPath) {
+    bool checkExistDir(const char* dirPath)
+    {
         if (dirPath == nullptr) return false;
         struct stat sb{};
         return (stat(dirPath, &sb) == 0 && (S_IFDIR & sb.st_mode) != 0);
@@ -158,26 +182,110 @@ namespace FS
         return filePaths;
     }
 
+    bool WriteToFile(const void* data, const ui64& bufLen, const char* filePath)
+    {
+        if(!data)
+        {
+            LOG_ERROR({}, "Failed to write to file with path'%S'! buffer is nullptr!", filePath);
+            return false;
+        }
+
+        if(!checkExistFile(filePath))
+        {
+            if(!createFile(filePath))
+            {
+                LOG_ERROR({}, "Failed to create file and write to file with path'%S'!", filePath);
+                return false;
+            }
+        }
+
+        if(bufLen <= 0)
+        {
+            LOG_ERROR({}, "Failed to write to file, buffer is empty!");
+            return false;
+        }
+
+        FILE* file = _fsopen(filePath, "wb", _SH_DENYNO);;
+        if(!file)
+        {
+            LOG_ERROR({}, "Failed to open file with path'%s'", filePath);
+            return false;
+        }
+
+        size_t result = fwrite(data, bufLen, 1, file);
+        fclose(file);
+        if(result != 1)
+        {
+            LOG_ERROR({}, "Failed to write to file with path'%s'", filePath);
+            return false;
+        }
+        return true;
+    }
+
+    bool ReadFromFile(void** data, const char* filePath, const bool& nullTerm)
+    {
+        if(!checkExistFile(filePath))
+        {
+            LOG_ERROR({}, "File with path'%s' not found!", filePath);
+            return false;
+        }
+
+        ui64 fileSize = getFileSize(filePath);
+        if(fileSize <= 0)
+        {
+            LOG_ERROR({}, "File with path'%s' is empty!", filePath);
+            return false;
+        }
+
+        FILE* file = _fsopen(filePath, "rb", _SH_DENYNO);;
+        if(!file)
+        {
+            LOG_ERROR({}, "Failed to open file with path'%s'", filePath);
+            return false;
+        }
+
+        if(nullTerm)
+        {
+            fileSize++;
+        }
+
+        *data = Malloc(fileSize);
+        if(*data == nullptr)
+        {
+            LOG_ERROR({}, "Failed to allocate memory for file with path'%s'", filePath);
+            return false;
+        }
+
+        size_t result = fread_s(*data, fileSize, fileSize - 1, 1, file);
+        fclose(file);
+
+        if(result == 0)
+        {
+            LOG_ERROR({}, "Failed to read data from file with path'%s'", filePath);
+            Free(*data);
+            *data = nullptr;
+            return false;
+        }
+        char* cData;
+        if(nullTerm)
+        {
+            cData = (char*)*data;
+            cData[fileSize - 1] = '\0';
+        }
+
+        return true;
+    }
+
     File::File()
-        :mPath(""), mName(""), mEnding(""), mSource(0), mExist(false), mReadOffset(0)
+        :mPath(""), mName(""), mEnding(""), mSource(0), mExist(false)
     {}
 
     File::File(const char* path, int flags)
-        :mPath(path), mName(getFileName(path)), mEnding(getFileNameExtension(path)), mSource(0),mExist(checkExistFile(path)), mReadOffset(0)
+        :mPath(path), mName(getFileName(path)), mEnding(getFileNameExtension(path)), mSource(0),mExist(checkExistFile(path))
     {
         if ((flags & FILE_CRT) == FILE_CRT)
         {
-            if(!mExist)
-            {
-                ui64 lenRemove = mName.length() + mEnding.length() + 2;
-                String dirPath(mPath);
-                dirPath.remove(dirPath.length() - lenRemove, dirPath.length());
-                createDirIfNotExist((const char *)dirPath.getSource());
-                if(!(mExist = createFile(path)))
-                {
-                    LOG_ASSERT(false, {}, "Failed to create file with path: %s", path)
-                }
-            }
+           createDirsAndFile();
         }
 
         if ((flags & FILE_READ) == FILE_READ)
@@ -193,17 +301,25 @@ namespace FS
 
     File::~File()
     {
-
+        mExist = false;
     }
 
     void File::read()
     {
-
+        const char* filePath = (const char *)mPath.getSource();
+        char* buffer = nullptr;
+        ReadFromFile((void**)&buffer ,filePath, true);
+        if(buffer)
+        {
+            mSource.add(buffer, true);
+            Free(buffer);
+        }
     }
 
     void File::write()
     {
-
+        const char* filePath = (const char *)mPath.getSource();
+        WriteToFile(mSource.getSource(), mSource.length(), filePath);
     }
 
     const String& File::getPath() const
@@ -225,14 +341,14 @@ namespace FS
         return mSource;
     }
 
-    ui64 File::capacity() const
+    const ui64& File::capacity() const
     {
-        mSource.capacity();
+        return mSource.capacity();
     }
 
-    ui64 File::length() const
+    const ui64& File::length() const
     {
-        mSource.length();
+        return mSource.length();
     }
 
     bool File::exist() const
@@ -240,165 +356,158 @@ namespace FS
         return mExist;
     }
 
-    ui8* File::getData(size_t len)
+    ui8* File::getData(const ui64& len)
     {
-
+        return (ui8*)mSource.pop(len);
     }
 
     i8 File::getI8()
     {
-
+        return mSource.getI8();
     }
 
     ui8 File::getUI8()
     {
-
+        return mSource.getUi8();
     }
 
     i16 File::getI16()
     {
-
+        return mSource.getI16();
     }
 
     ui16 File::getUI16()
     {
-
+        return mSource.getUi16();
     }
 
     i32 File::getI32()
     {
-
+        return mSource.getI32();
     }
 
-    [[maybe_unused]] ui32 File::getUI32()
+    ui32 File::getUI32()
     {
-
+        return mSource.getUi32();
     }
 
     i64 File::getI64()
     {
-
+        return mSource.getI64();
     }
 
     ui64 File::getUI64()
     {
-
+        return mSource.getUi64();
     }
 
     bool File::getBool()
     {
-
+        return (bool)mSource.getI8();
     }
 
     f32 File::getFloat()
     {
-
+        return mSource.getF32();
     }
 
     f64 File::getDouble()
     {
-
+        return mSource.getF64();
     }
 
-    String File::getString()
+    String File::getString(const bool& withoutLen)
     {
-
+        return mSource.getString(withoutLen);
     }
 
-
-    void File::addData(void* dat, ui64 len)
+    void File::addData(void* dat, const ui64& len)
     {
-
+        mSource.push(len, dat);
     }
 
-    void File::addI8(i8 dat)
-    {
-        mSource.add(dat);
-    }
-
-    void File::addUI8(ui8 dat)
+    void File::addI8(const i8& dat)
     {
         mSource.add(dat);
     }
 
-    void File::addI16(i16 dat)
+    void File::addUI8(const ui8& dat)
     {
         mSource.add(dat);
     }
 
-    void File::addUI16(ui16 dat)
+    void File::addI16(const i16& dat)
     {
         mSource.add(dat);
     }
 
-    void File::addI32(i32 dat)
+    void File::addUI16(const ui16& dat)
     {
         mSource.add(dat);
     }
 
-    void File::addUI32(ui32 dat)
+    void File::addI32(const i32& dat)
     {
         mSource.add(dat);
     }
 
-    void File::addI64(i64 dat)
+    void File::addUI32(const ui32& dat)
     {
         mSource.add(dat);
     }
 
-    void File::addUI64(ui64 dat)
+    void File::addI64(const i64& dat)
     {
         mSource.add(dat);
     }
 
-    void File::addBool(bool dat, bool asNum)
-    {
-        //mSource.add(dat, asNum);
-    }
-
-    void File::addF32(f32 dat)
+    void File::addUI64(const ui64& dat)
     {
         mSource.add(dat);
     }
 
-    void File::addF64(f64 dat)
+    void File::addBool(const bool& dat)
+    {
+        mSource.add((i8)dat);
+    }
+
+    void File::addF32(const f32& dat)
     {
         mSource.add(dat);
     }
 
-    void File::addString(const String& dat, bool withoutLen)
+    void File::addF64(const f64& dat)
     {
-        if(withoutLen)
+        mSource.add(dat);
+    }
+
+    void File::addString(const String& dat, const bool& withoutLen)
+    {
+        mSource.add(dat, withoutLen);
+    }
+
+    void File::addString(const std::string& dat, const bool& withoutLen)
+    {
+        mSource.add(dat, withoutLen);
+    }
+
+    void File::addString(const char* dat, const bool& withoutLen)
+    {
+        mSource.add(dat, withoutLen);
+    }
+
+    void File::createDirsAndFile()
+    {
+        if(!mExist)
         {
-            mSource.add(dat);
-            return;
+            ui64 lenRemove = mName.length() + mEnding.length() + 2;
+            String dirPath(mPath);
+            dirPath.remove(dirPath.length() - lenRemove, dirPath.length());
+            createDirIfNotExist(dirPath.c_str());
+            if(!(mExist = createFile(mPath.c_str())))
+            {
+                LOG_ASSERT(false, {}, "Failed to create file with path: %s", mPath.c_str())
+            }
         }
-
-        mSource.add(dat.length());
-        mSource.add(dat);
-    }
-
-    void File::addString(const std::string& dat, bool withoutLen)
-    {
-        if(withoutLen)
-        {
-            mSource.add(dat);
-            return;
-        }
-
-        mSource.add(dat.size());
-        mSource.add(dat);
-    }
-
-    void File::addString(const char* dat, bool withoutLen)
-    {
-        if(withoutLen)
-        {
-            mSource.add(dat);
-            return;
-        }
-
-        mSource.add(strlen(dat));
-        mSource.add(dat);
     }
 }
