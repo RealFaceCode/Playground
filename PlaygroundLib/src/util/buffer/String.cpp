@@ -896,12 +896,12 @@ void String::clear()
     mSource[mLen] = '\0';
 }
 
-const ui64 String::capacity() const
+const ui64& String::capacity() const
 {
     return mCap;
 }
 
-const ui64 String::length() const
+const ui64& String::length() const
 {
     return mLen;
 }
@@ -909,6 +909,10 @@ const ui64 String::length() const
 ui8* String::getSource() const
 {
     return mSource;
+}
+
+const char *String::c_str() const {
+    return (const char*)mSource;
 }
 
 const ui8& String::at(const ui64& index) const
@@ -981,9 +985,9 @@ String& String::operator+=(const char* string)
     return *this;
 }
 
-bool String::checkCap(const ui64& size)
+bool String::checkCap(const ui64& size) const
 {
-    return mCap - mLen >= size ? true : false;
+    return mCap - mLen >= size;
 }
 
 void String::makeFit(const ui64 &size) {

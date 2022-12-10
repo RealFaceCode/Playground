@@ -506,17 +506,22 @@ public:
      * @returns
      * Returns the actual capacity of the string
      */
-    const ui64 capacity() const;
+    const ui64& capacity() const;
     /**@brief Gets the length
      * @returns
      * Returns the actual length of the string
      */
-    const ui64 length() const;
+    const ui64& length() const;
     /**@brief Gets data of the string
      * @returns
      * Returns a ui8* to the data of the string
      */
     ui8* getSource() const;
+    /**@brief Gets data of the string as a c style string
+     * @returns
+     * Returns a const char* to the data of the string
+     */
+    const char* c_str() const;
     /**@brief Gets the char at the index position
      * @returns
      * Returns the address of the string at the given index
@@ -580,7 +585,7 @@ public:
      */
     String& operator+=(const char* string);
 private:
-    bool checkCap(const ui64& size);
+    bool checkCap(const ui64& size) const;
     void makeFit(const ui64& size);
 private:
     ui64 mCap;
