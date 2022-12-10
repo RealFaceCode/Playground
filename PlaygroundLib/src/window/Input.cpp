@@ -36,7 +36,7 @@ namespace Input
 	MouseButton buttons[GLFW_MOUSE_BUTTON_LAST]				= {};
 	i8 scrollHorizontal										= 0;
 	i8 scrollVertical										= 0;
-	extern std::vector<std::string> whitelistedFileEndings	= {};
+	extern std::vector<std::string> whitelistedFileEndings;
 	std::queue<FileDrop> drops								= {};
 	ui32 mouseX												= 0;
 	ui32 mouseY												= 0;
@@ -105,42 +105,42 @@ namespace Input
 		charInput.modifierKey = 0;
 	}
 
-	bool Key::isPressed()
+	bool Key::isPressed() const
 	{
 		return (mState == State::PRESSED);
 	}
 
-	bool Key::isRepeat()
+	bool Key::isRepeat() const
 	{
 		return (mState == State::REPEAT);
 	}
 
-	bool Key::isReleased()
+	bool Key::isReleased() const
 	{
 		return (mState == State::RELEASED);
 	}
 
-	bool Key::isDown()
+	bool Key::isDown() const
 	{
 		return (mState == State::ISDOWN);
 	}
 
-	bool MouseButton::isPressed()
+	bool MouseButton::isPressed() const
 	{
 		return (mState == State::PRESSED);
 	}
 
-	bool MouseButton::isRepeat()
+	bool MouseButton::isRepeat() const
 	{
 		return (mState == State::REPEAT);
 	}
 
-	bool MouseButton::isReleased()
+	bool MouseButton::isReleased() const
 	{
 		return (mState == State::RELEASED);
 	}
 
-	bool MouseButton::isDown()
+	bool MouseButton::isDown() const
 	{
 		return (mState == State::ISDOWN);
 	}
@@ -328,12 +328,12 @@ namespace Input
 
 	i32 GetMouseX()
 	{
-		return mouseX;
+		return (i32)mouseX;
 	}
 
 	i32 GetMouseY()
 	{
-		return mouseY;
+	    return (i32)mouseY;
 	}
 
 	f32 GetMouseXFloat()

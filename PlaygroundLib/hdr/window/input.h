@@ -79,10 +79,10 @@ namespace Input
 		State mState = State::NONE;
 		ui16 mKey;
 
-		bool isPressed();
-		bool isRepeat();
-		bool isReleased();
-		bool isDown();
+		bool isPressed() const;
+		bool isRepeat() const;
+		bool isReleased() const;
+		bool isDown() const;
 	};
 
 	/**@brief Holds all information about a Button*/
@@ -92,10 +92,10 @@ namespace Input
 		State mState = State::NONE;
 		ui8 mButton;
 
-		bool isPressed();
-		bool isRepeat();
-		bool isReleased();
-		bool isDown();
+		bool isPressed() const;
+		bool isRepeat() const;
+		bool isReleased() const;
+		bool isDown() const;
 	};
 
 	/**@brief Holds all information about a FileDrop*/

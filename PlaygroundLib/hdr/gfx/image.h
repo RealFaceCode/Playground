@@ -57,10 +57,10 @@ namespace GFX
         public:
             const i32 convertType() const;
             const i32 convertInternalFormat() const;
-            const i32 convertFormat() const;
-            const i32 convertWrapS() const;
-            const i32 convertWrapT() const;
-            const i32 convertMin() const;
+            i32 convertFormat() const;
+            i32 convertWrapS() const;
+            i32 convertWrapT() const;
+            i32 convertMin() const;
             const i32 convertMag() const;
         };
 

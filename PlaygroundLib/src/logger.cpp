@@ -28,6 +28,7 @@ const char* GetAnsiColor(const ConsoleOutPutColor& color)
         case Gray:          return "\033[38;5;242m";
         case DarkGray:      return "\033[38;5;236m";
     }
+    return "\033[38;5;236m";
 }
 
 Highlight CreateHighlighter(const char* toHighlight, const ConsoleOutPutColor& color)

@@ -29,6 +29,7 @@ namespace GFX
                     return GL_TEXTURE_2D;
                     break;
             }
+            return GL_TEXTURE_2D;
         }
 
         const i32 ImageBuildingSettings::convertInternalFormat() const
@@ -50,9 +51,10 @@ namespace GFX
                     return GL_RGBA32F;
                     break;
             }
+            return -1;
         }
 
-        const i32 ImageBuildingSettings::convertFormat() const
+        i32 ImageBuildingSettings::convertFormat() const
         {
             switch (mFormat) {
                 case ImageFormat::AUTO:
@@ -65,27 +67,30 @@ namespace GFX
                     return GL_RGBA;
                     break;
             }
+            return -1;
         }
 
-        const i32 ImageBuildingSettings::convertWrapS() const
+        i32 ImageBuildingSettings::convertWrapS() const
         {
             switch (mWrapS) {
                 case ImageWrap::REPEAT:
                     return GL_REPEAT;
                     break;
             }
+            return GL_REPEAT;
         }
 
-        const i32 ImageBuildingSettings::convertWrapT() const
+        i32 ImageBuildingSettings::convertWrapT() const
         {
             switch (mWrapT) {
                 case ImageWrap::REPEAT:
                     return GL_REPEAT;
                     break;
             }
+            return GL_REPEAT;
         }
 
-        const i32 ImageBuildingSettings::convertMin() const
+        i32 ImageBuildingSettings::convertMin() const
         {
             switch (mFilterMin) {
                 case ImageFilter::LINEAR:
@@ -95,6 +100,7 @@ namespace GFX
                     return GL_NEAREST;
                     break;
             }
+            return GL_LINEAR;
         }
 
         const i32 ImageBuildingSettings::convertMag() const
@@ -107,6 +113,7 @@ namespace GFX
                     return GL_NEAREST;
                     break;
             }
+            return GL_LINEAR;
         }
 
         void AddNewBuildingSettings(const char* settingsName)
