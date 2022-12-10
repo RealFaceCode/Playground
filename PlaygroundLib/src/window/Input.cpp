@@ -36,7 +36,7 @@ namespace Input
 	MouseButton buttons[GLFW_MOUSE_BUTTON_LAST]				= {};
 	i8 scrollHorizontal										= 0;
 	i8 scrollVertical										= 0;
-	extern std::vector<std::string> whitelistedFileEndings;
+	std::vector<std::string> whitelistedFileEndings         = {};
 	std::queue<FileDrop> drops								= {};
 	ui32 mouseX												= 0;
 	ui32 mouseY												= 0;
