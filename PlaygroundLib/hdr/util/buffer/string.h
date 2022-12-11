@@ -629,6 +629,37 @@ public:
      * Returns a string reference to the actual string and adds the data of the new given string
      */
     String& operator+=(const char* string);
+
+    /**@brief Adds a new string to the actual string
+     * @param[in] other
+     * @retval TRUE if the given string is bigger than the actual string
+     * @retval FALSE if the given string is smaller than the actual string
+     */
+    bool operator<(const String& other) const;
+    /**@brief Checks if the given string is smaller than the actual string
+     * @param[in] other
+     * @retval TRUE if the given string is smaller than the actual string
+     * @retval FALSE if the given string is bigger than the actual string
+     */
+    bool operator>(const String& other) const;
+    /**@brief Checks if the given string equals the actual string
+     * @param[in] other
+     * @retval TRUE if the given string equals the actual string
+     * @retval FALSE if the given string not equals the actual string
+     */
+    bool operator==(const String& other);
+    /**@brief Checks if the given string is bigger than the actual string or has the same size
+     * @param[in] other
+     * @retval TRUE if the given string is bigger than the actual string or the string has the same size
+     * @retval FALSE if the given string is smaller than the actual string
+     */
+    bool operator<=(const String& other) const;
+    /**@brief Checks if the given string is smaller than the actual string or has the same size
+     * @param[in] other
+     * @retval TRUE if the given string is smaller than the actual string or the string has the same size
+     * @retval FALSE if the given string is bigger than the actual string
+     */
+    bool operator>=(const String& other) const;
 private:
     bool checkCap(const ui64& size) const;
     void makeFit(const ui64& size);

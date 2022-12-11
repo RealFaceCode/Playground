@@ -1080,6 +1080,31 @@ void String::makeFit(const ui64 &size) {
     reserve(strLen);
 }
 
+bool String::operator<(const String &other) const
+{
+    return mLen < other.mLen;
+}
+
+bool String::operator>(const String &other) const
+{
+    return mLen > other.mLen;
+}
+
+bool String::operator==(const String &other)
+{
+    return mLen == other.mLen && (strcmp((const char*)mSource, (const char*)other.mSource) == 0);
+}
+
+bool String::operator<=(const String &other) const
+{
+    return mLen <= other.mLen;
+}
+
+bool String::operator>=(const String &other) const
+{
+    return mLen >= other.mLen;
+}
+
 StringView::StringView(const ui64& posBegin, const ui64& posEnd, const String& string)
 {
     ui64 strLen = posEnd - posBegin + 1;
