@@ -810,15 +810,14 @@ const std::vector<ui64> String::find(const ui64& posBegin, const ui64& posEnd, c
 {
     std::vector<ui64> pos = {};
     ui64 strLen = string.length();
-    StringView strView(posBegin, posEnd, *this);
-    for(ui64 i = 0; i < mLen; i++)
+    for(ui64 i = posBegin; i < posEnd; i++)
     {
-        if(strView.getView()[i] == string.getSource()[0])
+        if(mSource[i] == string.at(i))
         {
-            StringView view(i, i + strLen - 1, strView);
-            if(strcmp((const char*)string.getSource(), (const char*)view.getView()) == 0)
+            StringView view = createStringView(i, i + strLen -1);
+            if(strcmp((const char*)view.getView(), string.c_str()) == 0)
             {
-                pos.emplace_back(i + posBegin);
+                pos.emplace_back(i);
                 i += strLen;
             }
         }
@@ -829,16 +828,15 @@ const std::vector<ui64> String::find(const ui64& posBegin, const ui64& posEnd, c
 const std::vector<ui64> String::find(const ui64& posBegin, const ui64& posEnd, const std::string& string) const
 {
     std::vector<ui64> pos = {};
-    ui64 strLen = string.size();
-    StringView strView(posBegin, posEnd, *this);
-    for(ui64 i = 0; i < mLen; i++)
+    ui64 strLen = string.length();
+    for(ui64 i = posBegin; i < posEnd; i++)
     {
-        if(strView.getView()[i] == string.data()[0])
+        if(mSource[i] == string[i])
         {
-            StringView view(i, i + strLen - 1, strView);
-            if(strcmp((const char*)string.data(), (const char*)view.getView()) == 0)
+            StringView view = createStringView(i, i + strLen -1);
+            if(strcmp((const char*)view.getView(), string.c_str()) == 0)
             {
-                pos.emplace_back(i + posBegin);
+                pos.emplace_back(i);
                 i += strLen;
             }
         }
@@ -850,15 +848,14 @@ const std::vector<ui64> String::find(const ui64& posBegin, const ui64& posEnd, c
 {
     std::vector<ui64> pos = {};
     ui64 strLen = strlen(string);
-    StringView strView(posBegin, posEnd, *this);
-    for(ui64 i = 0; i < mLen; i++)
+    for(ui64 i = posBegin; i < posEnd; i++)
     {
-        if(strView.getView()[i] == string[0])
+        if(mSource[i] == string[i])
         {
-            StringView view(i, i + strLen - 1 , strView);
-            if(strcmp((const char*)string, (const char*)view.getView()) == 0)
+            StringView view = createStringView(i, i + strLen -1);
+            if(strcmp((const char*)view.getView(), string) == 0)
             {
-                pos.emplace_back(i + posBegin);
+                pos.emplace_back(i);
                 i += strLen;
             }
         }
@@ -914,6 +911,57 @@ ui64 String::findFirst(const char *string) const
     return UINT64_MAX;
 }
 
+ui64 String::findFirst(const ui64 &posBegin, const ui64 &posEnd, const String &string) const
+{
+    ui64 strLen = string.length();
+    for(ui64 i = posBegin; i < posEnd; i++)
+    {
+        if(mSource[i] == string.at(0))
+        {
+            StringView view = createStringView(i, i + strLen -1);
+            if(strcmp((const char*)view.getView(), string.c_str()) == 0)
+            {
+                return i;
+            }
+        }
+    }
+    return UINT64_MAX;
+}
+
+ui64 String::findFirst(const ui64 &posBegin, const ui64 &posEnd, const std::string &string) const
+{
+    ui64 strLen = string.length();
+    for(ui64 i = posBegin; i < posEnd; i++)
+    {
+        if(mSource[i] == string[0])
+        {
+            StringView view = createStringView(i, i + strLen -1);
+            if(strcmp((const char*)view.getView(), string.c_str()) == 0)
+            {
+                return i;
+            }
+        }
+    }
+    return UINT64_MAX;
+}
+
+ui64 String::findFirst(const ui64 &posBegin, const ui64 &posEnd, const char *string) const
+{
+    ui64 strLen = strlen(string);
+    for(ui64 i = posBegin; i < posEnd; i++)
+    {
+        if(mSource[i] == string[0])
+        {
+            StringView view = createStringView(i, i + strLen -1);
+            if(strcmp((const char*)view.getView(), string) == 0)
+            {
+                return i;
+            }
+        }
+    }
+    return UINT64_MAX;
+}
+
 std::vector<String> String::toLines() const
 {
     std::vector<String> lines;
@@ -930,12 +978,48 @@ std::vector<String> String::toLines() const
     return lines;
 }
 
+std::vector<String> String::tokenize(const char &token) const
+{
+    std::vector<String> tokens;
+    const char* t = &token;
+    ui64 pos = findFirst(t);
+    if(pos == UINT64_MAX)
+    {
+        StringView view = createStringView(0, mLen);
+        tokens.emplace_back((const char*)view.getView());
+    }
+
+    ui64 nPos = findFirst(pos + 1, mLen, t);
+    if(pos < mLen)
+    {
+        StringView view = createStringView(0, pos - 1);
+        tokens.emplace_back((const char*)view.getView());
+    }
+
+    while(pos < mLen)
+    {
+        if(nPos == UINT64_MAX)
+        {
+            StringView view = createStringView(pos + 1, mLen - 1);
+            tokens.emplace_back((const char*)view.getView());
+            break;
+        }
+
+        StringView view = createStringView(pos + 1, nPos - 1);
+        tokens.emplace_back((const char*)view.getView());
+        pos = findFirst(pos + 1, mLen, t);
+        nPos = findFirst(pos + 1, mLen, t);
+    }
+
+    return tokens;
+}
+
 StringView String::createStringView(const ui64& posBegin, const ui64& posEnd) const
 {
     return {posBegin, posEnd, *this};
 }
 
-const bool String::reserve(const ui64& size)
+bool String::reserve(const ui64& size)
 {
     //TODO: error handling
     if(mSource == nullptr)

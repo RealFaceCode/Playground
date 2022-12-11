@@ -510,12 +510,42 @@ public:
      * Returns a ui64 of the first match from the string
      */
     ui64 findFirst(const char* string) const;
+    /**@brief Gets the position of the first match between posBegin and posEnd
+     * @param[in] posEnd
+     * @param[in] posEnd
+     * @param[in] string
+     * @returns
+     * Returns a ui64 of the first match from the string between posBegin and posEnd
+     */
+    ui64 findFirst(const ui64& posBegin, const ui64& posEnd, const String& string) const;
+    /**@brief Gets the position of the first match between posBegin and posEnd
+     * @param[in] posEnd
+     * @param[in] posEnd
+     * @param[in] string
+     * @returns
+     * Returns a ui64 of the first match from the string between posBegin and posEnd
+     */
+    ui64 findFirst(const ui64& posBegin, const ui64& posEnd, const std::string& string) const;
+    /**@brief Gets the position of the first match between posBegin and posEnd
+     * @param[in] posEnd
+     * @param[in] posEnd
+     * @param[in] string
+     * @returns
+     * Returns a ui64 of the first match from the string between posBegin and posEnd
+     */
+    ui64 findFirst(const ui64& posBegin, const ui64& posEnd, const char* string) const;
 
     /**@brief Seperated the string in to lines
      * @returns
      * Returns a std::vector<ui64> filled with lines
      */
     std::vector<String> toLines() const;
+
+    /**@brief Seperated the string after each token
+    * @returns
+    * Returns a std::vector<ui64> filled with seperated strings
+    */
+    std::vector<String> tokenize(const char& token) const;
 
     /**@brief Creates a string view between posBegin and posEnd
      * @param[in] posBegin
@@ -530,7 +560,7 @@ public:
      * @retval TRUE if the allocation was successful
      * @retval FALSE if the allocation was not successful
      */
-    const bool reserve(const ui64& size);
+    bool reserve(const ui64& size);
     /**@brief Clears the buffer und sets all values to 0 except the capacity
      * @returns
      * VOID
@@ -673,6 +703,8 @@ private:
 struct StringView
 {
 public:
+    /**@brief Constructs an empty stringview*/
+    StringView() = default;
     /**@brief Constructs stringview from posBegin to posEnd from the given string
      * @param[in] posBegin
      * @param[in] posEnd
