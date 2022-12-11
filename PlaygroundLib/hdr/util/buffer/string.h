@@ -9,68 +9,77 @@ struct String;
  * @returns
  * Returns String with the given number as a string
  */
-String toString(i8 integer);
+String ToString(i8 integer);
 /**@brief Converts a i16 to a string
  * @param[in] integer
  * @returns
  * Returns String with the given number as a string
  */
-String toString(i16 integer);
+String ToString(i16 integer);
 /**@brief Converts a i32 to a string
  * @param[in] integer
  * @returns
  * Returns String with the given number as a string
  */
-String toString(i32 integer);
+String ToString(i32 integer);
 /**@brief Converts a i64 to a string
  * @param[in] integer
  * @returns
  * Returns String with the given number as a string
  */
-String toString(i64 integer);
+String ToString(i64 integer);
 /**@brief Converts a ui8 to a string
  * @param[in] integer
  * @returns
  * Returns String with the given number as a string
  */
-String toString(ui8 integer);
+String ToString(ui8 integer);
 /**@brief Converts a ui16 to a string
  * @param[in] integer
  * @returns
  * Returns String with the given number as a string
  */
-String toString(ui16 integer);
+String ToString(ui16 integer);
 /**@brief Converts a ui32 to a string
  * @param[in] integer
  * @returns
  * Returns String with the given number as a string
  */
-String toString(ui32 integer);
+String ToString(ui32 integer);
 /**@brief Converts a ui64 to a string
  * @param[in] integer
  * @returns
  * Returns String with the given number as a string
  */
-String toString(ui64 integer);
+String ToString(ui64 integer);
 /**@brief Converts a f32 to a string
  * @param[in] f
  * @returns
  * Returns String with the given number as a string
  */
-String toString(f32 f);
+String ToString(f32 f);
 /**@brief Converts a f64 to a string
  * @param[in] f
  * @returns
  * Returns String with the given number as a string
  */
-String toString(f64 f);
+String ToString(f64 f);
 /**@brief Converts a bool to a string
  * @param[in] boolean
  * @param[in] asNum
  * @returns
  * Returns String with the given boolean as a string with true/false or as a number representation
  */
-String toString(bool boolean, bool asNum = false);
+String ToString(bool boolean, bool asNum = false);
+
+/**@brief Converts a string in to the given type
+ * @param[in] Type
+ * @param[in] string
+ * @returns
+ * Returns the value as the given type
+ */
+template<typename Type>
+extern Type ToValue(const String& string);
 
 struct StringView;
 
@@ -677,7 +686,7 @@ public:
      * @retval TRUE if the given string equals the actual string
      * @retval FALSE if the given string not equals the actual string
      */
-    bool operator==(const String& other);
+    bool operator==(const String& other) const;
     /**@brief Checks if the given string is bigger than the actual string or has the same size
      * @param[in] other
      * @retval TRUE if the given string is bigger than the actual string or the string has the same size

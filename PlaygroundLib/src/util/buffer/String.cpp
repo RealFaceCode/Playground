@@ -2,77 +2,77 @@
 #include "../../../hdr/util/memory.h"
 #include "../../../hdr/logger.h"
 
-String toString(i8 integer)
+String ToString(i8 integer)
 {
     char str[32];
     snprintf(str, 32, "%d", integer);
     return str;
 }
 
-String toString(i16 integer)
+String ToString(i16 integer)
 {
     char str[32];
     snprintf(str, 32, "%d", integer);
     return str;
 }
 
-String toString(i32 integer)
+String ToString(i32 integer)
 {
     char str[32];
     snprintf(str, 32, "%d", integer);
     return str;
 }
 
-String toString(i64 integer)
+String ToString(i64 integer)
 {
     char str[32];
     snprintf(str, 32, "%d", integer);
     return str;
 }
 
-String toString(ui8 integer)
+String ToString(ui8 integer)
 {
     char str[32];
     snprintf(str, 32, "%d", integer);
     return str;
 }
 
-String toString(ui16 integer)
+String ToString(ui16 integer)
 {
     char str[32];
     snprintf(str, 32, "%d", integer);
     return str;
 }
 
-String toString(ui32 integer)
+String ToString(ui32 integer)
 {
     char str[32];
     snprintf(str, 32, "%d", integer);
     return str;
 }
 
-String toString(ui64 integer)
+String ToString(ui64 integer)
 {
     char str[32];
     snprintf(str, 32, "%d", integer);
     return str;
 }
 
-String toString(f32 f)
+String ToString(f32 f)
 {
     char str[32];
     snprintf(str, 32, "%f", f);
     return str;
 }
 
-String toString(f64 f)
+String ToString(f64 f)
 {
     char str[64];
     snprintf(str, 64, "%f", f);
     return str;
 }
 
-String toString(bool boolean, bool asNum)
+String ToString(bool boolean, bool asNum)
 {
     if(asNum)
     {
@@ -90,6 +90,44 @@ String toString(bool boolean, bool asNum)
         return "false";
     }
 }
+
+template<typename Type>
+Type ToValue(const String& string)
+{
+    if(std::is_same<Type, i32>::value)
+    {
+        return (Type)std::stoi(string.c_str());
+    }
+    if(std::is_same<Type, ui32>::value)
+    {
+        return (Type)std::stoul(string.c_str());
+    }
+    if(std::is_same<Type, i64>::value)
+    {
+        return (Type)std::stoll(string.c_str());
+    }
+    if(std::is_same<Type, ui64>::value)
+    {
+        return (Type)std::stoull(string.c_str());
+    }
+    if(std::is_same<Type, f64>::value)
+    {
+        return (Type)std::stod(string.c_str());
+    }
+    return (Type)std::stoi(string.c_str());
+}
+
+template i8 ToValue<i8>(const String&);
+template i16 ToValue<i16>(const String&);
+template i32 ToValue<i32>(const String&);
+template i64 ToValue<i64>(const String&);
+template ui8 ToValue<ui8>(const String&);
+template ui16 ToValue<ui16>(const String&);
+template ui32 ToValue<ui32>(const String&);
+template ui64 ToValue<ui64>(const String&);
+template f32 ToValue<f32>(const String&);
+template f64 ToValue<f64>(const String&);
+template bool ToValue<bool>(const String&);
 
 String::String() :mCap(0), mLen(0), mSource(nullptr) {}
 
@@ -142,52 +180,52 @@ void String::add(const char* string)
 
 void String::add(i8 integer)
 {
-    add(toString(integer));
+    add(ToString(integer));
 }
 
 void String::add(i16 integer)
 {
-    add(toString(integer));
+    add(ToString(integer));
 }
 
 void String::add(i32 integer)
 {
-    add(toString(integer));
+    add(ToString(integer));
 }
 
 void String::add(i64 integer)
 {
-    add(toString(integer));
+    add(ToString(integer));
 }
 
 void String::add(ui8 integer)
 {
-    add(toString(integer));
+    add(ToString(integer));
 }
 
 void String::add(ui16 integer)
 {
-    add(toString(integer));
+    add(ToString(integer));
 }
 
 void String::add(ui32 integer)
 {
-    add(toString(integer));
+    add(ToString(integer));
 }
 
 void String::add(ui64 integer)
 {
-    add(toString(integer));
+    add(ToString(integer));
 }
 
 void String::add(f32 f)
 {
-    add(toString(f));
+    add(ToString(f));
 }
 
 void String::add(f64 f)
 {
-    add(toString(f));
+    add(ToString(f));
 }
 
 void String::add(bool boolean, bool asNum)
@@ -981,7 +1019,9 @@ std::vector<String> String::toLines() const
 std::vector<String> String::tokenize(const char &token) const
 {
     std::vector<String> tokens;
-    const char* t = &token;
+    char t[2];
+    t[0] = token;
+    t[1] = '\0';
     ui64 pos = findFirst(t);
     if(pos == UINT64_MAX)
     {
@@ -1174,7 +1214,7 @@ bool String::operator>(const String &other) const
     return mLen > other.mLen;
 }
 
-bool String::operator==(const String &other)
+bool String::operator==(const String &other) const
 {
     return mLen == other.mLen && (strcmp((const char*)mSource, (const char*)other.mSource) == 0);
 }
