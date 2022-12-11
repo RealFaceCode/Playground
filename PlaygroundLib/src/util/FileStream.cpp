@@ -510,4 +510,479 @@ namespace FS
             }
         }
     }
+
+    Serializer::Node::Node()
+    :mNext(nullptr), mNodeName(String()), mValues({})
+    {
+    }
+
+    String Serializer::Node::ToString(const Serializer::Node &node, ui64& depth)
+    {
+        String rStr;
+        for(ui64 i = 0; i < depth; i++)
+        {
+            rStr.add("\t");
+        }
+        rStr.add("[");
+        rStr.add(node.mNodeName);
+        rStr.add("]\n");
+        for(ui64 i = 0; i < depth; i++)
+        {
+            rStr.add("\t");
+        }
+        rStr.add("{\n");
+
+        for(const String& str : node.mValues)
+        {
+            for(ui64 i = 0; i < depth + 1; i++)
+            {
+                rStr.add("\t");
+            }
+            rStr.add("= ");
+            rStr.add(str);
+            rStr.add(";\n");
+        }
+
+        if(node.mNext)
+        {
+            depth++;
+            rStr += ToString(*node.mNext, depth);
+            depth--;
+        }
+
+        for(ui64 i = 0; i < depth; i++)
+        {
+            rStr.add("\t");
+        }
+        rStr.add("}\n");
+
+        return rStr;
+    }
+
+    std::vector<Serializer::Node> Serializer::Node::ToNode(String &string)
+    {
+        std::vector<Serializer::Node> nodeTree;
+        std::vector<String> nodes = toNodeString(string);
+
+        for(String str : nodes)
+        {
+            Node node;
+            fillNode(&node, str);
+            nodeTree.emplace_back(node);
+        }
+
+        return nodeTree;
+    }
+
+    std::vector<String> Serializer::Node::toNodeString(String &string)
+    {
+        std::vector<String> nodes;
+        while(!string.empty())
+        {
+            ui64 oBrack = 0;
+            ui64 cBrack = 0;
+            bool fBrack = false;
+            ui64 pos = 0;
+
+            for(; pos < string.length(); pos++)
+            {
+                if(string.at(pos) == '{')
+                {
+                    oBrack++;
+                    if(!fBrack)
+                    {
+                        fBrack = true;
+                    }
+                }
+                if(string.at(pos) == '}')
+                {
+                    cBrack++;
+                }
+
+                if(oBrack == cBrack && fBrack)
+                {
+                    break;
+                }
+            }
+            StringView view = string.createStringView(0, pos);
+            string.remove(0, pos + 2);
+            nodes.emplace_back((const char*)view.getView());
+        }
+        return nodes;
+    }
+
+    void  Serializer::Node::fillNode(Node* node, String& string)
+    {
+        if(string.empty() || !node)
+        {
+            return;
+        }
+        ui64 posBeginName = string.findFirst("[") + 1;
+        ui64 posEndName = string.findFirst("]") - 1;
+
+        node->mNodeName = (const char*)string.createStringView(posBeginName, posEndName).getView();
+        string.remove(posBeginName - 1, posEndName + 2);
+
+        fillNodeData(node, string);
+
+        ui64 posBeginNameInD = string.findFirst("[");
+        if(posBeginNameInD != UINT64_MAX)
+        {
+            node->mNext = createNotePtr();
+            fillNode(node->mNext,string);
+        }
+    }
+
+    void Serializer::Node::fillNodeData(Serializer::Node *node, String &string)
+    {
+        std::vector<ui64> posValue = string.find("=");
+        ui64 offset = 0;
+        for(ui64 pV : posValue)
+        {
+            ui64 posBeginNameInD = string.findFirst("[");
+            pV -= offset;
+
+            if(pV > posBeginNameInD)
+            {
+                break;
+            }
+
+            if(pV < posBeginNameInD)
+            {
+                ui64 posValueEnd = string.findFirst(";");
+                StringView view = string.createStringView(pV + 2, posValueEnd - 1);
+                string.remove(0, posValueEnd + 1);
+                node->mValues.emplace_back((const char*)view.getView());
+                offset += posValueEnd + 1;
+            }
+        }
+    }
+
+    Serializer::Node *Serializer::Node::createNotePtr()
+    {
+        return (Node*)MemReg(new Node());
+    }
+
+    Serializer::Serializer(const char *path)
+        :mFile(path, FILE_CRT), mNodes()
+    {
+    }
+
+    void Serializer::write()
+    {
+        serialize();
+        mFile.write();
+    }
+
+    void Serializer::load()
+    {
+        mFile.read();
+        deserialize();
+    }
+
+    bool Serializer::addNewNode(const String &nodePath)
+    {
+        std::vector<String> tokens = nodePath.tokenize('/');
+
+        Node* node = findBaseNode(*tokens.begin().base());
+        if(!node)
+        {
+            mNodes[*tokens.begin().base()] = Node();
+            node = &mNodes.at(*tokens.begin().base());
+            node->mNodeName = *tokens.begin().base();
+        }
+        tokens.erase(tokens.begin());
+        Node* lastNode = findLastNode(node->mNext, tokens);
+        if(!lastNode)
+        {
+            lastNode = node;
+        }
+        createNode(lastNode, tokens);
+        return true;
+    }
+
+    void Serializer::addDataToNode(const String &nodePath, const i8 &data)
+    {
+        Node* node = getTargetedNode(nodePath);
+        if(!node)
+        {
+            LOG_ERROR({}, "Failed do add data to node with path'%s", nodePath.c_str());
+            return;
+        }
+        node->mValues.emplace_back(ToString(data));
+    }
+
+    void Serializer::addDataToNode(const String &nodePath, const i16 &data)
+    {
+        Node* node = getTargetedNode(nodePath);
+        if(!node)
+        {
+            LOG_ERROR({}, "Failed do add data to node with path'%s", nodePath.c_str());
+            return;
+        }
+        node->mValues.emplace_back(ToString(data));
+    }
+
+    void Serializer::addDataToNode(const String &nodePath, const i32 &data)
+    {
+        Node* node = getTargetedNode(nodePath);
+        if(!node)
+        {
+            LOG_ERROR({}, "Failed do add data to node with path'%s", nodePath.c_str());
+            return;
+        }
+        node->mValues.emplace_back(ToString(data));
+    }
+
+    void Serializer::addDataToNode(const String &nodePath, const i64 &data)
+    {
+        Node* node = getTargetedNode(nodePath);
+        if(!node)
+        {
+            LOG_ERROR({}, "Failed do add data to node with path'%s", nodePath.c_str());
+            return;
+        }
+        node->mValues.emplace_back(ToString(data));
+    }
+
+    void Serializer::addDataToNode(const String &nodePath, const ui8 &data)
+    {
+        Node* node = getTargetedNode(nodePath);
+        if(!node)
+        {
+            LOG_ERROR({}, "Failed do add data to node with path'%s", nodePath.c_str());
+            return;
+        }
+        node->mValues.emplace_back(ToString(data));
+    }
+
+    void Serializer::addDataToNode(const String &nodePath, const ui16 &data)
+    {
+        Node* node = getTargetedNode(nodePath);
+        if(!node)
+        {
+            LOG_ERROR({}, "Failed do add data to node with path'%s", nodePath.c_str());
+            return;
+        }
+        node->mValues.emplace_back(ToString(data));
+    }
+
+    void Serializer::addDataToNode(const String &nodePath, const ui32 &data)
+    {
+        Node* node = getTargetedNode(nodePath);
+        if(!node)
+        {
+            LOG_ERROR({}, "Failed do add data to node with path'%s", nodePath.c_str());
+            return;
+        }
+        node->mValues.emplace_back(ToString(data));
+    }
+
+    void Serializer::addDataToNode(const String &nodePath, const ui64 &data)
+    {
+        Node* node = getTargetedNode(nodePath);
+        if(!node)
+        {
+            LOG_ERROR({}, "Failed do add data to node with path'%s", nodePath.c_str());
+            return;
+        }
+        node->mValues.emplace_back(ToString(data));
+    }
+
+    void Serializer::addDataToNode(const String &nodePath, const f32 &data)
+    {
+        Node* node = getTargetedNode(nodePath);
+        if(!node)
+        {
+            LOG_ERROR({}, "Failed do add data to node with path'%s", nodePath.c_str());
+            return;
+        }
+        node->mValues.emplace_back(ToString(data));
+    }
+
+    void Serializer::addDataToNode(const String &nodePath, const f64 &data)
+    {
+        Node* node = getTargetedNode(nodePath);
+        if(!node)
+        {
+            LOG_ERROR({}, "Failed do add data to node with path'%s", nodePath.c_str());
+            return;
+        }
+        node->mValues.emplace_back(ToString(data));
+    }
+
+    void Serializer::addDataToNode(const String &nodePath, const String &data)
+    {
+        Node* node = getTargetedNode(nodePath);
+        if(!node)
+        {
+            LOG_ERROR({}, "Failed do add data to node with path'%s", nodePath.c_str());
+            return;
+        }
+        node->mValues.emplace_back(data);
+    }
+
+    i8 Serializer::getI8FromNode(const String &nodePath)
+    {
+        Node* node = getTargetedNode(nodePath);
+        auto v = *node->mValues.begin()++;
+        return ToValue<i8>(v);
+    }
+
+    i16 Serializer::getI16FromNode(const String &nodePath)
+    {
+        Node* node = getTargetedNode(nodePath);
+        auto v = *node->mValues.begin()++;
+        return ToValue<i16>(v);
+    }
+
+    i32 Serializer::getI32FromNode(const String &nodePath)
+    {
+        Node* node = getTargetedNode(nodePath);
+        auto v = *node->mValues.begin()++;
+        return ToValue<i32>(v);
+    }
+
+    i64 Serializer::getI64FromNode(const String &nodePath)
+    {
+        Node* node = getTargetedNode(nodePath);
+        auto v = *node->mValues.begin()++;
+        return ToValue<i64>(v);
+    }
+
+    ui8 Serializer::getUi8FromNode(const String &nodePath)
+    {
+        Node* node = getTargetedNode(nodePath);
+        auto v = *node->mValues.begin()++;
+        return ToValue<ui8>(v);
+    }
+
+    ui16 Serializer::getUi16FromNode(const String &nodePath)
+    {
+        Node* node = getTargetedNode(nodePath);
+        auto v = *node->mValues.begin()++;
+        return ToValue<ui16>(v);
+    }
+
+    ui32 Serializer::getUi32FromNode(const String &nodePath)
+    {
+        Node* node = getTargetedNode(nodePath);
+        auto v = *node->mValues.begin()++;
+        return ToValue<ui32>(v);
+    }
+
+    ui64 Serializer::getUi64FromNode(const String &nodePath)
+    {
+        Node* node = getTargetedNode(nodePath);
+        auto v = *node->mValues.begin()++;
+        return ToValue<ui64>(v);
+    }
+
+    f32 Serializer::getF32FromNode(const String &nodePath)
+    {
+        Node* node = getTargetedNode(nodePath);
+        auto v = *node->mValues.begin()++;
+        return ToValue<f32>(v);
+    }
+
+    f64 Serializer::getF64FromNode(const String &nodePath)
+    {
+        Node* node = getTargetedNode(nodePath);
+        auto v = *node->mValues.begin()++;
+        return ToValue<f64>(v);
+    }
+
+    String Serializer::getStringFromNode(const String &nodePath)
+    {
+        Node* node = getTargetedNode(nodePath);
+        auto v = *node->mValues.begin()++;
+        return v;
+    }
+
+    void Serializer::serialize()
+    {
+        for(const auto& p : mNodes)
+        {
+            ui64 depth = 0;
+            mFile.addString(Node::ToString(p.second, depth));
+        }
+    }
+
+    void Serializer::deserialize()
+    {
+        String nodeStr((const char*)mFile.getData().getSource());
+        std::vector<Node> nodes = Node::ToNode(nodeStr);
+        for(const Node& n : nodes)
+        {
+            mNodes[n.mNodeName] = n;
+        }
+    }
+
+    Serializer::Node* Serializer::getTargetedNode(const String& nodePath)
+    {
+        Node* node = nullptr;
+        std::vector<String> tokens = nodePath.tokenize('/');
+
+        if(mNodes.contains(tokens[0]))
+        {
+            Node& n = mNodes.at(tokens[0]);
+            node = findNode(&n, tokens.back());
+        }
+        return node;
+    }
+
+    Serializer::Node* Serializer::findNode(Serializer::Node* node, const String& nodeName)
+    {
+        if(!node)
+        {
+            return nullptr;
+        }
+        if(node->mNodeName == nodeName)
+        {
+            return node;
+        }
+        return findNode(node->mNext, nodeName);
+    }
+
+    Serializer::Node* Serializer::findBaseNode(const String& nodeName)
+    {
+        if(mNodes.contains(nodeName))
+        {
+            return &mNodes.at(nodeName);
+        }
+        return nullptr;
+    }
+
+    Serializer::Node* Serializer::findLastNode(Node* node, std::vector<String>& tokens)
+    {
+        if(tokens.empty() || !node)
+        {
+            return nullptr;
+        }
+        String nodeName = *tokens.begin();
+        tokens.erase(tokens.begin());
+        if(node->mNodeName == nodeName)
+        {
+            Node* n = findLastNode(node->mNext, tokens);
+            if(!n)
+            {
+                return node;
+            }
+        }
+        return nullptr;
+    }
+
+    void Serializer::createNode(Node* node, std::vector<String>& tokens)
+    {
+       if(tokens.empty())
+       {
+           return;
+       }
+       String nodeName = *tokens.begin().base();
+       tokens.erase(tokens.begin());
+       Node* nNode = Node::createNotePtr();
+       nNode->mNodeName = nodeName;
+       node->mNext = nNode;
+       createNode(nNode, tokens);
+    }
 }

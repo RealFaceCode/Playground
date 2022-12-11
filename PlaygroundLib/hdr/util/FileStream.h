@@ -2,6 +2,7 @@
 #define PLAYGROUNDLIB_FILESTREAM_H
 
 #include <../../hdr/core.h>
+#include <functional>
 #include "buffer/string.h"
 #include "buffer/binarybuffer.h"
 
@@ -345,6 +346,223 @@ namespace FS
         String mEnding;
         BinaryBuffer mSource;
         bool mExist;
+    };
+
+    /**@brief Converts all given data to a specific format to store*/
+    struct Serializer
+    {
+    public:
+        struct Node
+        {
+        public:
+        /**@brief Constructs a Node with all values set to 0*/
+        Node();
+
+        /**@brief Converts a node to a string representation
+         * @param[in] node
+         * @param[in] depth
+         * @returns
+         * Returns a string representation of the node
+         */
+        static String ToString(const Node& node, ui64& depth);
+        /**@brief Converts a string representation of a node to node
+         * @param[in] string
+         * @returns
+         * Returns a std::vector<Node> from a string representation of a node tree. This function is destructive!
+         */
+        static std::vector<Node> ToNode(String& string);
+
+        /**@brief Creates a new Node*
+         * @returns
+         * Returns a new Node*
+         */
+        static Node* createNotePtr();
+
+        private:
+            static std::vector<String> toNodeString(String& string);
+            static void fillNode(Node* node, String& string);
+            static void fillNodeData(Node* node, String& string);
+        public:
+            Node* mNext                 = nullptr;
+            String mNodeName;
+            std::vector<String> mValues = {};
+        };
+    public:
+        Serializer() = default;
+        Serializer(const char* path);
+
+        /**@brief Serialized all nodes and write it to the file
+         * @returns
+         * VOID
+         */
+        void write();
+        /**@brief Loads the serialized nodes and deserialized it to the actual nodes
+         * @returns
+         * VOID
+         */
+        void load();
+
+        /**@brief Adds a new node to the Serializer
+         * @param[in] string
+         * @retval TRUE if the node was successfully created
+         * @retval FALSE if the node was not successfully created
+         */
+        bool addNewNode(const String& name);
+        /**@brief Adds a i8 to the targeted node
+         * @param[in] nodePath
+         * @param[in] data
+         * @returns
+         * VOID
+         */
+        void addDataToNode(const String& nodePath, const i8& data);
+        /**@brief Adds a i16 to the targeted node
+         * @param[in] nodePath
+         * @param[in] data
+         * @returns
+         * VOID
+         */
+        void addDataToNode(const String& nodePath, const i16& data);
+        /**@brief Adds a i32 to the targeted node
+         * @param[in] nodePath
+         * @param[in] data
+         * @returns
+         * VOID
+         */
+        void addDataToNode(const String& nodePath, const i32& data);
+        /**@brief Adds a i64 to the targeted node
+         * @param[in] nodePath
+         * @param[in] data
+         * @returns
+         * VOID
+         */
+        void addDataToNode(const String& nodePath, const i64& data);
+        /**@brief Adds a ui8 to the targeted node
+         * @param[in] nodePath
+         * @param[in] data
+         * @returns
+         * VOID
+         */
+        void addDataToNode(const String& nodePath, const ui8& data);
+        /**@brief Adds a ui16 to the targeted node
+         * @param[in] nodePath
+         * @param[in] data
+         * @returns
+         * VOID
+         */
+        void addDataToNode(const String& nodePath, const ui16& data);
+        /**@brief Adds a ui32 to the targeted node
+         * @param[in] nodePath
+         * @param[in] data
+         * @returns
+         * VOID
+         */
+        void addDataToNode(const String& nodePath, const ui32& data);
+        /**@brief Adds a ui64 to the targeted node
+         * @param[in] nodePath
+         * @param[in] data
+         * @returns
+         * VOID
+         */
+        void addDataToNode(const String& nodePath, const ui64& data);
+        /**@brief Adds a f32 to the targeted node
+         * @param[in] nodePath
+         * @param[in] data
+         * @returns
+         * VOID
+         */
+        void addDataToNode(const String& nodePath, const f32& data);
+        /**@brief Adds a f64 to the targeted node
+         * @param[in] nodePath
+         * @param[in] data
+         * @returns
+         * VOID
+         */
+        void addDataToNode(const String& nodePath, const f64& data);
+        /**@brief Adds a string to the targeted node
+         * @param[in] nodePath
+         * @param[in] data
+         * @returns
+         * VOID
+         */
+        void addDataToNode(const String& nodePath, const String& data);
+
+        /**@brief Gets a i8 from the node
+         * @param[in] nodePath
+         * @returns
+         * Returns a i8 from the targeted node
+         */
+        i8 getI8FromNode(const String& nodePath);
+        /**@brief Gets a i16 from the node
+         * @param[in] nodePath
+         * @returns
+         * Returns a i16 from the targeted node
+         */
+        i16 getI16FromNode(const String& nodePath);
+        /**@brief Gets a i32 from the node
+         * @param[in] nodePath
+         * @returns
+         * Returns a i32 from the targeted node
+         */
+        i32 getI32FromNode(const String& nodePath);
+        /**@brief Gets a i64 from the node
+         * @param[in] nodePath
+         * @returns
+         * Returns a i64 from the targeted node
+         */
+        i64 getI64FromNode(const String& nodePath);
+        /**@brief Gets a ui8 from the node
+         * @param[in] nodePath
+         * @returns
+         * Returns a ui8 from the targeted node
+         */
+        ui8 getUi8FromNode(const String& nodePath);
+        /**@brief Gets a ui16 from the node
+         * @param[in] nodePath
+         * @returns
+         * Returns a ui16 from the targeted node
+         */
+        ui16 getUi16FromNode(const String& nodePath);
+        /**@brief Gets a ui32 from the node
+         * @param[in] nodePath
+         * @returns
+         * Returns a ui32 from the targeted node
+         */
+        ui32 getUi32FromNode(const String& nodePath);
+        /**@brief Gets a ui64 from the node
+         * @param[in] nodePath
+         * @returns
+         * Returns a ui64 from the targeted node
+         */
+        ui64 getUi64FromNode(const String& nodePath);
+        /**@brief Gets a f32 from the node
+         * @param[in] nodePath
+         * @returns
+         * Returns a f32 from the targeted node
+         */
+        f32 getF32FromNode(const String& nodePath);
+        /**@brief Gets a f64 from the node
+         * @param[in] nodePath
+         * @returns
+         * Returns a f64 from the targeted node
+         */
+        f64 getF64FromNode(const String& nodePath);
+        /**@brief Gets a String from the node
+         * @param[in] nodePath
+         * @returns
+         * Returns a String from the targeted node
+         */
+        String getStringFromNode(const String& nodePath);
+    private:
+        void serialize();
+        void deserialize();
+        Node* getTargetedNode(const String& nodePath);
+        Node* findNode(Node* node, const String& nodeName);
+        Node* findBaseNode(const String& nodeName);
+        Node* findLastNode(Node* node, std::vector<String>& tokens);
+        void createNode(Node* node, std::vector<String>& tokens);
+    private:
+        std::map<String, Node> mNodes;
+        File mFile;
     };
 }
 #endif //PLAYGROUNDLIB_FILESTREAM_H
