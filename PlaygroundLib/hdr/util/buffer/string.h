@@ -72,6 +72,8 @@ String toString(f64 f);
  */
 String toString(bool boolean, bool asNum = false);
 
+struct StringView;
+
 /**@brief A container for strings*/
 struct String
 {
@@ -490,6 +492,39 @@ public:
      */
     const std::vector<ui64> find(const ui64& posBegin, const ui64& posEnd, const char* string) const;
 
+    /**@brief Gets the position of the first match
+     * @param[in] string
+     * @returns
+     * Returns a ui64 of the first match from the string
+     */
+    ui64 findFirst(const String& string) const;
+    /**@brief Gets the position of the first match
+     * @param[in] string
+     * @returns
+     * Returns a ui64 of the first match from the string
+     */
+    ui64 findFirst(const std::string& string) const;
+    /**@brief Gets the position of the first match
+     * @param[in] string
+     * @returns
+     * Returns a ui64 of the first match from the string
+     */
+    ui64 findFirst(const char* string) const;
+
+    /**@brief Seperated the string in to lines
+     * @returns
+     * Returns a std::vector<ui64> filled with lines
+     */
+    std::vector<String> toLines() const;
+
+    /**@brief Creates a string view between posBegin and posEnd
+     * @param[in] posBegin
+     * @param[in] posEnd
+     * @returns
+     * Returns a StringView between posBegin and posEnd
+     */
+    StringView createStringView(const ui64& posBegin, const ui64& posEnd) const;
+
     /**@brief Reserves more space for the string in bytes
      * @param[in] size
      * @retval TRUE if the allocation was successful
@@ -501,6 +536,11 @@ public:
      * VOID
      */
     void clear();
+    /**@brief Initialized all values. Use this in case no constructor was called
+     * @returns
+     * VOID
+     */
+    void initialize();
 
     /**@brief Gets the capacity
      * @returns
@@ -512,6 +552,11 @@ public:
      * Returns the actual length of the string
      */
     const ui64& length() const;
+    /**@brief Checks if the string is empty
+     * @retval TRUE if the string is empty
+     * @retval FALSE if the string is not empty
+     */
+    bool empty() const;
     /**@brief Gets data of the string
      * @returns
      * Returns a ui8* to the data of the string

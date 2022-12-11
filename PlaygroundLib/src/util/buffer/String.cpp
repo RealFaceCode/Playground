@@ -758,7 +758,7 @@ const std::vector<ui64> String::find(const String& string) const
     {
         if(mSource[i] == string.getSource()[0])
         {
-            StringView view(i, i + strLen, *this);
+            StringView view(i, i + strLen - 1, *this);
             if(strcmp((const char*)string.getSource(), (const char*)view.getView()) == 0)
             {
                 pos.emplace_back(i);
@@ -777,7 +777,7 @@ const std::vector<ui64> String::find(const std::string& string) const
     {
         if(mSource[i] == string.data()[0])
         {
-            StringView view(i, i + strLen, *this);
+            StringView view(i, i + strLen - 1, *this);
             if(strcmp((const char*)string.data(), (const char*)view.getView()) == 0)
             {
                 pos.emplace_back(i);
@@ -795,7 +795,7 @@ const std::vector<ui64> String::find(const char* string) const
     {
         if(mSource[i] == string[0])
         {
-            StringView view(i, i + strLen, *this);
+            StringView view(i, i + strLen - 1, *this);
             if(strcmp(string, (const char*)view.getView()) == 0)
             {
                 pos.emplace_back(i);
@@ -815,7 +815,7 @@ const std::vector<ui64> String::find(const ui64& posBegin, const ui64& posEnd, c
     {
         if(strView.getView()[i] == string.getSource()[0])
         {
-            StringView view(i, i + strLen, strView);
+            StringView view(i, i + strLen - 1, strView);
             if(strcmp((const char*)string.getSource(), (const char*)view.getView()) == 0)
             {
                 pos.emplace_back(i + posBegin);
@@ -835,7 +835,7 @@ const std::vector<ui64> String::find(const ui64& posBegin, const ui64& posEnd, c
     {
         if(strView.getView()[i] == string.data()[0])
         {
-            StringView view(i, i + strLen, strView);
+            StringView view(i, i + strLen - 1, strView);
             if(strcmp((const char*)string.data(), (const char*)view.getView()) == 0)
             {
                 pos.emplace_back(i + posBegin);
@@ -855,7 +855,7 @@ const std::vector<ui64> String::find(const ui64& posBegin, const ui64& posEnd, c
     {
         if(strView.getView()[i] == string[0])
         {
-            StringView view(i, i + strLen, strView);
+            StringView view(i, i + strLen - 1 , strView);
             if(strcmp((const char*)string, (const char*)view.getView()) == 0)
             {
                 pos.emplace_back(i + posBegin);
@@ -864,6 +864,75 @@ const std::vector<ui64> String::find(const ui64& posBegin, const ui64& posEnd, c
         }
     }
     return pos;
+}
+
+ui64 String::findFirst(const String &string) const
+{
+    for(ui64 i = 0; i < mLen; i++)
+    {
+        if(mSource[i] == string.c_str()[0])
+        {
+            StringView view(i, i + string.length() - 1, *this);
+            if(strcmp(string.c_str(), (const char*)view.getView()) == 0)
+            {
+                return i;
+            }
+        }
+    }
+    return UINT64_MAX;
+}
+
+ui64 String::findFirst(const std::string &string) const
+{
+    for(ui64 i = 0; i < mLen; i++)
+    {
+        if(mSource[i] == string.c_str()[0])
+        {
+            StringView view(i, i + string.length() - 1, *this);
+            if(strcmp(string.c_str(), (const char*)view.getView()) == 0)
+            {
+                return i;
+            }
+        }
+    }
+    return UINT64_MAX;
+}
+
+ui64 String::findFirst(const char *string) const
+{
+    for(ui64 i = 0; i < mLen; i++)
+    {
+        if(mSource[i] == string[0])
+        {
+            StringView view(i, i + strlen(string) - 1 , *this);
+            if(strcmp(string, (const char*)view.getView()) == 0)
+            {
+                return i;
+            }
+        }
+    }
+    return UINT64_MAX;
+}
+
+std::vector<String> String::toLines() const
+{
+    std::vector<String> lines;
+
+    std::vector<ui64> pos = find("\n");
+    ui64 begin = 0;
+    for(ui64 p : pos)
+    {
+        StringView view = createStringView(begin, p);
+        lines.emplace_back((const char*)view.getView());
+        begin = ++p;
+    }
+
+    return lines;
+}
+
+StringView String::createStringView(const ui64& posBegin, const ui64& posEnd) const
+{
+    return {posBegin, posEnd, *this};
 }
 
 const bool String::reserve(const ui64& size)
@@ -893,7 +962,17 @@ const bool String::reserve(const ui64& size)
 void String::clear()
 {
     mLen = 0;
-    mSource[mLen] = '\0';
+    if(mSource)
+    {
+        mSource[mLen] = '\0';
+    }
+}
+
+void String::initialize()
+{
+    mSource = nullptr;
+    mLen = 0;
+    mCap = 0;
 }
 
 const ui64& String::capacity() const
@@ -904,6 +983,11 @@ const ui64& String::capacity() const
 const ui64& String::length() const
 {
     return mLen;
+}
+
+bool String::empty() const
+{
+    return mLen <= 0;
 }
 
 ui8* String::getSource() const
@@ -998,7 +1082,7 @@ void String::makeFit(const ui64 &size) {
 
 StringView::StringView(const ui64& posBegin, const ui64& posEnd, const String& string)
 {
-    ui64 strLen = posEnd - posBegin;
+    ui64 strLen = posEnd - posBegin + 1;
     mSource = (ui8*)Malloc(strLen + 1);
     memcpy(mSource, string.getSource() + posBegin, strLen);
     mSource[strLen] = '\0';
@@ -1007,7 +1091,7 @@ StringView::StringView(const ui64& posBegin, const ui64& posEnd, const String& s
 
 StringView::StringView(const ui64& posBegin, const ui64& posEnd, const std::string& string)
 {
-    ui64 strLen = posEnd - posBegin;
+    ui64 strLen = posEnd - posBegin + 1;
     mSource = (ui8*)Malloc(strLen + 1);
     memcpy(mSource, string.data() + posBegin, strLen);
     mSource[strLen] = '\0';
@@ -1016,7 +1100,7 @@ StringView::StringView(const ui64& posBegin, const ui64& posEnd, const std::stri
 
 StringView::StringView(const ui64& posBegin, const ui64& posEnd, const char* string)
 {
-    ui64 strLen = posEnd - posBegin;
+    ui64 strLen = posEnd - posBegin + 1;
     mSource = (ui8*)Malloc(strLen + 1);
     memcpy(mSource, string + posBegin, strLen);
     mSource[strLen] = '\0';
@@ -1025,7 +1109,7 @@ StringView::StringView(const ui64& posBegin, const ui64& posEnd, const char* str
 
 StringView::StringView(const ui64& posBegin, const ui64& posEnd, const StringView& string)
 {
-    ui64 strLen = posEnd - posBegin;
+    ui64 strLen = posEnd - posBegin + 1;
     mSource = (ui8*)Malloc(strLen + 1);
     memcpy(mSource, string.getView() + posBegin, strLen);
     mSource[strLen] = '\0';
