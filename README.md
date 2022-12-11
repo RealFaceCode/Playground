@@ -16,12 +16,13 @@ An easy way to get a fast project setup for gui apps.
 - [ ] Graphical user interface
 - [x] Sprite sheet builder
 - [x] Console logging system
-- [ ] Filestream system(not finished)
+- [x] Filestream system
 - [ ] File logging system
 - [x] File hot loading
 - [ ] SXF 
 - [x] Memory leak tracking
 - [x] User input system
+- [ ] Unit text system
 
 ## Build instructions
 ### cmake
