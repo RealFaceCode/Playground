@@ -6,10 +6,7 @@ file(GLOB_RECURSE SOURCE_FILES "src/*.cpp" "hdr/*.hpp" "src/*.c" "hdr/*.h")
 file(GLOB_RECURSE GLAD_FILES "vendor/glad/*.cpp" "vendor/glad/*.hpp" "vendor/glad/*.c" "vendor/glad/*.h")
 file(GLOB_RECURSE FHANDLE_FILES "vendor/fhandle/*.cpp" "vendor/fhandle/*.hpp" "vendor/fhandle/*.c" "vendor/fhandle/*.h")
 
-include_directories("vendor/fhandle")
-include_directories("vendor/glad")
-include_directories("vendor/glm/glm/")
-include_directories("vendor/stb/")
+include_directories(vendor/fhandle vendor/glad vendor/glm/glm/ vendor/stb/)
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
@@ -18,6 +15,8 @@ add_subdirectory("vendor/glfw")
 add_compile_definitions(GLFW_INCLUDE_NONE)
 
 add_library(PlaygroundLib ${SOURCE_FILES} ${GLAD_FILES} ${FHANDLE_FILES})
+target_include_directories(PlaygroundLib PUBLIC vendor/glm/glm/ vendor/fhandle/ vendor/glad/ vendor/stb/)
+target_compile_definitions(PlaygroundLib PUBLIC GLFW_INCLUDE_NONE)
 
 target_link_libraries(PlaygroundLib glfw)
 find_package(OpenGL REQUIRED)
