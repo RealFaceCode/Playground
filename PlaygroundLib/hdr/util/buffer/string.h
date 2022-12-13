@@ -575,6 +575,12 @@ public:
      * VOID
      */
     void clear();
+    /**@brief Destroys the buffer und sets all values to 0 except the capacity
+     * @returns
+     * VOID
+     */
+    void destroy();
+
     /**@brief Initialized all values. Use this in case no constructor was called
      * @returns
      * VOID

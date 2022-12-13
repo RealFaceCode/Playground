@@ -154,13 +154,7 @@ String::String(const char* string)
 
 String::~String()
 {
-    if(mSource != nullptr)
-    {
-        Free(mSource);
-    }
-    mSource = nullptr;
-    mCap = 0;
-    mLen = 0;
+    destroy();
 }
 
 void String::add(const String& string)
@@ -438,6 +432,10 @@ void String::replaceWith(const char* string, const char* rString)
 void String::insert(const ui64& pos, const String& string)
 {
     ui64 strLen = string.mLen;
+    if(strLen == 0)
+    {
+        return;
+    }
     if(!checkCap(strLen))
     {
         makeFit(strLen);
@@ -455,6 +453,10 @@ void String::insert(const ui64& pos, const String& string)
 void String::insert(const ui64& pos, const std::string& string)
 {
     ui64 strLen = string.size();
+    if(strLen == 0)
+    {
+        return;
+    }
     if(!checkCap(strLen))
     {
         makeFit(strLen);
@@ -472,6 +474,10 @@ void String::insert(const ui64& pos, const std::string& string)
 void String::insert(const ui64& pos, const char* string)
 {
     ui64 strLen = strlen(string);
+    if(strLen == 0)
+    {
+        return;
+    }
     if(!checkCap(strLen))
     {
         makeFit(strLen);
@@ -1227,6 +1233,16 @@ bool String::operator<=(const String &other) const
 bool String::operator>=(const String &other) const
 {
     return mLen >= other.mLen;
+}
+
+void String::destroy() {
+    if(mSource != nullptr)
+    {
+        Free(mSource);
+    }
+    mSource = nullptr;
+    mCap = 0;
+    mLen = 0;
 }
 
 StringView::StringView(const ui64& posBegin, const ui64& posEnd, const String& string)
