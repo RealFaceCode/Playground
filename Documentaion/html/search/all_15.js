@@ -15,5 +15,6 @@ var searchData=
   ['windowwidth_12',['windowWidth',['../da/dce/namespace_input.html#ad085224f0b0508d6e5eace386b5b4899',1,'Input']]],
   ['winposx_13',['winPosX',['../df/d50/struct_window_1_1_settings.html#ae3ff0da7c603728369d104da0eaea8d4',1,'Window::Settings']]],
   ['winposy_14',['winPosY',['../df/d50/struct_window_1_1_settings.html#a1264c0d98e62fec5e8f1259b5242473b',1,'Window::Settings']]],
-  ['write_15',['write',['../dc/dff/struct_f_s_1_1_file.html#a47189e60e18ff257646851bc3af605b3',1,'FS::File']]]
+  ['write_15',['write',['../dc/dff/struct_f_s_1_1_file.html#a47189e60e18ff257646851bc3af605b3',1,'FS::File::write()'],['../d2/daa/struct_f_s_1_1_serializer.html#ac8dde3ab7d87a1d2fdddbbc9a2ffa355',1,'FS::Serializer::write()']]],
+  ['writetofile_16',['WriteToFile',['../d2/dd3/namespace_f_s.html#af6cfc90a0371188fd1d1a243ebd2d911',1,'FS']]]
 ];

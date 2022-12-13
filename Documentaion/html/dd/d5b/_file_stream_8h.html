@@ -97,6 +97,7 @@ $(document).ready(function(){initNavTree('dd/d5b/_file_stream_8h.html','../../')
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;<a class="el" href="../../d5/dc4/core_8h_source.html">../../hdr/core.h</a>&gt;</code><br />
+<code>#include &lt;functional&gt;</code><br />
 <code>#include &quot;<a class="el" href="../../da/d66/string_8h_source.html">buffer/string.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="../../dc/d10/binarybuffer_8h_source.html">buffer/binarybuffer.h</a>&quot;</code><br />
 </div>
@@ -106,6 +107,11 @@ $(document).ready(function(){initNavTree('dd/d5b/_file_stream_8h.html','../../')
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/dff/struct_f_s_1_1_file.html">FS::File</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A buffer to store data and write it to a file or read from a file.  <a href="../../dc/dff/struct_f_s_1_1_file.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/daa/struct_f_s_1_1_serializer.html">FS::Serializer</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts all given data to a specific format to store.  <a href="../../d2/daa/struct_f_s_1_1_serializer.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/d4f/struct_f_s_1_1_serializer_1_1_node.html">FS::Serializer::Node</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -160,6 +166,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a7c422d3c7ca42dd73389fc9d601fa98e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="../../d1/d18/struct_string.html">String</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd3/namespace_f_s.html#a7c422d3c7ca42dd73389fc9d601fa98e">FS::getFilePathsFromDir</a> (const char *dir)</td></tr>
 <tr class="memdesc:a7c422d3c7ca42dd73389fc9d601fa98e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all paths from a given directory.  <a href="../../d2/dd3/namespace_f_s.html#a7c422d3c7ca42dd73389fc9d601fa98e">More...</a><br /></td></tr>
 <tr class="separator:a7c422d3c7ca42dd73389fc9d601fa98e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6cfc90a0371188fd1d1a243ebd2d911"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd3/namespace_f_s.html#af6cfc90a0371188fd1d1a243ebd2d911">FS::WriteToFile</a> (const void *data, const <a class="el" href="../../d5/dc4/core_8h.html#ada5a2ff028927a7af00d6050bee3a292">ui64</a> &amp;bufLen, const char *filePath)</td></tr>
+<tr class="memdesc:af6cfc90a0371188fd1d1a243ebd2d911"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes to a file.  <a href="../../d2/dd3/namespace_f_s.html#af6cfc90a0371188fd1d1a243ebd2d911">More...</a><br /></td></tr>
+<tr class="separator:af6cfc90a0371188fd1d1a243ebd2d911"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e9f69a079cc9298f8dc0db43c31a49a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd3/namespace_f_s.html#a1e9f69a079cc9298f8dc0db43c31a49a">FS::ReadFromFile</a> (void **data, const char *filePath, const bool &amp;nullTerm=false)</td></tr>
+<tr class="memdesc:a1e9f69a079cc9298f8dc0db43c31a49a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads from a file.  <a href="../../d2/dd3/namespace_f_s.html#a1e9f69a079cc9298f8dc0db43c31a49a">More...</a><br /></td></tr>
+<tr class="separator:a1e9f69a079cc9298f8dc0db43c31a49a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

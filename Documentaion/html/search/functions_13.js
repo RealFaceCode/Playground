@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['_7ebatch_0',['~Batch',['../d9/d16/struct_g_f_x_1_1_batch.html#ab471b485b00ded4241d31be79a274101',1,'GFX::Batch']]],
-  ['_7efile_1',['~File',['../dc/dff/struct_f_s_1_1_file.html#aa9e3258b49b8152a383f476d126fc8cb',1,'FS::File']]],
-  ['_7eimage_2',['~Image',['../de/d5e/struct_g_f_x_1_1_image.html#ac7a0d84599cb735fcc382f7139566884',1,'GFX::Image']]],
-  ['_7estring_3',['~String',['../d1/d18/struct_string.html#ac40b2a3fb58c2d8556f5e6ff73510036',1,'String']]],
-  ['_7estringview_4',['~StringView',['../de/d1d/struct_string_view.html#a50ddec2f4fc8d9db5fc93df8ad0fb032',1,'StringView']]]
+  ['wasframebufferresized_0',['WasFrameBufferResized',['../da/dce/namespace_input.html#a21b3b32bac086df6aa709e2a73ee27ff',1,'Input']]],
+  ['waswindowmoved_1',['WasWindowMoved',['../da/dce/namespace_input.html#afe82266b53ec4caecf872282a66f66ff',1,'Input']]],
+  ['waswindowresized_2',['WasWindowResized',['../da/dce/namespace_input.html#a4ddd4e0a717ca4b564a0491e32e6e280',1,'Input']]],
+  ['write_3',['write',['../dc/dff/struct_f_s_1_1_file.html#a47189e60e18ff257646851bc3af605b3',1,'FS::File::write()'],['../d2/daa/struct_f_s_1_1_serializer.html#ac8dde3ab7d87a1d2fdddbbc9a2ffa355',1,'FS::Serializer::write()']]],
+  ['writetofile_4',['WriteToFile',['../d2/dd3/namespace_f_s.html#af6cfc90a0371188fd1d1a243ebd2d911',1,'FS']]]
 ];

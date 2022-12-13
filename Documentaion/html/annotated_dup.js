@@ -1,7 +1,8 @@
 var annotated_dup =
 [
     [ "FS", "d2/dd3/namespace_f_s.html", [
-      [ "File", "dc/dff/struct_f_s_1_1_file.html", "dc/dff/struct_f_s_1_1_file" ]
+      [ "File", "dc/dff/struct_f_s_1_1_file.html", "dc/dff/struct_f_s_1_1_file" ],
+      [ "Serializer", "d2/daa/struct_f_s_1_1_serializer.html", "d2/daa/struct_f_s_1_1_serializer" ]
     ] ],
     [ "GFX", "d7/dd4/namespace_g_f_x.html", [
       [ "ImageSettingsBuilder", "d8/d63/namespace_g_f_x_1_1_image_settings_builder.html", [

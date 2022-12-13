@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['length_0',['length',['../d1/d18/struct_string.html#a38bb348bfe5ff08b7a36289cfb171e42',1,'String::length()'],['../de/d1d/struct_string_view.html#a5c313d46dfb9fd7171b0bf08d042e62e',1,'StringView::length()'],['../dc/dff/struct_f_s_1_1_file.html#acd64f4ac7cbf5625363f96f8919867f5',1,'FS::File::length()']]],
+  ['length_0',['length',['../d1/d18/struct_string.html#a0964979e3a96565b3a1e7d70340daf5e',1,'String::length()'],['../de/d1d/struct_string_view.html#a5c313d46dfb9fd7171b0bf08d042e62e',1,'StringView::length()'],['../dc/dff/struct_f_s_1_1_file.html#a100e2a5bad2d87fc4e51a304816301c3',1,'FS::File::length()']]],
   ['lightblue_1',['LightBlue',['../d1/d8c/logger_8h.html#a35ffacb6a8d9e39e2b3f7797679ce65ca1a4360030daf53036ce1cd1668dc6243',1,'logger.h']]],
   ['lightgray_2',['LightGray',['../d1/d8c/logger_8h.html#a35ffacb6a8d9e39e2b3f7797679ce65caab5a67106ffa41f1195b52a8109c745a',1,'logger.h']]],
   ['lightgreen_3',['LightGreen',['../d1/d8c/logger_8h.html#a35ffacb6a8d9e39e2b3f7797679ce65ca6f3bae902f4a1a3b69152ad13382ab18',1,'logger.h']]],
@@ -9,14 +9,15 @@ var searchData=
   ['linear_6',['LINEAR',['../d8/d63/namespace_g_f_x_1_1_image_settings_builder.html#a7a08f93bd16f048a5b8228603e0c66f0aaac544aacc3615aada24897a215f5046',1,'GFX::ImageSettingsBuilder']]],
   ['linecolor_7',['lineColor',['../dc/dca/struct_g_f_x_1_1_renderer_1_1_gui_1_1_gui_settings.html#a98b32bba7a4398d38bf392cd58fc9ab8',1,'GFX::Renderer::Gui::GuiSettings']]],
   ['linewidth_8',['lineWidth',['../dc/dca/struct_g_f_x_1_1_renderer_1_1_gui_1_1_gui_settings.html#afd2e72bf15384a1c9e23f13b288bc2e1',1,'GFX::Renderer::Gui::GuiSettings']]],
-  ['loaddropedfiles_9',['loadDropedFiles',['../db/d62/struct_input_1_1_input_settings.html#a8990b9d03c48bff9245ec7a457c81e44',1,'Input::InputSettings']]],
-  ['loaddropedfiles_10',['LoadDropedFiles',['../da/dce/namespace_input.html#af86aaa3759c4564174f51c4c61b94b4aab6a65156658bbc6b89b4d914670ad8b4',1,'Input']]],
-  ['loadsettings_11',['loadSettings',['../d4/da4/struct_window_1_1_window.html#a835351354ab659a328feb43f08dffc8f',1,'Window::Window']]],
-  ['loadspritesheet_12',['LoadSpriteSheet',['../d2/d25/namespace_g_f_x_1_1_sprite_sheet_builder.html#a8b9a9adbbd14f58622b5856e355a7359',1,'GFX::SpriteSheetBuilder']]],
-  ['log_13',['Log',['../d1/d8c/logger_8h.html#ab008045be30f33330b64c8eed133e485',1,'logger.h']]],
-  ['log_5fassert_14',['LOG_ASSERT',['../d1/d8c/logger_8h.html#a105311bb14edc2c52dd5cc2b88259f4e',1,'logger.h']]],
-  ['log_5ferror_15',['LOG_ERROR',['../d1/d8c/logger_8h.html#a68c7936c074b7c449ae99fa9a114013f',1,'logger.h']]],
-  ['log_5finfo_16',['LOG_INFO',['../d1/d8c/logger_8h.html#a2629b2299f7a15e1d8a94f859814a720',1,'logger.h']]],
-  ['log_5fwarning_17',['LOG_WARNING',['../d1/d8c/logger_8h.html#aff0dd6ef72ce1b345666292dcb5844e1',1,'logger.h']]],
-  ['logger_2eh_18',['logger.h',['../d1/d8c/logger_8h.html',1,'']]]
+  ['load_9',['load',['../d2/daa/struct_f_s_1_1_serializer.html#a497d3c9fa42517371b7a0cc7394f6415',1,'FS::Serializer']]],
+  ['loaddropedfiles_10',['loadDropedFiles',['../db/d62/struct_input_1_1_input_settings.html#a8990b9d03c48bff9245ec7a457c81e44',1,'Input::InputSettings']]],
+  ['loaddropedfiles_11',['LoadDropedFiles',['../da/dce/namespace_input.html#af86aaa3759c4564174f51c4c61b94b4aab6a65156658bbc6b89b4d914670ad8b4',1,'Input']]],
+  ['loadsettings_12',['loadSettings',['../d4/da4/struct_window_1_1_window.html#a835351354ab659a328feb43f08dffc8f',1,'Window::Window']]],
+  ['loadspritesheet_13',['LoadSpriteSheet',['../d2/d25/namespace_g_f_x_1_1_sprite_sheet_builder.html#a8b9a9adbbd14f58622b5856e355a7359',1,'GFX::SpriteSheetBuilder']]],
+  ['log_14',['Log',['../d1/d8c/logger_8h.html#ab008045be30f33330b64c8eed133e485',1,'logger.h']]],
+  ['log_5fassert_15',['LOG_ASSERT',['../d1/d8c/logger_8h.html#a105311bb14edc2c52dd5cc2b88259f4e',1,'logger.h']]],
+  ['log_5ferror_16',['LOG_ERROR',['../d1/d8c/logger_8h.html#a68c7936c074b7c449ae99fa9a114013f',1,'logger.h']]],
+  ['log_5finfo_17',['LOG_INFO',['../d1/d8c/logger_8h.html#a2629b2299f7a15e1d8a94f859814a720',1,'logger.h']]],
+  ['log_5fwarning_18',['LOG_WARNING',['../d1/d8c/logger_8h.html#aff0dd6ef72ce1b345666292dcb5844e1',1,'logger.h']]],
+  ['logger_2eh_19',['logger.h',['../d1/d8c/logger_8h.html',1,'']]]
 ];

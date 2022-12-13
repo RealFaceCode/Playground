@@ -2,15 +2,16 @@ var string_8h =
 [
     [ "String", "d1/d18/struct_string.html", "d1/d18/struct_string" ],
     [ "StringView", "de/d1d/struct_string_view.html", "de/d1d/struct_string_view" ],
-    [ "toString", "da/d66/string_8h.html#aeedfc9eec0fdb851b3e001394dbe66c3", null ],
-    [ "toString", "da/d66/string_8h.html#a598d653ca83597435cb36dcb00bd79d2", null ],
-    [ "toString", "da/d66/string_8h.html#a763e94fc553d9af6d95693d773e6c3ff", null ],
-    [ "toString", "da/d66/string_8h.html#a4e4408648722644a21d7dc37e1bcf319", null ],
-    [ "toString", "da/d66/string_8h.html#a423ea5b06aa32a126fa1616e1781de13", null ],
-    [ "toString", "da/d66/string_8h.html#a09b798ce34f829af3890cae845c6d234", null ],
-    [ "toString", "da/d66/string_8h.html#a0cb4e09287cedf08014ccbd747bbc8ac", null ],
-    [ "toString", "da/d66/string_8h.html#a12bb355c38ea49b58b67fb51a2fd5be0", null ],
-    [ "toString", "da/d66/string_8h.html#a1717d30593c33e5f0c546a4b66b41517", null ],
-    [ "toString", "da/d66/string_8h.html#ac3117b0a10b4b685337dffcf52423de9", null ],
-    [ "toString", "da/d66/string_8h.html#a9561c0a4cbf3090f9c81c070493f8ba2", null ]
+    [ "ToString", "da/d66/string_8h.html#a44cb23200ace9f7e357d4e0cb0442cb6", null ],
+    [ "ToString", "da/d66/string_8h.html#ae643e98fe120573d8bcf640eafc79e09", null ],
+    [ "ToString", "da/d66/string_8h.html#aa239443d1db2a4f6459af3eb87f8a595", null ],
+    [ "ToString", "da/d66/string_8h.html#a92b1f2c7f95c87b16991f0a7b45fe07d", null ],
+    [ "ToString", "da/d66/string_8h.html#ad11438d21084d5c13ccb32fb592458da", null ],
+    [ "ToString", "da/d66/string_8h.html#abb2b3f345ce78960b5a04191f8e4f472", null ],
+    [ "ToString", "da/d66/string_8h.html#a4efb0c19c728377d422b03e814e44c20", null ],
+    [ "ToString", "da/d66/string_8h.html#a31b78f680f17fa3f46f822785d44b87c", null ],
+    [ "ToString", "da/d66/string_8h.html#afcd1115bdbede38c354d24e2ccbfffc1", null ],
+    [ "ToString", "da/d66/string_8h.html#a4e364c1228d96652ba7eb4084177afa8", null ],
+    [ "ToString", "da/d66/string_8h.html#a735adbb54ee4091e42f5b83830d431dd", null ],
+    [ "ToValue", "da/d66/string_8h.html#a197a3ddd7e4c672b8aa2e907c872c44d", null ]
 ];

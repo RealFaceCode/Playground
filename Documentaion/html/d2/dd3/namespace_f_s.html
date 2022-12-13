@@ -101,6 +101,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/dff/struct_f_s_1_1_file.html">File</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A buffer to store data and write it to a file or read from a file.  <a href="../../dc/dff/struct_f_s_1_1_file.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/daa/struct_f_s_1_1_serializer.html">Serializer</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts all given data to a specific format to store.  <a href="../../d2/daa/struct_f_s_1_1_serializer.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -149,6 +152,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a7c422d3c7ca42dd73389fc9d601fa98e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="../../d1/d18/struct_string.html">String</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd3/namespace_f_s.html#a7c422d3c7ca42dd73389fc9d601fa98e">getFilePathsFromDir</a> (const char *dir)</td></tr>
 <tr class="memdesc:a7c422d3c7ca42dd73389fc9d601fa98e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all paths from a given directory.  <a href="../../d2/dd3/namespace_f_s.html#a7c422d3c7ca42dd73389fc9d601fa98e">More...</a><br /></td></tr>
 <tr class="separator:a7c422d3c7ca42dd73389fc9d601fa98e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6cfc90a0371188fd1d1a243ebd2d911"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd3/namespace_f_s.html#af6cfc90a0371188fd1d1a243ebd2d911">WriteToFile</a> (const void *data, const <a class="el" href="../../d5/dc4/core_8h.html#ada5a2ff028927a7af00d6050bee3a292">ui64</a> &amp;bufLen, const char *filePath)</td></tr>
+<tr class="memdesc:af6cfc90a0371188fd1d1a243ebd2d911"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes to a file.  <a href="../../d2/dd3/namespace_f_s.html#af6cfc90a0371188fd1d1a243ebd2d911">More...</a><br /></td></tr>
+<tr class="separator:af6cfc90a0371188fd1d1a243ebd2d911"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e9f69a079cc9298f8dc0db43c31a49a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dd3/namespace_f_s.html#a1e9f69a079cc9298f8dc0db43c31a49a">ReadFromFile</a> (void **data, const char *filePath, const bool &amp;nullTerm=false)</td></tr>
+<tr class="memdesc:a1e9f69a079cc9298f8dc0db43c31a49a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads from a file.  <a href="../../d2/dd3/namespace_f_s.html#a1e9f69a079cc9298f8dc0db43c31a49a">More...</a><br /></td></tr>
+<tr class="separator:a1e9f69a079cc9298f8dc0db43c31a49a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a86bdb6e76ca259890de9e071478200ed" name="a86bdb6e76ca259890de9e071478200ed"></a>
@@ -499,6 +508,57 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a1e9f69a079cc9298f8dc0db43c31a49a" name="a1e9f69a079cc9298f8dc0db43c31a49a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e9f69a079cc9298f8dc0db43c31a49a">&#9670;&#160;</a></span>ReadFromFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FS::ReadFromFile </td>
+          <td>(</td>
+          <td class="paramtype">void **&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>filePath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool &amp;&#160;</td>
+          <td class="paramname"><em>nullTerm</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reads from a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">data</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bufLen</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">filePath</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">TRUE</td><td>if the read was successful </td></tr>
+    <tr><td class="paramname">FALSE</td><td>if the read was not successful </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a97809f19a5c0002bc4c22fdf45c09cdf" name="a97809f19a5c0002bc4c22fdf45c09cdf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a97809f19a5c0002bc4c22fdf45c09cdf">&#9670;&#160;</a></span>removeDir()</h2>
 
@@ -603,6 +663,56 @@ Functions</h2></td></tr>
   <table class="retval">
     <tr><td class="paramname">TRUE</td><td>if the file is successfully renamed </td></tr>
     <tr><td class="paramname">FALSE</td><td>if the file is not successfully renamed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af6cfc90a0371188fd1d1a243ebd2d911" name="af6cfc90a0371188fd1d1a243ebd2d911"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6cfc90a0371188fd1d1a243ebd2d911">&#9670;&#160;</a></span>WriteToFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool FS::WriteToFile </td>
+          <td>(</td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="../../d5/dc4/core_8h.html#ada5a2ff028927a7af00d6050bee3a292">ui64</a> &amp;&#160;</td>
+          <td class="paramname"><em>bufLen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>filePath</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Writes to a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">filePath</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">TRUE</td><td>if the write was successful </td></tr>
+    <tr><td class="paramname">FALSE</td><td>if the write was not successful </td></tr>
   </table>
   </dd>
 </dl>
