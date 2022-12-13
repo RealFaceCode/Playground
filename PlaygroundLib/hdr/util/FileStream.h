@@ -351,7 +351,7 @@ namespace FS
     /**@brief Converts all given data to a specific format to store*/
     struct Serializer
     {
-    public:
+    private:
         struct Node
         {
         public:
