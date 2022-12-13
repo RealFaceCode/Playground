@@ -357,6 +357,9 @@ namespace FS
         public:
         /**@brief Constructs a Node with all values set to 0*/
         Node();
+        Node(const String& string);
+        /**@brief Constructs a Node*/
+        ~Node();
 
         /**@brief Converts a node to a string representation
          * @param[in] node
@@ -376,20 +379,32 @@ namespace FS
          * @returns
          * Returns a new Node*
          */
-        static Node* createNotePtr();
+        static Node* createNodePtr();
+        /**@brief Destroys the node;
+         * @returns
+         * VOID
+         */
+        void destroyNode();
 
         private:
             static std::vector<String> toNodeString(String& string);
             static void fillNode(Node* node, String& string);
             static void fillNodeData(Node* node, String& string);
+            static void cleanNodes(Node* node);
         public:
             Node* mNext                 = nullptr;
             String mNodeName;
             std::vector<String> mValues = {};
         };
+
     public:
+        /**@brief Constructs a Serializer with all values set to 0;
+         */
         Serializer() = default;
+        /**@brief Constructs a Serializer with a path to a file*/
         Serializer(const char* path);
+        /**@brief Deconstructs a Serializer*/
+        ~Serializer();
 
         /**@brief Serialized all nodes and write it to the file
          * @returns
@@ -559,7 +574,7 @@ namespace FS
         Node* findNode(Node* node, const String& nodeName);
         Node* findBaseNode(const String& nodeName);
         Node* findLastNode(Node* node, std::vector<String>& tokens);
-        void createNode(Node* node, std::vector<String>& tokens);
+        void createNode(Node** node, std::vector<String>& tokens);
     private:
         std::map<String, Node> mNodes;
         File mFile;

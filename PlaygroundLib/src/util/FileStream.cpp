@@ -512,8 +512,18 @@ namespace FS
     }
 
     Serializer::Node::Node()
-    :mNext(nullptr), mNodeName(String()), mValues({})
+        :mNext(nullptr), mNodeName(String()), mValues({})
     {
+    }
+
+    Serializer::Node::Node(const String &string)
+        :mNext(nullptr), mNodeName(string), mValues({})
+    {
+    }
+
+    Serializer::Node::~Node()
+    {
+
     }
 
     String Serializer::Node::ToString(const Serializer::Node &node, ui64& depth)
@@ -611,6 +621,18 @@ namespace FS
         return nodes;
     }
 
+    Serializer::Node *Serializer::Node::createNodePtr()
+    {
+        return (Node*)MemReg(new Node());
+    }
+
+    void Serializer::Node::destroyNode()
+    {
+        mValues.clear();
+        mNodeName.destroy();
+        cleanNodes(mNext);
+    }
+
     void  Serializer::Node::fillNode(Node* node, String& string)
     {
         if(string.empty() || !node)
@@ -628,7 +650,7 @@ namespace FS
         ui64 posBeginNameInD = string.findFirst("[");
         if(posBeginNameInD != UINT64_MAX)
         {
-            node->mNext = createNotePtr();
+            node->mNext = createNodePtr();
             fillNode(node->mNext,string);
         }
     }
@@ -658,14 +680,32 @@ namespace FS
         }
     }
 
-    Serializer::Node *Serializer::Node::createNotePtr()
+    void Serializer::Node::cleanNodes(Serializer::Node* node)
     {
-        return (Node*)MemReg(new Node());
+        if(!node)
+        {
+            return;
+        }
+        cleanNodes(node->mNext);
+        node->mNodeName.destroy();
+        node->mValues.clear();
+        Free(node);
     }
 
     Serializer::Serializer(const char *path)
         :mFile(path, FILE_CRT), mNodes()
     {
+    }
+
+    Serializer::~Serializer()
+    {
+        while (!mNodes.empty())
+        {
+            auto p = mNodes.extract(mNodes.begin());
+            p.key().destroy();
+            p.mapped().destroyNode();
+        }
+        mNodes.clear();
     }
 
     void Serializer::write()
@@ -685,19 +725,20 @@ namespace FS
         std::vector<String> tokens = nodePath.tokenize('/');
 
         Node* node = findBaseNode(*tokens.begin().base());
+
         if(!node)
         {
-            mNodes[*tokens.begin().base()] = Node();
-            node = &mNodes.at(*tokens.begin().base());
-            node->mNodeName = *tokens.begin().base();
+            mNodes[*tokens.begin()] = Node();
+            node = &mNodes.at(*tokens.begin());
+            node->mNodeName = *tokens.begin();
         }
         tokens.erase(tokens.begin());
         Node* lastNode = findLastNode(node->mNext, tokens);
         if(!lastNode)
         {
-            lastNode = node;
+           lastNode = node;
         }
-        createNode(lastNode, tokens);
+        createNode(&lastNode->mNext, tokens);
         return true;
     }
 
@@ -972,17 +1013,18 @@ namespace FS
         return nullptr;
     }
 
-    void Serializer::createNode(Node* node, std::vector<String>& tokens)
+    void Serializer::createNode(Node** node, std::vector<String>& tokens)
     {
        if(tokens.empty())
        {
            return;
        }
-       String nodeName = *tokens.begin().base();
+       String nodeName = *tokens.begin();
        tokens.erase(tokens.begin());
-       Node* nNode = Node::createNotePtr();
-       nNode->mNodeName = nodeName;
-       node->mNext = nNode;
-       createNode(nNode, tokens);
+       *node = Node::createNodePtr();
+       Node* n= *node;
+       n->mNodeName = nodeName;
+       createNode(&n->mNext, tokens);
     }
+
 }
