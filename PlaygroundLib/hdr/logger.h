@@ -1,6 +1,7 @@
 #ifndef PLAYGROUNDLIB_LOGGER_H
 #define PLAYGROUNDLIB_LOGGER_H
 #include "core.h"
+
 //DEFINES
 #define ANSI_END "\033[m"
 

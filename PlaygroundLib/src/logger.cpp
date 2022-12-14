@@ -70,6 +70,7 @@ void Log(const char* type,
     char* str;
     va_list args;
     va_start(args, userFormat.data());
+    //Allocates dynamically memory for str. str hax to be freed later
     vasprintf(&str, userFormat.data(), args);
     va_end(args);
 
@@ -86,6 +87,7 @@ void Log(const char* type,
     const char* cDate       = date.c_str();
     const char* cTime       = time.c_str();
 
+    //Allocates dynamically memory for str. str hax to be freed later
     asprintf(&str,
              "%s[%s][FILE:%s][LINE:%i][%s][%s]%s",
              color, type,fileName,line, cDate, cTime, ANSI_END);
