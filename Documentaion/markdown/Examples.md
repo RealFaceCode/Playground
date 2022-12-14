@@ -18,7 +18,7 @@ int main()
 For more information:
 - @subpage subExample1Logger "Logger Example"
 
-@section section2Example Hot Loader
+@section section2Example HotLoader
 This code shows how the HotLoader is used.
 ```c++
 #include "core.h"
@@ -68,6 +68,21 @@ return EXIT_SUCCESS;
 ```
 
 For more information:
-- @subpage subExample1MemoryLeakTracker "Memory leak tracker Example"
+- @subpage subExample1MemoryLeakTrackerExample "Memory leak tracker Example"
+
+@section section4Example String
+
+For more information:
+- @subpage subExample1StringExample "String Example"
+
+@section section5Example File
+
+For more information:
+- @subpage subExample1FileExample "File Example"
+
+@section section5Example Serializer
+
+For more information:
+- @subpage subExample1SerializerExample "Serializer Example"
 
 @ref index "Playground"

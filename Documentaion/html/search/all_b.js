@@ -19,7 +19,7 @@ var searchData=
   ['log_5ferror_16',['LOG_ERROR',['../d1/d8c/logger_8h.html#a68c7936c074b7c449ae99fa9a114013f',1,'logger.h']]],
   ['log_5finfo_17',['LOG_INFO',['../d1/d8c/logger_8h.html#a2629b2299f7a15e1d8a94f859814a720',1,'logger.h']]],
   ['log_5fwarning_18',['LOG_WARNING',['../d1/d8c/logger_8h.html#aff0dd6ef72ce1b345666292dcb5844e1',1,'logger.h']]],
-  ['logger_20example_19',['Logger Example',['../d0/dd4/md_markdown__logger_example.html',1,'']]],
+  ['logger_20example_19',['Logger Example',['../d1/d52/md_markdown_examples__logger_example.html',1,'']]],
   ['logger_2eh_20',['logger.h',['../d1/d8c/logger_8h.html',1,'']]],
   ['loggerexample_2emd_21',['LoggerExample.md',['../da/d89/_logger_example_8md.html',1,'']]]
 ];

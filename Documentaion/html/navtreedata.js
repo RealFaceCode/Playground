@@ -33,21 +33,26 @@ var NAVTREE =
     ] ],
     [ "Examples", "d9/d44/md_markdown__examples.html", [
       [ "Logger", "d9/d44/md_markdown__examples.html#section1Example", null ],
-      [ "Hot Loader", "d9/d44/md_markdown__examples.html#section2Example", null ],
-      [ "Memory leak tracker", "d9/d44/md_markdown__examples.html#section3Example", null ]
+      [ "HotLoader", "d9/d44/md_markdown__examples.html#section2Example", null ],
+      [ "Memory leak tracker", "d9/d44/md_markdown__examples.html#section3Example", null ],
+      [ "String", "d9/d44/md_markdown__examples.html#section4Example", null ],
+      [ "File", "d9/d44/md_markdown__examples.html#section5Example", null ]
     ] ],
-    [ "HotLoader  Example", "d6/db2/md_markdown__hot_loader_example.html", null ],
-    [ "Logger Example", "d0/dd4/md_markdown__logger_example.html", [
-      [ "Highlighting", "d0/dd4/md_markdown__logger_example.html#section1LoggingExample", null ],
-      [ "Logging calls", "d0/dd4/md_markdown__logger_example.html#section2LoggingExample", null ],
-      [ "Using a highlight", "d0/dd4/md_markdown__logger_example.html#section3LoggingExample", null ]
+    [ "File Example", "d0/d66/md_markdown_examples__file_example.html", null ],
+    [ "HotLoader  Example", "d5/d0f/md_markdown_examples__hot_loader_example.html", null ],
+    [ "Logger Example", "d1/d52/md_markdown_examples__logger_example.html", [
+      [ "Highlighting", "d1/d52/md_markdown_examples__logger_example.html#section1LoggingExample", null ],
+      [ "Logging calls", "d1/d52/md_markdown_examples__logger_example.html#section2LoggingExample", null ],
+      [ "Using a highlight", "d1/d52/md_markdown_examples__logger_example.html#section3LoggingExample", null ]
     ] ],
-    [ "Memory leak tracker Example", "df/dd5/md_markdown__memory_leak_tracker.html", [
-      [ "Enable / Disable", "df/dd5/md_markdown__memory_leak_tracker.html#section1MemoryLeakTrackerExample", null ],
-      [ "Allocating", "df/dd5/md_markdown__memory_leak_tracker.html#section2MemoryLeakTrackerExample", null ],
-      [ "Register / Deregister", "df/dd5/md_markdown__memory_leak_tracker.html#section3MemoryLeakTrackerExample", null ],
-      [ "Deallocating", "df/dd5/md_markdown__memory_leak_tracker.html#section4MemoryLeakTrackerExample", null ]
+    [ "Memory leak tracker Example", "d2/d94/md_markdown_examples__memory_leak_tracker.html", [
+      [ "Enable / Disable", "d2/d94/md_markdown_examples__memory_leak_tracker.html#section1MemoryLeakTrackerExample", null ],
+      [ "Allocating", "d2/d94/md_markdown_examples__memory_leak_tracker.html#section2MemoryLeakTrackerExample", null ],
+      [ "Register / Deregister", "d2/d94/md_markdown_examples__memory_leak_tracker.html#section3MemoryLeakTrackerExample", null ],
+      [ "Deallocating", "d2/d94/md_markdown_examples__memory_leak_tracker.html#section4MemoryLeakTrackerExample", null ]
     ] ],
+    [ "Serializer Example", "d0/d25/md_markdown_examples__serializer_example.html", null ],
+    [ "String Example", "d0/dbd/md_markdown_examples__string_example.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -84,11 +89,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"d2/daa/struct_f_s_1_1_serializer.html#ab0c76756de65be4e468588250b6f0753",
-"d6/d3c/systeminfo_8h.html#a2f37ac4f914c055625533a927b4a957e",
-"da/dce/namespace_input.html#a775b80f8de05fa260ac884e3ed7c84e9",
-"dc/dff/struct_f_s_1_1_file.html#a92650cbe316219d8122e8cfc9f27b9db",
-"df/d48/struct_input_1_1_key.html#a87b0fb81a26f29e5f6341ee5ce59335e"
+"d2/daa/struct_f_s_1_1_serializer.html#a9bdc4d513123986664564cf566280a78",
+"d6/d3c/systeminfo_8h.html",
+"da/dce/namespace_input.html#a483e5ab5c69fda0061e97040385fc155",
+"dc/dff/struct_f_s_1_1_file.html#a5aa0ee44aedab7051d20f739894b991a",
+"df/d36/struct_system___info.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

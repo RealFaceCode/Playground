@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Playground: Examples</title>
+<title>Playground: HotLoader  Example</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -64,7 +64,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('d9/d44/md_markdown__examples.html','../../'); initResizable(); });
+$(document).ready(function(){initNavTree('d5/d0f/md_markdown_examples__hot_loader_example.html','../../'); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -90,36 +90,11 @@ $(document).ready(function(){initNavTree('d9/d44/md_markdown__examples.html','..
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Examples </div></div>
+  <div class="headertitle"><div class="title"><a class="el" href="../../d3/d38/namespace_hot_loader.html">HotLoader</a> Example </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#section1Example">Logger</a></li>
-<li class="level1"><a href="#section2Example">HotLoader</a></li>
-<li class="level1"><a href="#section3Example">Memory leak tracker</a></li>
-<li class="level1"><a href="#section4Example">String</a></li>
-<li class="level1"><a href="#section5Example">File</a></li>
-</ul>
-</div>
-<div class="textblock"><p ><a class="anchor" id="page1example"></a></p>
-<h1><a class="anchor" id="section1Example"></a>
-Logger</h1>
-<p >A simple example for using the logger in playground. </p><div class="fragment"><div class="line"> {c++}</div>
-<div class="line">#include &quot;core.h&quot;</div>
-<div class="line">#include &quot;logger.h&quot;</div>
-<div class="line"> </div>
-<div class="line">int main()</div>
-<div class="line">{</div>
-<div class="line">    CoreInit();</div>
-<div class="line">    LOG_INFO({}, &quot;This is a info log message. %s&quot;, &quot;And this is a value passed to the logger!&quot;)</div>
-<div class="line">    return EXIT_SUCCESS;</div>
-<div class="line">}</div>
-</div><!-- fragment --><p> For more information:</p><ul>
-<li><a class="el" href="../../d1/d52/md_markdown_examples__logger_example.html#subExample1Logger">Logger Example</a></li>
-</ul>
-<h1><a class="anchor" id="section2Example"></a>
-HotLoader</h1>
-<p >This code shows how the <a class="el" href="../../d3/d38/namespace_hot_loader.html">HotLoader</a> is used. </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="textblock"><p ><a class="anchor" id="subHotLoaderExample1"></a></p>
+<p >In the example code: </p><div class="fragment"><div class="line"> {c++}</div>
 <div class="line">#include &quot;core.h&quot;</div>
 <div class="line">#include &quot;util/hotloader.h&quot;</div>
 <div class="line"> </div>
@@ -135,52 +110,11 @@ HotLoader</h1>
 <div class="line">    HotLoader::RemoveFileToWatch(&quot;../Sandbox/main.cpp&quot;);</div>
 <div class="line">    return EXIT_SUCCESS;</div>
 <div class="line">}</div>
-</div><!-- fragment --><p >For more information:</p><ul>
-<li><a class="el" href="../../d5/d0f/md_markdown_examples__hot_loader_example.html#subHotLoaderExample1">HotLoader Example</a></li>
-</ul>
-<h1><a class="anchor" id="section3Example"></a>
-Memory leak tracker</h1>
-<p >This code shows how the memory leak tracker is used. </p><div class="fragment"><div class="line"> {c++}</div>
-<div class="line">#include &quot;core.h&quot;</div>
-<div class="line">#include &quot;util/memory.h&quot;</div>
-<div class="line"> </div>
-<div class="line">int main(int argc, char** argv)</div>
-<div class="line">{</div>
-<div class="line">CoreInit();</div>
-<div class="line">MemoryEnableTracking(true);</div>
-<div class="line">int* array1 = (int*)Malloc(8);</div>
-<div class="line">int* array2 = (int*)Malloc(8);              //memory leak is never freed</div>
-<div class="line">int* array3 = (int*)MemReg(new int[1]);</div>
-<div class="line">int* array4 = (int*)MemReg(new int[1]);     //memory leak is never freed</div>
-<div class="line"> </div>
-<div class="line">MemZero(array1, 8);</div>
-<div class="line">MemZero(array2, 8);</div>
-<div class="line">MemZero(array3, 8);</div>
-<div class="line">MemZero(array4, 8);</div>
-<div class="line"> </div>
-<div class="line">MemDeReg(array3);</div>
-<div class="line">Free(array1);</div>
-<div class="line">return EXIT_SUCCESS;</div>
-<div class="line">}</div>
-</div><!-- fragment --><p >For more information:</p><ul>
-<li><a class="el" href="../../d2/d94/md_markdown_examples__memory_leak_tracker.html#subExample1MemoryLeakTrackerExample">Memory leak tracker Example</a></li>
-</ul>
-<h1><a class="anchor" id="section4Example"></a>
-String</h1>
-<p >For more information:</p><ul>
-<li><a class="el" href="../../d0/dbd/md_markdown_examples__string_example.html#subExample1StringExample">String Example</a></li>
-</ul>
-<h1><a class="anchor" id="section5Example"></a>
-File</h1>
-<p >For more information:</p><ul>
-<li><a class="el" href="../../d0/d66/md_markdown_examples__file_example.html#subExample1FileExample">File Example</a></li>
-</ul>
-<h1><a class="anchor" id="section5Example"></a>
-File</h1>
-<p >For more information:</p><ul>
-<li><a class="el" href="../../d0/d25/md_markdown_examples__serializer_example.html#subExample1SerializerExample">Serializer Example</a></li>
-</ul>
-<p ><a class="el" href="../../index.html">Playground</a> </p>
+</div><!-- fragment --><p> The function <a class="el" href="../../d3/d38/namespace_hot_loader.html#aeddc897d6d6af7399352da3c57d40609" title="Adds a new file to the file watch list.">HotLoader::AddFileToWatch()</a> will be create a new <a class="el" href="../../de/d02/struct_hot_loader_1_1_file_watch.html" title="Holds all information to watch if a file was changed.">HotLoader::FileWatch</a> struct and the function <a class="el" href="../../d3/d38/namespace_hot_loader.html#a823f477d932720de864b0d23b9a231ec" title="Checks all files for modification.">HotLoader::CheckFiles()</a> checks all <a class="el" href="../../de/d02/struct_hot_loader_1_1_file_watch.html" title="Holds all information to watch if a file was changed.">HotLoader::FileWatch</a> entries for modification.</p>
+<p >The function <a class="el" href="../../d3/d38/namespace_hot_loader.html#acdc9bd4e7c9345b74554adb9e1711b65" title="Checks if a file in the watch list was modified.">HotLoader::IsModified()</a> checks a specific file for a modification the function <a class="el" href="../../d3/d38/namespace_hot_loader.html#a823f477d932720de864b0d23b9a231ec" title="Checks all files for modification.">HotLoader::CheckFiles()</a> has to be called!</p>
+<p >With the function <a class="el" href="../../d3/d38/namespace_hot_loader.html#a63e156e81c69bf0192fd4999c1f3533b" title="Gets the modified file by file path.">HotLoader::GetFile()</a> is a handle to a file accessible.</p>
+<p >With the function <a class="el" href="../../d3/d38/namespace_hot_loader.html#a41ec45910b07fa5ba7e85c066d68605d" title="Removes a file from the file watch list.">HotLoader::RemoveFileToWatch()</a> will a <a class="el" href="../../de/d02/struct_hot_loader_1_1_file_watch.html" title="Holds all information to watch if a file was changed.">HotLoader::FileWatch</a> be deleted.</p>
+<p ><a class="el" href="../../d9/d44/md_markdown__examples.html#page1example">Examples</a> <a class="el" href="../../index.html">Playground</a> </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

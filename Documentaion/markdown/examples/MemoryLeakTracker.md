@@ -1,4 +1,4 @@
-@page subExample1MemoryLeakTracker Memory leak tracker Example
+@page subExample1MemoryLeakTrackerExample Memory leak tracker Example
 @tableofcontents
 
 @section section1MemoryLeakTrackerExample Enable / Disable
