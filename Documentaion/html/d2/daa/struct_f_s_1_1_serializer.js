@@ -1,8 +1,8 @@
 var struct_f_s_1_1_serializer =
 [
-    [ "Node", "dd/d4f/struct_f_s_1_1_serializer_1_1_node.html", "dd/d4f/struct_f_s_1_1_serializer_1_1_node" ],
     [ "Serializer", "d2/daa/struct_f_s_1_1_serializer.html#ae9ad0d2c4d833ec6f0e3a97f0ef836f7", null ],
     [ "Serializer", "d2/daa/struct_f_s_1_1_serializer.html#a8081a06d70ebf69d1f68de740cae09f8", null ],
+    [ "~Serializer", "d2/daa/struct_f_s_1_1_serializer.html#a6df1b59d1a45d8a03c80abf2b24e9c13", null ],
     [ "addDataToNode", "d2/daa/struct_f_s_1_1_serializer.html#a0e673bfa1d47340bd76fe280b760eed9", null ],
     [ "addDataToNode", "d2/daa/struct_f_s_1_1_serializer.html#ac5b80ac5ee7890b498c5bbca13fdc553", null ],
     [ "addDataToNode", "d2/daa/struct_f_s_1_1_serializer.html#a2a92357d275072e9415c01efa8352753", null ],

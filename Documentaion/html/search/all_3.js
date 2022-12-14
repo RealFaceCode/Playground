@@ -70,13 +70,12 @@ var searchData=
   ['createfile_67',['createFile',['../d2/dd3/namespace_f_s.html#af7160088b9ca5b89ab031f1b6ae6105f',1,'FS']]],
   ['createguiobject_68',['CreateGuiObject',['../de/dcc/namespace_g_f_x_1_1_renderer_1_1_gui.html#a92e80fddc242238a45059940031b09f0',1,'GFX::Renderer::Gui']]],
   ['createhighlighter_69',['CreateHighlighter',['../d1/d8c/logger_8h.html#add348f879897cd54273092c4d769af7c',1,'logger.h']]],
-  ['createnoteptr_70',['createNotePtr',['../dd/d4f/struct_f_s_1_1_serializer_1_1_node.html#a4ab966cad642a2a7045af8b2875f2e26',1,'FS::Serializer::Node']]],
-  ['createspritesheet_71',['CreateSpriteSheet',['../d2/d25/namespace_g_f_x_1_1_sprite_sheet_builder.html#a888959d5437848342cc245e99280533d',1,'GFX::SpriteSheetBuilder']]],
-  ['createstringview_72',['createStringView',['../d1/d18/struct_string.html#a4fd05399cce754a786d09b4e7bcf2595',1,'String']]],
-  ['crosshaircursor_73',['CrosshairCursor',['../d2/d06/namespace_window.html#ace7c7c0ef1c71b42148a9ad7d3e88a7fa3555c07d2665e78a14717e5136a23ef7',1,'Window']]],
-  ['cursor16_74',['Cursor16',['../d2/d06/namespace_window.html#a25d9049a5b75296bd853ebdb108b55c7a929008b6a62eb691f4845c7031c6a813',1,'Window']]],
-  ['cursor32_75',['Cursor32',['../d2/d06/namespace_window.html#a25d9049a5b75296bd853ebdb108b55c7ad1646530a8d3b2081796180b1edd73ca',1,'Window']]],
-  ['cursor64_76',['Cursor64',['../d2/d06/namespace_window.html#a25d9049a5b75296bd853ebdb108b55c7a2ec6c196cbd05038098f01cea3cca4a2',1,'Window']]],
-  ['cursorform_77',['CursorForm',['../d2/d06/namespace_window.html#ace7c7c0ef1c71b42148a9ad7d3e88a7f',1,'Window']]],
-  ['customcursorform_78',['CustomCursorForm',['../d2/d06/namespace_window.html#a25d9049a5b75296bd853ebdb108b55c7',1,'Window']]]
+  ['createspritesheet_70',['CreateSpriteSheet',['../d2/d25/namespace_g_f_x_1_1_sprite_sheet_builder.html#a888959d5437848342cc245e99280533d',1,'GFX::SpriteSheetBuilder']]],
+  ['createstringview_71',['createStringView',['../d1/d18/struct_string.html#a4fd05399cce754a786d09b4e7bcf2595',1,'String']]],
+  ['crosshaircursor_72',['CrosshairCursor',['../d2/d06/namespace_window.html#ace7c7c0ef1c71b42148a9ad7d3e88a7fa3555c07d2665e78a14717e5136a23ef7',1,'Window']]],
+  ['cursor16_73',['Cursor16',['../d2/d06/namespace_window.html#a25d9049a5b75296bd853ebdb108b55c7a929008b6a62eb691f4845c7031c6a813',1,'Window']]],
+  ['cursor32_74',['Cursor32',['../d2/d06/namespace_window.html#a25d9049a5b75296bd853ebdb108b55c7ad1646530a8d3b2081796180b1edd73ca',1,'Window']]],
+  ['cursor64_75',['Cursor64',['../d2/d06/namespace_window.html#a25d9049a5b75296bd853ebdb108b55c7a2ec6c196cbd05038098f01cea3cca4a2',1,'Window']]],
+  ['cursorform_76',['CursorForm',['../d2/d06/namespace_window.html#ace7c7c0ef1c71b42148a9ad7d3e88a7f',1,'Window']]],
+  ['customcursorform_77',['CustomCursorForm',['../d2/d06/namespace_window.html#a25d9049a5b75296bd853ebdb108b55c7',1,'Window']]]
 ];

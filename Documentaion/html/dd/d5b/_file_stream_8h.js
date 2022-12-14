@@ -2,7 +2,6 @@ var _file_stream_8h =
 [
     [ "FS::File", "dc/dff/struct_f_s_1_1_file.html", "dc/dff/struct_f_s_1_1_file" ],
     [ "FS::Serializer", "d2/daa/struct_f_s_1_1_serializer.html", "d2/daa/struct_f_s_1_1_serializer" ],
-    [ "FS::Serializer::Node", "dd/d4f/struct_f_s_1_1_serializer_1_1_node.html", "dd/d4f/struct_f_s_1_1_serializer_1_1_node" ],
     [ "checkExistDir", "dd/d5b/_file_stream_8h.html#a86bdb6e76ca259890de9e071478200ed", null ],
     [ "checkExistFile", "dd/d5b/_file_stream_8h.html#a99cfe7e16172a231706a2b5b3871a162", null ],
     [ "checkIfDirContainsFiles", "dd/d5b/_file_stream_8h.html#ad45472246ea3c15bb335bf42d2eeb7ef", null ],

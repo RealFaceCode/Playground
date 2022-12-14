@@ -24,7 +24,6 @@ var searchData=
   ['createfile_21',['createFile',['../d2/dd3/namespace_f_s.html#af7160088b9ca5b89ab031f1b6ae6105f',1,'FS']]],
   ['createguiobject_22',['CreateGuiObject',['../de/dcc/namespace_g_f_x_1_1_renderer_1_1_gui.html#a92e80fddc242238a45059940031b09f0',1,'GFX::Renderer::Gui']]],
   ['createhighlighter_23',['CreateHighlighter',['../d1/d8c/logger_8h.html#add348f879897cd54273092c4d769af7c',1,'logger.h']]],
-  ['createnoteptr_24',['createNotePtr',['../dd/d4f/struct_f_s_1_1_serializer_1_1_node.html#a4ab966cad642a2a7045af8b2875f2e26',1,'FS::Serializer::Node']]],
-  ['createspritesheet_25',['CreateSpriteSheet',['../d2/d25/namespace_g_f_x_1_1_sprite_sheet_builder.html#a888959d5437848342cc245e99280533d',1,'GFX::SpriteSheetBuilder']]],
-  ['createstringview_26',['createStringView',['../d1/d18/struct_string.html#a4fd05399cce754a786d09b4e7bcf2595',1,'String']]]
+  ['createspritesheet_24',['CreateSpriteSheet',['../d2/d25/namespace_g_f_x_1_1_sprite_sheet_builder.html#a888959d5437848342cc245e99280533d',1,'GFX::SpriteSheetBuilder']]],
+  ['createstringview_25',['createStringView',['../d1/d18/struct_string.html#a4fd05399cce754a786d09b4e7bcf2595',1,'String']]]
 ];

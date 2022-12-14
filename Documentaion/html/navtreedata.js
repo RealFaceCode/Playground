@@ -25,6 +25,22 @@
 var NAVTREE =
 [
   [ "Playground", "index.html", [
+    [ "Build", "index.html#section1Playground", null ],
+    [ "Examples", "index.html#section2Playground", null ],
+    [ "Links", "index.html#section3Playground", null ],
+    [ "Build", "d4/da7/md_markdown_build.html", [
+      [ "CMAKE", "d4/da7/md_markdown_build.html#section1build", null ]
+    ] ],
+    [ "Examples", "d9/d44/md_markdown__examples.html", [
+      [ "Logger", "d9/d44/md_markdown__examples.html#section1Example", null ],
+      [ "Hot Loader", "d9/d44/md_markdown__examples.html#section2Example", null ],
+      [ "Memory leak tracker", "d9/d44/md_markdown__examples.html#section3Example", null ]
+    ] ],
+    [ "Logger Example", "d0/dd4/md_markdown__logger_example.html", [
+      [ "Highlighting", "d0/dd4/md_markdown__logger_example.html#section1LoggingExample", null ],
+      [ "Logging calls", "d0/dd4/md_markdown__logger_example.html#section2LoggingExample", null ],
+      [ "Using a highlight", "d0/dd4/md_markdown__logger_example.html#section3LoggingExample", null ]
+    ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -61,11 +77,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"d2/daa/struct_f_s_1_1_serializer.html#ad283310da4f53830be749f0cad4b71b9",
-"d6/d85/renderer_8h.html#a2718d077ca0064fe62eb15e4e2f32d7a",
-"da/dce/namespace_input.html#a94f675319ad247198532205efe0df10b",
-"dc/dff/struct_f_s_1_1_file.html#abaf5b0574800ccd9f1c00bcecc6305c0",
-"df/d48/struct_input_1_1_key.html#a91b00c14b0c46c9181181d3d848bf305"
+"d2/daa/struct_f_s_1_1_serializer.html#ab0c76756de65be4e468588250b6f0753",
+"d6/d3c/systeminfo_8h.html#a2f37ac4f914c055625533a927b4a957e",
+"da/dce/namespace_input.html#a75850345678e94a2cefda17bf2c54dcb",
+"dc/dff/struct_f_s_1_1_file.html#a92650cbe316219d8122e8cfc9f27b9db",
+"df/d48/struct_input_1_1_key.html#a87b0fb81a26f29e5f6341ee5ce59335e"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

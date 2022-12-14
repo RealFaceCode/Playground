@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['physicalmemory_0',['PhysicalMemory',['../dc/dc5/struct_r_a_m___info_1_1_physical_memory.html',1,'RAM_Info']]]
+  ['ram_5finfo_0',['RAM_Info',['../d3/d90/struct_r_a_m___info.html',1,'']]],
+  ['result_1',['Result',['../d1/da6/struct_result.html',1,'']]]
 ];

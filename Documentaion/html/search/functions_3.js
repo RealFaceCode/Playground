@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['destroy_0',['destroy',['../dc/d13/struct_g_f_x_1_1_shader.html#af4ab0e4ab5367e3b0aef7e75ede10052',1,'GFX::Shader']]],
+  ['destroy_0',['destroy',['../dc/d13/struct_g_f_x_1_1_shader.html#af4ab0e4ab5367e3b0aef7e75ede10052',1,'GFX::Shader::destroy()'],['../d1/d18/struct_string.html#a2e4debb87409627c22bf20df4c5cbe01',1,'String::destroy()']]],
   ['disablecursor_1',['disableCursor',['../d4/da4/struct_window_1_1_window.html#a54edded1353adefcab4bd532418ee802',1,'Window::Window::disableCursor()'],['../d7/d15/struct_window_1_1_window_build_obj.html#ad6cf3dabbbe7c4889409673d6001d4a5',1,'Window::WindowBuildObj::disableCursor()']]],
   ['drawbutton_2',['drawButton',['../d7/d6a/struct_g_f_x_1_1_renderer_1_1_gui_1_1_gui_object.html#a39fae3c96233e74db437a66acaa593c4',1,'GFX::Renderer::Gui::GuiObject']]],
   ['drawline_3',['DrawLine',['../dd/d9c/namespace_g_f_x_1_1_renderer.html#a8bc485714e55c1d03ec8726465e63a6b',1,'GFX::Renderer']]],

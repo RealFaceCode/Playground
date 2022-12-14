@@ -24,6 +24,7 @@ var struct_string =
     [ "capacity", "d1/d18/struct_string.html#ad96172cfbf3e9ad1d2b911c1195ab06d", null ],
     [ "clear", "d1/d18/struct_string.html#ab5b0c43ae84247df8e5f9488a911587c", null ],
     [ "createStringView", "d1/d18/struct_string.html#a4fd05399cce754a786d09b4e7bcf2595", null ],
+    [ "destroy", "d1/d18/struct_string.html#a2e4debb87409627c22bf20df4c5cbe01", null ],
     [ "empty", "d1/d18/struct_string.html#acf604fddaddc57ee1575b34ec1c1589d", null ],
     [ "find", "d1/d18/struct_string.html#a620f85466e8e5b4565abe667c7110c68", null ],
     [ "find", "d1/d18/struct_string.html#a12e627b1714b9ed9bdc1ffc5f7bd1718", null ],

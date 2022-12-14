@@ -10,5 +10,7 @@ var searchData=
   ['blue_7',['Blue',['../d1/d8c/logger_8h.html#a35ffacb6a8d9e39e2b3f7797679ce65caf5e09dd1da4088464f264b7a3118bff8',1,'logger.h']]],
   ['bluebit_8',['blueBit',['../df/d50/struct_window_1_1_settings.html#a1cbe6a2dd53e3474ff092e34607fbfef',1,'Window::Settings']]],
   ['build_9',['build',['../dc/d13/struct_g_f_x_1_1_shader.html#a41b821ef345701e90c80ba4ec6f39d12',1,'GFX::Shader::build()'],['../d7/d15/struct_window_1_1_window_build_obj.html#aa7510827ffdc3bc8bc4a3edd3ab94bdb',1,'Window::WindowBuildObj::build()']]],
-  ['buildshader_10',['BuildShader',['../d6/d2c/namespace_g_f_x_1_1_shader_handler.html#a23593e44c03ce251d078bf8499ac358c',1,'GFX::ShaderHandler']]]
+  ['build_10',['Build',['../d4/da7/md_markdown_build.html',1,'']]],
+  ['build_2emd_11',['build.md',['../d8/dfd/build_8md.html',1,'']]],
+  ['buildshader_12',['BuildShader',['../d6/d2c/namespace_g_f_x_1_1_shader_handler.html#a23593e44c03ce251d078bf8499ac358c',1,'GFX::ShaderHandler']]]
 ];
