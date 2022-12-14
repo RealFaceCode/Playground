@@ -19,6 +19,8 @@ var searchData=
   ['highlight_16',['Highlight',['../db/dec/struct_highlight.html',1,'']]],
   ['highlighter_17',['Highlighter',['../d1/d8c/logger_8h.html#afd77299e72b7dd46707aabe13e28496f',1,'logger.h']]],
   ['hotloader_18',['HotLoader',['../d3/d38/namespace_hot_loader.html',1,'']]],
-  ['hotloader_2eh_19',['hotloader.h',['../db/de0/hotloader_8h.html',1,'']]],
-  ['hresizecursor_20',['HResizeCursor',['../d2/d06/namespace_window.html#ace7c7c0ef1c71b42148a9ad7d3e88a7fad28efbd05805df31550f5d58151a53ab',1,'Window']]]
+  ['hotloader_20_20example_19',['HotLoader  Example',['../d6/db2/md_markdown__hot_loader_example.html',1,'']]],
+  ['hotloader_2eh_20',['hotloader.h',['../db/de0/hotloader_8h.html',1,'']]],
+  ['hotloaderexample_2emd_21',['HotLoaderExample.md',['../da/d71/_hot_loader_example_8md.html',1,'']]],
+  ['hresizecursor_22',['HResizeCursor',['../d2/d06/namespace_window.html#ace7c7c0ef1c71b42148a9ad7d3e88a7fad28efbd05805df31550f5d58151a53ab',1,'Window']]]
 ];

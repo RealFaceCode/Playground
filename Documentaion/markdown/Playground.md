@@ -8,3 +8,4 @@ Click @subpage page1build "here" to see how to build the library.
 Click @subpage page1example "here" to see all examples for this library.
 
 @section section3Playground Links
+- [Playground on github](https://github.com/RealFaceCode/Playground)
