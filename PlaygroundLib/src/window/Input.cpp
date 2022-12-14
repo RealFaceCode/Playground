@@ -36,7 +36,7 @@ namespace Input
 	MouseButton buttons[GLFW_MOUSE_BUTTON_LAST]				= {};
 	i8 scrollHorizontal										= 0;
 	i8 scrollVertical										= 0;
-	std::vector<std::string> whitelistedFileEndings         = {};
+	std::vector<String> whitelistedFileEndings              = {};
 	std::queue<FileDrop> drops								= {};
 	ui32 mouseX												= 0;
 	ui32 mouseY												= 0;
@@ -54,7 +54,6 @@ namespace Input
 	bool isWindowMaximized									= false;
 	bool isWindowMinimized									= false;
 	bool isWindowSeen										= true;
-
 	bool wasMaximizedBMinimized								= false;
 
 	float ToFloatCoord(const int& coord, const int& maxLen, const bool& flip)
@@ -376,9 +375,9 @@ namespace Input
 		return !drops.empty();
 	}
 
-	void SetFileEndingToWhitelist(const char* fileEnding)
+	void SetFileEndingToWhitelist(const String& fileEnding)
 	{
-		whitelistedFileEndings.emplace_back(std::string(fileEnding));
+		whitelistedFileEndings.emplace_back(fileEnding);
 	}
 
 	FileDrop getFileDrop()
@@ -522,14 +521,14 @@ namespace Input
 	{
 		if (settings.collectDropCallback)
 		{
-			std::vector<std::string> path;
-			std::vector<std::string> rejectedPath;
+			std::vector<String> path;
+			std::vector<String> rejectedPath;
 			bool accepted = false;
 			for (int i = 0; i < count; i++)
 			{
-				for (auto ending : whitelistedFileEndings)
+				for (const auto& ending : whitelistedFileEndings)
 				{
-					if (EndsWith(paths[i], ending.c_str()))
+					if (EndsWith(paths[i], ending))
 					{
 						accepted = true;
 						path.emplace_back(paths[i]);
@@ -551,7 +550,7 @@ namespace Input
 				.numRejectedFiles	= rejectedPath.size(),
 				.rejectedFilePaths	= rejectedPath,
 			};
-			for (auto p : path)
+			for (const String& p : path)
 			{
 				if (settings.loadDropedFiles)
 				{

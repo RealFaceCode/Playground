@@ -1,6 +1,7 @@
 #include "../../hdr/util/memory.h"
 #include "../../hdr/core.h"
 #include "../../hdr/logger.h"
+#include "../../hdr/util/FileStream.h"
 
 constexpr int preReservedSpace = 1000;
 
@@ -116,7 +117,7 @@ bool    MemoryPrintStack()
     {
         char* fmt = (char*)"Memory leak detected at address: '\033[38;5;226m%p\\033[m' in file: '\033[38;5;226m%s\\033[m' at line \033[38;5;226m%i\\033[m\n";
         char* str;
-        asprintf(&str, fmt, trace.mPtr, GetFileName(trace.mFile).c_str(), trace.mLine);
+        asprintf(&str, fmt, trace.mPtr, FS::getFileName(trace.mFile).c_str(), trace.mLine);
         leaks.append(str);
         Free(str);
     }

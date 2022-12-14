@@ -1,9 +1,11 @@
 #ifndef INPUT_H
 #define INPUT_H
 #include "../core.h"
+#include "../../hdr/util/buffer/string.h"
 
 namespace Input
 {
+
 	extern ui32* windowWidth;
 	extern ui32* windowHeight;
 	extern ui32* windowPosX;
@@ -105,7 +107,7 @@ namespace Input
 		const ui64 numDropedFiles					= 0;;
 		const ui64 numRejectedFiles					= 0;
 		std::vector<FHandle::File> files			= {};
-		std::vector<std::string> rejectedFilePaths	= {};
+		std::vector<String> rejectedFilePaths	    = {};
 	};
 
 	/**@brief Holds all information about char input*/
@@ -282,7 +284,7 @@ namespace Input
 	 * @returns
 	 * VOID
 	 */
-	void SetFileEndingToWhitelist(const char* fileEnding);
+	void SetFileEndingToWhitelist(const String& fileEnding);
 	/**@brief Checks if the window has a file drop
 	 * @retval TRUE if the window has a file drop
 	 * @retval FALSE if the window has not a file drop

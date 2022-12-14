@@ -1,5 +1,7 @@
 #include "../hdr/core.h"
 #include "../hdr/util/memory.h"
+#include "../hdr/util/buffer/string.h"
+#include "../hdr/util/FileStream.h"
 
 void exitFunc()
 {
@@ -15,7 +17,7 @@ void CoreInit()
     atexit(exitFunc);
 }
 
-std::string GetTime()
+String GetTime()
 {
     time_t rawtime;
     struct tm* timeinfo;
@@ -23,11 +25,10 @@ std::string GetTime()
     time(&rawtime);
     timeinfo = localtime(&rawtime);
     strftime(buffer, sizeof(buffer), "%H:%M:%S", timeinfo);
-    std::string time(buffer);
-	return time;
+	return buffer;
 }
 
-std::string GetDate()
+String GetDate()
 {
     time_t rawtime;
     struct tm* timeinfo;
@@ -35,27 +36,13 @@ std::string GetDate()
     time(&rawtime);
     timeinfo = localtime(&rawtime);
     strftime(buffer, sizeof(buffer), "%y-%m-%d", timeinfo);
-    std::string date(buffer);
-	return date;
+	return buffer;
 }
 
-std::string GetFileName(const char* fileName)
+bool EndsWith(const String& filepath, const String& ending)
 {
-    std::string name(fileName);
-    ui32 pos = name.find_last_of('\\') + 1;
-    name.erase(name.begin(), name.begin() + pos);
-    return name;
+    return ending == FS::getFileName(filepath.c_str());
 }
-
-bool EndsWith(const char* filepath, const char* ending)
-{
-    std::string path(filepath);
-    const size_t pos = path.find_last_of(".");
-    path.erase(path.begin(), path.begin() + pos);
-    return (strcmp(path.c_str(), ending) == 0);
-}
-
-void PrintColorPattern(){}
 
 int vasprintf(char **strp, const char *fmt, va_list ap)
 {

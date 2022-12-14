@@ -104,6 +104,8 @@ Result<T>::operator bool() const noexcept {
     return result;
 }
 
+struct String;
+
 //FUNCTIONS
 /**@brief Initialized all core related functions
  * @returns
@@ -113,25 +115,20 @@ void CoreInit();
 
 /**@brief Gets the time as a std::string
  * @returns
- * Returns a std::string with the actual time
+ * Returns a String with the actual time
  */
-std::string GetTime();
+String GetTime();
 /**@brief Gets the date as a std::string
  * @returns
- * Returns a std::string with the actual date
+ * Returns a String with the actual date
  */
-std::string GetDate();
-/**@brief Gets a file name from a file path
- * @param[in] fileName
- * @returns
- * Returns a std::string with a file name from a given file path
- */
-std::string GetFileName(const char* fileName);
+String GetDate();
+
 /**@brief Checks if a file path end with a given file extension
  * @retval TRUE if the file ends with the file extension
  * @retval FALSE if the file dont ends with the file extension
  */
-bool EndsWith(const char* filepath, const char* ending);
+bool EndsWith(const String& filepath, const String& ending);
 
 //C STRING HELPER
 int vasprintf(char** strp, const char* fmt, va_list ap);

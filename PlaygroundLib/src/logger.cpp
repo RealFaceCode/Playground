@@ -2,6 +2,7 @@
 #include "../hdr/logger.h"
 #include "../hdr/util/memory.h"
 #include "../../hdr/util/buffer/string.h"
+#include "../hdr/util/FileStream.h"
 
 String GetAnsiColor(const ConsoleOutPutColor& color)
 {
@@ -83,7 +84,7 @@ void Log(const String& type,
     Free(str);
 
     const String color      = GetAnsiColor(logColor);
-    const auto fName        = GetFileName(filePath.c_str());
+    const auto fName        = FS::getFileName(filePath.c_str());
     const auto date         = GetDate();
     const auto time         = GetTime();
     const char* fileName    = fName.c_str();
