@@ -142,3 +142,5 @@ int main(int argc, char** argv)
 The result:
 
 ![Window](assets/images/markdown/img_3.png)
+
+For more examples take a look in the docs
