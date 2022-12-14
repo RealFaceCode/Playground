@@ -2,6 +2,28 @@ cmake_minimum_required(VERSION 3.19)
 project(PlaygroundLib)
 set(CMAKE_CXX_STANDARD 20)
 
+file(GLOB_RECURSE folder_contents "vendor/glm*" "vendor/glfw*" "vendor/stb*")
+if (!folder_contents)
+    if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+        execute_process(COMMAND "getVendor.bat"
+                RESULT_VARIABLE result
+                OUTPUT_VARIABLE output
+                ERROR_VARIABLE error)
+    elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        message(STATUS "Platform: Linux")
+    elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+        message(STATUS "Platform: macOS")
+    else()
+        message(STATUS "Unknown platform")
+    endif()
+
+    if (result EQUAL 0)
+        message(STATUS "Batch file executed successfully")
+    else()
+        message(ERROR "Error while executing batch file: ${error}")
+    endif()
+endif()
+
 file(GLOB_RECURSE SOURCE_FILES "src/*.cpp" "hdr/*.hpp" "src/*.c" "hdr/*.h")
 file(GLOB_RECURSE GLAD_FILES "vendor/glad/*.cpp" "vendor/glad/*.hpp" "vendor/glad/*.c" "vendor/glad/*.h")
 file(GLOB_RECURSE FHANDLE_FILES "vendor/fhandle/*.cpp" "vendor/fhandle/*.hpp" "vendor/fhandle/*.c" "vendor/fhandle/*.h")
