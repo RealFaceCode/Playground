@@ -25,6 +25,9 @@ An easy way to get a fast project setup for gui apps.
 - [ ] Unit text system
 
 ## Build instructions
+
+The getVendor.bat/sh should be executed before!
+
 ### cmake
 ```cmake
 cmake_minimum_required(VERSION 3.20)

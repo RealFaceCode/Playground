@@ -2,6 +2,7 @@
 @tableofcontents
 
 @section section1build CMAKE
+The getVendor.bat/sh should be executed before!
 This shows the code to implement this library in to your application.
 ```cmake
 cmake_minimum_required(VERSION 3.20)

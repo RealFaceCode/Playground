@@ -1,4 +1,5 @@
 @echo off
+cd PlaygroundLib
 mkdir vendor
 cd vendor
 
