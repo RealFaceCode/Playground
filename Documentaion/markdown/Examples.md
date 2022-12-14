@@ -80,9 +80,39 @@ For more information:
 For more information:
 - @subpage subExample1FileExample "File Example"
 
-@section section5Example Serializer
+@section section6Example Serializer
+This example shows how the FS::Serializer should be used.
+```c++
+#include "core.h"
+#include "util/FileStream.h"
+
+int main(int argc, char** argv)
+{
+    CoreInit();
+    
+    FS::Serializer s("../Sandbox/test.txt");
+    s.addNewNode("i/am/a/new/node");
+    s.addDataToNode("i", "1");
+    s.addDataToNode("i/am", "2");
+    s.addDataToNode("i/am/a", "3");
+    s.addDataToNode("i/am/a/new", "4");
+    s.addDataToNode("i/am/a/new/node", "5");
+    s.write();
+
+    FS::Serializer s2("../Sandbox/test.txt");
+    s2.load();
+    int ir1 = s2.getI32FromNode("i");
+    int ir2 = s2.getI32FromNode("i/am");
+    int ir3 = s2.getI32FromNode("i/am/a");
+    int ir4 = s2.getI32FromNode("i/am/a/new");
+    int ir5 = s2.getI32FromNode("i/am/a/new/node");
+
+    return EXIT_SUCCESS;
+}
+```
 
 For more information:
 - @subpage subExample1SerializerExample "Serializer Example"
+
 
 @ref index "Playground"

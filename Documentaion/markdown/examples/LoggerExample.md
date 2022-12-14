@@ -6,7 +6,7 @@ For creating a Highlight the MARCO C_HiLi() is used.
 ````c++
 C_HiLI("something to highlight", Yellow)
 ````
-For the color in put is the enum #ConsoleOutPutColor used.
+For the color input is the enum #ConsoleOutPutColor used.
 
 @section section2LoggingExample Logging calls
 All available logging calls are:

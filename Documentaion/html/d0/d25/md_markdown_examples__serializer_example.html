@@ -93,8 +93,42 @@ $(document).ready(function(){initNavTree('d0/d25/md_markdown_examples__serialize
   <div class="headertitle"><div class="title">Serializer Example </div></div>
 </div><!--header-->
 <div class="contents">
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#section1SerializerExample">Create an FS::Serializer</a></li>
+<li class="level1"><a href="#section2SerializerExample">Adding new nodes</a></li>
+<li class="level1"><a href="#section3SerializerExample">Adding data</a></li>
+<li class="level1"><a href="#section4SerializerExample">Writing data to file</a></li>
+<li class="level1"><a href="#section5SerializerExample">Loading data from file</a></li>
+<li class="level1"><a href="#section6SerializerExample">Getting data</a></li>
+</ul>
+</div>
 <div class="textblock"><p ><a class="anchor" id="subExample1SerializerExample"></a></p>
-<p ><a class="el" href="../../d9/d44/md_markdown__examples.html#page1example">Examples</a> <a class="el" href="../../index.html">Playground</a> </p>
+<h1><a class="anchor" id="section1SerializerExample"></a>
+Create an FS::Serializer</h1>
+<p >The code example shows how an <a class="el" href="../../d2/daa/struct_f_s_1_1_serializer.html" title="Converts all given data to a specific format to store.">FS::Serializer</a> is created. </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">FS::Serializer sWrite(&quot;../Sandbox/test.txt&quot;);</div>
+</div><!-- fragment --> <h1><a class="anchor" id="section2SerializerExample"></a>
+Adding new nodes</h1>
+<p >To add a new node the function <a class="el" href="../../d2/daa/struct_f_s_1_1_serializer.html#ab0c76756de65be4e468588250b6f0753" title="Adds a new node to the Serializer.">FS::Serializer::addNewNode()</a> is used. </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">sWrite.addNewNode(&quot;newNode&quot;);</div>
+</div><!-- fragment --><h1><a class="anchor" id="section3SerializerExample"></a>
+Adding data</h1>
+<p >To add data the function <a class="el" href="../../d2/daa/struct_f_s_1_1_serializer.html#a1cba3a615bd232e1bb07143e8aefb5ae" title="Adds a i8 to the targeted node.">FS::Serializer::addDataToNode()</a> is used. </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">sWrite.addDataToNode(&quot;newNode&quot;, 42);</div>
+</div><!-- fragment --><h1><a class="anchor" id="section4SerializerExample"></a>
+Writing data to file</h1>
+<p >To write data to a file the function <a class="el" href="../../d2/daa/struct_f_s_1_1_serializer.html#ac8dde3ab7d87a1d2fdddbbc9a2ffa355" title="Serialized all nodes and write it to the file.">FS::Serializer::write()</a> is used. </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">sWrite.write();</div>
+</div><!-- fragment --><h1><a class="anchor" id="section5SerializerExample"></a>
+Loading data from file</h1>
+<p >To load data from a file the function <a class="el" href="../../d2/daa/struct_f_s_1_1_serializer.html#a497d3c9fa42517371b7a0cc7394f6415" title="Loads the serialized nodes and deserialized it to the actual nodes.">FS::Serializer::load()</a> is used. </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">FS::Serializer sLoad(&quot;../Sandbox/test.txt&quot;);</div>
+<div class="line">sLoad.load();</div>
+</div><!-- fragment --><h1><a class="anchor" id="section6SerializerExample"></a>
+Getting data</h1>
+<p >To get data from the node the function <a class="el" href="../../d2/daa/struct_f_s_1_1_serializer.html#a2ad98e5ed85cfd776144e6fff6c4dfbb" title="Gets a i32 from the node.">FS::Serializer::getI32FromNode()</a> is used. For all get functions take a look at <a class="el" href="../../d2/daa/struct_f_s_1_1_serializer.html" title="Converts all given data to a specific format to store.">FS::Serializer</a>. </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">i32 value = sLoad(&quot;newNode&quot;);</div>
+</div><!-- fragment --><p ><a class="el" href="../../d9/d44/md_markdown__examples.html#page1example">Examples</a> <a class="el" href="../../index.html">Playground</a> </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

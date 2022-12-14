@@ -99,6 +99,7 @@ $(document).ready(function(){initNavTree('d9/d44/md_markdown__examples.html','..
 <li class="level1"><a href="#section3Example">Memory leak tracker</a></li>
 <li class="level1"><a href="#section4Example">String</a></li>
 <li class="level1"><a href="#section5Example">File</a></li>
+<li class="level1"><a href="#section6Example">Serializer</a></li>
 </ul>
 </div>
 <div class="textblock"><p ><a class="anchor" id="page1example"></a></p>
@@ -175,9 +176,36 @@ File</h1>
 <p >For more information:</p><ul>
 <li><a class="el" href="../../d0/d66/md_markdown_examples__file_example.html#subExample1FileExample">File Example</a></li>
 </ul>
-<h1><a class="anchor" id="section5Example"></a>
-File</h1>
-<p >For more information:</p><ul>
+<h1><a class="anchor" id="section6Example"></a>
+Serializer</h1>
+<p >This example shows how the <a class="el" href="../../d2/daa/struct_f_s_1_1_serializer.html" title="Converts all given data to a specific format to store.">FS::Serializer</a> should be used. </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">#include &quot;core.h&quot;</div>
+<div class="line">#include &quot;util/FileStream.h&quot;</div>
+<div class="line"> </div>
+<div class="line">int main(int argc, char** argv)</div>
+<div class="line">{</div>
+<div class="line">    CoreInit();</div>
+<div class="line">    </div>
+<div class="line">    FS::Serializer s(&quot;../Sandbox/test.txt&quot;);</div>
+<div class="line">    s.addNewNode(&quot;i/am/a/new/node&quot;);</div>
+<div class="line">    s.addDataToNode(&quot;i&quot;, &quot;1&quot;);</div>
+<div class="line">    s.addDataToNode(&quot;i/am&quot;, &quot;2&quot;);</div>
+<div class="line">    s.addDataToNode(&quot;i/am/a&quot;, &quot;3&quot;);</div>
+<div class="line">    s.addDataToNode(&quot;i/am/a/new&quot;, &quot;4&quot;);</div>
+<div class="line">    s.addDataToNode(&quot;i/am/a/new/node&quot;, &quot;5&quot;);</div>
+<div class="line">    s.write();</div>
+<div class="line"> </div>
+<div class="line">    FS::Serializer s2(&quot;../Sandbox/test.txt&quot;);</div>
+<div class="line">    s2.load();</div>
+<div class="line">    int ir1 = s2.getI32FromNode(&quot;i&quot;);</div>
+<div class="line">    int ir2 = s2.getI32FromNode(&quot;i/am&quot;);</div>
+<div class="line">    int ir3 = s2.getI32FromNode(&quot;i/am/a&quot;);</div>
+<div class="line">    int ir4 = s2.getI32FromNode(&quot;i/am/a/new&quot;);</div>
+<div class="line">    int ir5 = s2.getI32FromNode(&quot;i/am/a/new/node&quot;);</div>
+<div class="line"> </div>
+<div class="line">    return EXIT_SUCCESS;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p >For more information:</p><ul>
 <li><a class="el" href="../../d0/d25/md_markdown_examples__serializer_example.html#subExample1SerializerExample">Serializer Example</a></li>
 </ul>
 <p ><a class="el" href="../../index.html">Playground</a> </p>
