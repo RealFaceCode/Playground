@@ -1300,3 +1300,7 @@ const ui8* StringView::getView() const
 {
     return mSource;
 }
+
+const char *StringView::c_str() const {
+    return (const char*)mSource;
+}

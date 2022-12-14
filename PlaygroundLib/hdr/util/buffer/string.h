@@ -757,6 +757,11 @@ public:
      * Returns a const ui8* to the view
      */
     const ui8* getView() const;
+    /**@brief Gets the view
+     * @returns
+     * Returns a const char* to the view
+     */
+    const char* c_str() const;
 private:
     ui64 mLen;
     ui8* mSource;
