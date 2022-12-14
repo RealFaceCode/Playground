@@ -100,16 +100,15 @@ $(document).ready(function(){initNavTree('d4/da7/md_markdown_build.html','../../
 <div class="textblock"><p ><a class="anchor" id="page1build"></a></p>
 <h1><a class="anchor" id="section1build"></a>
 CMAKE</h1>
-<p >This shows the code to implement this library in to your application. </p><div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.19)</div>
-<div class="line">project(Sandbox)</div>
+<p >This shows the code to implement this library in to your application. </p><div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.20)</div>
+<div class="line">project(ExampleProject)</div>
 <div class="line">set(CMAKE_CXX_STANDARD 20)</div>
 <div class="line"> </div>
-<div class="line">file(GLOB_RECURSE SOURCE_FILES &quot;src/*.cpp&quot; &quot;hdr/*.hpp&quot; &quot;src/*.c&quot; &quot;hdr/*.h&quot; &quot;main.cpp&quot;)</div>
+<div class="line">include_directories(vendor/Playground/PlaygroundLib/hdr)</div>
+<div class="line">add_subdirectory(vendor/Playground/PlaygroundLib)</div>
 <div class="line"> </div>
-<div class="line">include_directories(&quot;../PlaygroundLib/hdr/&quot;)</div>
-<div class="line"> </div>
-<div class="line">add_executable(Sandbox ${SOURCE_FILES})</div>
-<div class="line">target_link_libraries(Sandbox PlaygroundLib)</div>
+<div class="line">add_executable(ExampleProject main.cpp)</div>
+<div class="line">target_link_libraries(ExampleProject PlaygroundLib)</div>
 </div><!-- fragment --><p ><a class="el" href="../../index.html">Playground</a> </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

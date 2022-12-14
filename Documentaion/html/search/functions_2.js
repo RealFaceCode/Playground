@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['c_5fstr_0',['c_str',['../d1/d18/struct_string.html#a8d485340c77fd86c2bd8f1ad2b121100',1,'String']]],
+  ['c_5fstr_0',['c_str',['../d1/d18/struct_string.html#a8d485340c77fd86c2bd8f1ad2b121100',1,'String::c_str()'],['../de/d1d/struct_string_view.html#aea783e46f6df95006c52fd8195bf330c',1,'StringView::c_str()']]],
   ['capacity_1',['capacity',['../d1/d18/struct_string.html#ad96172cfbf3e9ad1d2b911c1195ab06d',1,'String::capacity()'],['../dc/dff/struct_f_s_1_1_file.html#a0173c6d5aac2654bd6c1cce146024e2e',1,'FS::File::capacity()']]],
   ['centerwindowonscreen_2',['centerWindowOnScreen',['../d7/d15/struct_window_1_1_window_build_obj.html#ae1d129a1c5fad75f1d9790ba4fbe0b0b',1,'Window::WindowBuildObj']]],
   ['checkexistdir_3',['checkExistDir',['../d2/dd3/namespace_f_s.html#a86bdb6e76ca259890de9e071478200ed',1,'FS']]],
