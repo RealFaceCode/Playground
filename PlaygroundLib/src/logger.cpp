@@ -39,7 +39,7 @@ Highlight CreateHighlighter(const char* toHighlight, const ConsoleOutPutColor& c
         .mHighlightColor = (char*)GetAnsiColor(color),
     };
 }
-
+//TODO: check is highlight pos is valid
 void Highlighter(std::string& text, Highlight& highlight)
 {
     auto pos = text.find(highlight.mToHighlight);
