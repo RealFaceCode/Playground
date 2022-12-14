@@ -173,7 +173,18 @@ String</h1>
 </ul>
 <h1><a class="anchor" id="section5Example"></a>
 File</h1>
-<p >For more information:</p><ul>
+<p >This simple example shows how a string is used. </p><div class="fragment"><div class="line"> {c++}</div>
+<div class="line">#include &quot;core.h&quot;</div>
+<div class="line">#include &quot;util/buffer/string.h&quot;</div>
+<div class="line"> </div>
+<div class="line">int main(int argc, char** argv)</div>
+<div class="line">{</div>
+<div class="line">    CoreInit();</div>
+<div class="line">    String string(&quot;im a string&quot;);</div>
+<div class="line">    string.add(&quot;. I was added later!&quot;);</div>
+<div class="line">    return EXIT_SUCCESS;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p >For more information:</p><ul>
 <li><a class="el" href="../../d0/d66/md_markdown_examples__file_example.html#subExample1FileExample">File Example</a></li>
 </ul>
 <h1><a class="anchor" id="section6Example"></a>
