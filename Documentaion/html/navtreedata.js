@@ -42,6 +42,12 @@ var NAVTREE =
       [ "Logging calls", "d0/dd4/md_markdown__logger_example.html#section2LoggingExample", null ],
       [ "Using a highlight", "d0/dd4/md_markdown__logger_example.html#section3LoggingExample", null ]
     ] ],
+    [ "Memory leak tracker Example", "df/dd5/md_markdown__memory_leak_tracker.html", [
+      [ "Enable / Disable", "df/dd5/md_markdown__memory_leak_tracker.html#section1MemoryLeakTrackerExample", null ],
+      [ "Allocating", "df/dd5/md_markdown__memory_leak_tracker.html#section2MemoryLeakTrackerExample", null ],
+      [ "Register / Deregister", "df/dd5/md_markdown__memory_leak_tracker.html#section3MemoryLeakTrackerExample", null ],
+      [ "Deallocating", "df/dd5/md_markdown__memory_leak_tracker.html#section4MemoryLeakTrackerExample", null ]
+    ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [

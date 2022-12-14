@@ -40,6 +40,34 @@ int main(int argc, char** argv)
 
 For more information:
 - @subpage subHotLoaderExample1 "HotLoader Example"
+
 @section section3Example Memory leak tracker
+This code shows how the memory leak tracker is used.
+```c++
+#include "core.h"
+#include "util/memory.h"
+
+int main(int argc, char** argv)
+{
+CoreInit();
+MemoryEnableTracking(true);
+int* array1 = (int*)Malloc(8);
+int* array2 = (int*)Malloc(8);              //memory leak is never freed
+int* array3 = (int*)MemReg(new int[1]);
+int* array4 = (int*)MemReg(new int[1]);     //memory leak is never freed
+
+MemZero(array1, 8);
+MemZero(array2, 8);
+MemZero(array3, 8);
+MemZero(array4, 8);
+
+MemDeReg(array3);
+Free(array1);
+return EXIT_SUCCESS;
+}
+```
+
+For more information:
+- @subpage subExample1MemoryLeakTracker "Memory leak tracker Example"
 
 @ref index "Playground"
