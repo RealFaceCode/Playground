@@ -1,6 +1,7 @@
 #ifndef PLAYGROUNDLIB_LOGGER_H
 #define PLAYGROUNDLIB_LOGGER_H
 #include "core.h"
+#include "util/buffer/string.h"
 
 //DEFINES
 #define ANSI_END "\033[m"
@@ -33,9 +34,10 @@ enum ConsoleOutPutColor : ui8
 struct Highlight
 {
 public:
-    char* mToHighlight;
-    char* mPrevColor;
-    char* mHighlightColor;
+    ui64 mIndex;
+    String mToHighlight;
+    String mPrevColor;
+    String mHighlightColor;
 };
 
 //FUNCTIONS
@@ -44,22 +46,23 @@ public:
 * @returns
 * Returns a c style string representation of the given color from the enum type.
 */
-const char* GetAnsiColor(const ConsoleOutPutColor& color);
+String GetAnsiColor(const ConsoleOutPutColor& color);
 
 /**@brief Creates a highlight for text highlighting
 * @param[in] toHighlight
 * @param[in] color
+* @param[in] index
 * @returns
 * Returns a c style string representation of the given color from the enum type.
 */
-Highlight CreateHighlighter(const char* toHighlight, const ConsoleOutPutColor& color);
+Highlight CreateHighlighter(const String& toHighlight, const ConsoleOutPutColor& color, const ui64& index);
 /**@brief Highlights the given string with the given highlight
 * @param[in/out] toHighlight
 * @param[in] color
 * @returns
 * VOID
 */
-void Highlighter(std::string& text, Highlight& highlight);
+void Highlighter(String& text, Highlight& highlight);
 
 /**@brief Prints a log to the console
 * @param[in] type
@@ -72,11 +75,11 @@ void Highlighter(std::string& text, Highlight& highlight);
 * @returns
 * VOID
 */
-void Log(const char* type,
+void Log(const String& type,
          const ConsoleOutPutColor& logColor,
-         const char* filePath, int line,
+         const String& filePath, int line,
          std::vector<Highlight> highlights,
-         const char* format,
+         const String& format,
          ...);
 
 //FUNCTIONAL DEFINES
@@ -87,7 +90,7 @@ void Log(const char* type,
     * @returns
     * Returns a c style string representation of the given color from the enum type.
     */
-    #define C_HiLi(toHighlight, color)                  CreateHighlighter(toHighlight, color)
+    #define C_HiLi(toHighlight, color, index)                  CreateHighlighter(toHighlight, color, index)
     /**@brief Prints a info log to the console
      * @param[in] highlights
      * @param[in] fmt

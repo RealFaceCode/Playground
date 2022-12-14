@@ -1,12 +1,9 @@
-//
-// Created by Kevin-Laptop on 10.08.2022.
-//
-
 #include "../hdr/core.h"
 #include "../hdr/logger.h"
 #include "../hdr/util/memory.h"
+#include "../../hdr/util/buffer/string.h"
 
-const char* GetAnsiColor(const ConsoleOutPutColor& color)
+String GetAnsiColor(const ConsoleOutPutColor& color)
 {
     switch (color)
     {
@@ -31,32 +28,38 @@ const char* GetAnsiColor(const ConsoleOutPutColor& color)
     return "\033[38;5;236m";
 }
 
-Highlight CreateHighlighter(const char* toHighlight, const ConsoleOutPutColor& color)
+Highlight CreateHighlighter(const String& toHighlight, const ConsoleOutPutColor& color, const ui64& index)
 {
     return {
-        .mToHighlight = (char*)toHighlight,
+        .mIndex = index,
+        .mToHighlight = toHighlight,
         .mPrevColor = (char*)ANSI_END,
-        .mHighlightColor = (char*)GetAnsiColor(color),
+        .mHighlightColor = GetAnsiColor(color),
     };
 }
 //TODO: check is highlight pos is valid
-void Highlighter(std::string& text, Highlight& highlight)
+void Highlighter(String& text, Highlight& highlight)
 {
     auto pos = text.find(highlight.mToHighlight);
-    text.insert(pos, highlight.mHighlightColor);
-    pos = text.find(highlight.mToHighlight) + strlen(highlight.mToHighlight);
-    text.insert(pos, highlight.mPrevColor);
+    if(pos.empty() || highlight.mIndex >= pos.size())
+    {
+        return;
+    }
+    ui64 p = pos.at(highlight.mIndex);
+    text.insert(p, highlight.mHighlightColor);
+    p += highlight.mToHighlight.length() + highlight.mHighlightColor.length();
+    text.insert(p, highlight.mPrevColor);
 }
 
-void Log(const char* type,
+void Log(const String& type,
          const ConsoleOutPutColor& logColor,
-         const char* filePath,
+         const String& filePath,
          int line,
          std::vector<Highlight> highlights,
-         const char* format,
+         const String& format,
          ...)
 {
-    std::string userFormat(format);
+    String userFormat(format);
 
     for(auto i = 0; i < highlights.size(); i++)
     {
@@ -69,18 +72,18 @@ void Log(const char* type,
 
     char* str;
     va_list args;
-    va_start(args, userFormat.data());
+    va_start(args, userFormat.c_str());
     //Allocates dynamically memory for str. str hax to be freed later
-    vasprintf(&str, userFormat.data(), args);
+    vasprintf(&str, userFormat.c_str(), args);
     va_end(args);
 
     userFormat.clear();
-    userFormat.append(str);
+    userFormat.add(str);
 
     Free(str);
 
-    const char* color       = GetAnsiColor(logColor);
-    const auto fName        = GetFileName(filePath);
+    const String color      = GetAnsiColor(logColor);
+    const auto fName        = GetFileName(filePath.c_str());
     const auto date         = GetDate();
     const auto time         = GetTime();
     const char* fileName    = fName.c_str();
@@ -90,7 +93,7 @@ void Log(const char* type,
     //Allocates dynamically memory for str. str hax to be freed later
     asprintf(&str,
              "%s[%s][FILE:%s][LINE:%i][%s][%s]%s",
-             color, type,fileName,line, cDate, cTime, ANSI_END);
+             color.c_str(), type.c_str(),fileName,line, cDate, cTime, ANSI_END);
 
     printf("%s\n%s\n", str, userFormat.c_str());
     Free(str);

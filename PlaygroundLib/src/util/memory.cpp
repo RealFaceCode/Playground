@@ -1,6 +1,3 @@
-//
-// Created by Kevin-Laptop on 18.08.2022.
-//
 #include "../../hdr/util/memory.h"
 #include "../../hdr/core.h"
 #include "../../hdr/logger.h"
@@ -117,15 +114,9 @@ bool    MemoryPrintStack()
     std::string leaks;
     for(const auto& trace : stackTrace)
     {
-        std::string fmt("Memory leak detected at address: '%p' in file: '%s' at line %i\n");
-        Highlight h = CreateHighlighter("%p", Yellow);
-        Highlighter(fmt, h);
-        h = CreateHighlighter("%s", Yellow);
-        Highlighter(fmt, h);
-        h = CreateHighlighter("%i", Yellow);
-        Highlighter(fmt, h);
+        char* fmt = (char*)"Memory leak detected at address: '\033[38;5;226m%p\\033[m' in file: '\033[38;5;226m%s\\033[m' at line \033[38;5;226m%i\\033[m\n";
         char* str;
-        asprintf(&str, fmt.c_str(), trace.mPtr, GetFileName(trace.mFile).c_str(), trace.mLine);
+        asprintf(&str, fmt, trace.mPtr, GetFileName(trace.mFile).c_str(), trace.mLine);
         leaks.append(str);
         Free(str);
     }
