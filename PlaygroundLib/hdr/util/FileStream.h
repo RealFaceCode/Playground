@@ -108,8 +108,8 @@ namespace FS
     bool WriteToFile(const void* data, const ui64& bufLen, const char* filePath);
     /**@brief Reads from a file
      * @param[out] data
-     * @param[in] bufLen
      * @param[in] filePath
+     * @param[in] nullTerm
      * @retval TRUE if the read was successful
      * @retval FALSE if the read was not successful
      */
