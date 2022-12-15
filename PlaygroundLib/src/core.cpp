@@ -8,8 +8,6 @@
 
 void exitFunc()
 {
-    FileLogCleanup();
-    Window::Cleanup();
     CoreCleanup();
     if(MemoryPrintStack())
     {
@@ -27,6 +25,8 @@ void CoreInit()
 
 void CoreCleanup()
 {
+    FileLogCleanup();
+    Window::Cleanup();
     HotLoader::Cleanup();
 }
 
