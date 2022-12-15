@@ -10,7 +10,17 @@ namespace Input
 	extern ui32* windowPosX;
 	extern ui32* windowPosY;
 
+	/**@brief Initialized the input system
+	 * @returns
+	 * VOID
+	 * @note This function is automatically called. Dont call this manually
+	 */
 	void InitInput();
+	/**@brief Cleans the input system
+	 * @returns
+	 * VOID
+	 * @note This function is automatically called. Dont call this manually
+	 */
 	void CleanInput();
 
 	/**@brief Defines all callback collections and handle options*/
