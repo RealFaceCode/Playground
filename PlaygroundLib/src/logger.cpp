@@ -66,7 +66,14 @@ void Log(const String& type,
     {
         if(i != 0)
         {
-            highlights.at(i).mPrevColor = highlights.at(i - 1).mHighlightColor;
+            if(highlights.at(i - 1).mPrevColor == ANSI_END)
+            {
+                highlights.at(i).mPrevColor = ANSI_END;
+            }
+            else
+            {
+                highlights.at(i).mPrevColor = highlights.at(i - 1).mHighlightColor;
+            }
         }
         Highlighter(userFormat, highlights.at(i));
     }
