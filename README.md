@@ -139,7 +139,6 @@ int main(int argc, char** argv)
     }
 
     win.clear();
-    Window::Cleanup();
     
     return EXIT_SUCCESS;
 }

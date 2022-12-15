@@ -15,10 +15,11 @@ namespace Window
      * VOID
      */
 	void Init();
-	/**@brief Cleans the window namespace
-    * @returns
-    * VOID
-    */
+	/**@brief Cleans all window related functions
+     * @returns
+     * VOID
+     * @note This function is called automatically. This should not called manually!
+     */
     void Cleanup();
     /**@brief Polls all window events
     * @returns

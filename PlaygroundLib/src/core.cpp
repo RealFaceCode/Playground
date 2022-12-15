@@ -2,9 +2,13 @@
 #include "../hdr/util/memory.h"
 #include "../hdr/util/buffer/string.h"
 #include "../hdr/util/FileStream.h"
+#include "../hdr/util/hotloader.h"
+#include "../hdr/window/window.h"
 
 void exitFunc()
 {
+    Window::Cleanup();
+    CoreCleanup();
     if(MemoryPrintStack())
     {
         system("pause");
@@ -16,6 +20,12 @@ void CoreInit()
 {
     PREP_CONSOLE_LOG
     atexit(exitFunc);
+    at_quick_exit(exitFunc);
+}
+
+void CoreCleanup()
+{
+    HotLoader::Cleanup();
 }
 
 String GetTime()

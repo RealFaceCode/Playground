@@ -71,11 +71,6 @@ For more information:
 - @subpage subExample1MemoryLeakTrackerExample "Memory leak tracker Example"
 
 @section section4Example String
-
-For more information:
-- @subpage subExample1StringExample "String Example"
-
-@section section5Example File
 This simple example shows how a string is used.
 ```c++
 #include "core.h"
@@ -89,6 +84,11 @@ int main(int argc, char** argv)
     return EXIT_SUCCESS;
 }
 ```
+
+For more information:
+- @subpage subExample1StringExample "String Example"
+
+@section section5Example File
 
 For more information:
 - @subpage subExample1FileExample "File Example"

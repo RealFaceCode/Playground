@@ -18,6 +18,7 @@ var core_8h =
     [ "ui64", "d5/dc4/core_8h.html#ada5a2ff028927a7af00d6050bee3a292", null ],
     [ "ui8", "d5/dc4/core_8h.html#aefda6976618bffc0bcaee41c3335d484", null ],
     [ "asprintf", "d5/dc4/core_8h.html#a1af9acc6b6efdca3576cb8223d95f401", null ],
+    [ "CoreCleanup", "d5/dc4/core_8h.html#ae112bee598bcf7eb44d752a0059fdcd6", null ],
     [ "CoreInit", "d5/dc4/core_8h.html#a44a86a1ce71dc1cf546b9ad44e27ec33", null ],
     [ "EndsWith", "d5/dc4/core_8h.html#a351fdaf590e7f8304d7478d468aa6527", null ],
     [ "GetDate", "d5/dc4/core_8h.html#a1c200952e719b9f7897f70b75010f631", null ],

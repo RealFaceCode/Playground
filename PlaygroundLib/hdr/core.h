@@ -112,6 +112,12 @@ Result<T>::operator bool() const noexcept {
  * VOID
  */
 void CoreInit();
+/**@brief Cleans all core related functions
+ * @returns
+ * VOID
+ * @note This function is called automatically. This should not called manually!
+ */
+void CoreCleanup();
 
 /**@brief Gets the time as a String
  * @returns

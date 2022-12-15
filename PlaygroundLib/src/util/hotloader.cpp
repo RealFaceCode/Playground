@@ -1,11 +1,12 @@
 #include "../../hdr/core.h"
 #include "../../hdr/logger.h"
 #include "../../hdr/util/hotloader.h"
+#include "../../hdr/util/buffer/string.h"
 #include <sys/stat.h>
 
 namespace HotLoader
 {
-    static std::unordered_map<std::string, FileWatch> watchedFiles;
+    static std::map<String, FileWatch> watchedFiles;
 
     static time_t GetLastModifiedTime(const char* filePath)
     {
@@ -35,7 +36,7 @@ namespace HotLoader
 
         for(const auto& fileWatch : watchedFiles)
         {
-            if(std::string(fileWatch.second.mFile.path) == std::string(filePath))
+            if(String(fileWatch.second.mFile.path) == String(filePath))
             {
                 LOG_WARNING({}, "Failed to add file to watch with path'%s'!, File is already watched", filePath);
                 return;
@@ -43,7 +44,7 @@ namespace HotLoader
         }
 
         watchedFiles.emplace(
-                std::string(filePath),
+                String(filePath),
                 FileWatch
                 {
                     .mFile = FHandle::File(filePath),
@@ -61,8 +62,8 @@ namespace HotLoader
             return;
         }
 
-        if (watchedFiles.find(std::string(filePath)) != watchedFiles.end()) {
-            watchedFiles.erase(std::string(filePath));
+        if (watchedFiles.find(filePath) != watchedFiles.end()) {
+            watchedFiles.erase(filePath);
         }
     }
 
@@ -70,7 +71,7 @@ namespace HotLoader
 
         for(const auto& fileWatch : watchedFiles)
         {
-            if(fileWatch.first == std::string(filePath))
+            if(fileWatch.first == String(filePath))
             {
                 return fileWatch.second.mChanged;
             }
@@ -83,7 +84,7 @@ namespace HotLoader
     {
         for(auto& fileWatch : watchedFiles)
         {
-            if(fileWatch.first == std::string(filePath))
+            if(fileWatch.first == String(filePath))
             {
                 fileWatch.second.mChanged = false;
                 return &fileWatch.second.mFile;
@@ -110,6 +111,15 @@ namespace HotLoader
                 fileWatch.second.mCheckTime = GetLastModifiedTime(fileWatch.first.c_str());
                 fileWatch.second.mChanged = true;
             }
+        }
+    }
+
+    void Cleanup()
+    {
+        for(auto& p : watchedFiles)
+        {
+            auto& ref = (String&)p.first;
+            ref.destroy();
         }
     }
 }

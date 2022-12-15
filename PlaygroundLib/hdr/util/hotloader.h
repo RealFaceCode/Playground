@@ -44,5 +44,11 @@ namespace HotLoader
      * VOID
      */
     void CheckFiles();
+    /**@brief Cleans the HotLoader
+     * @returns
+     * VOID
+     * @note This function should not be called. Its called automatically
+     */
+    void Cleanup();
 }
 #endif //PLAYGROUNDLIB_HOTLOADER_H
