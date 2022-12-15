@@ -17,7 +17,7 @@ var searchData=
   ['hidecursor_14',['hideCursor',['../d4/da4/struct_window_1_1_window.html#a0035a178a0ef6a56aa5a40bb886d6b0d',1,'Window::Window::hideCursor()'],['../d7/d15/struct_window_1_1_window_build_obj.html#ad1b6eca13b7ed89071960087e9f08014',1,'Window::WindowBuildObj::hideCursor()']]],
   ['hidewindow_15',['hideWindow',['../d7/d15/struct_window_1_1_window_build_obj.html#a2e3415d7dcfa20b36dd083458919f0af',1,'Window::WindowBuildObj']]],
   ['highlight_16',['Highlight',['../db/dec/struct_highlight.html',1,'']]],
-  ['highlighter_17',['Highlighter',['../d1/d8c/logger_8h.html#afd77299e72b7dd46707aabe13e28496f',1,'logger.h']]],
+  ['highlighter_17',['Highlighter',['../d1/d8c/logger_8h.html#a0596a1240b33c964196f2613f02eebea',1,'logger.h']]],
   ['hotloader_18',['HotLoader',['../d3/d38/namespace_hot_loader.html',1,'']]],
   ['hotloader_20_20example_19',['HotLoader  Example',['../d5/d0f/md_markdown_examples__hot_loader_example.html',1,'']]],
   ['hotloader_2eh_20',['hotloader.h',['../db/de0/hotloader_8h.html',1,'']]],

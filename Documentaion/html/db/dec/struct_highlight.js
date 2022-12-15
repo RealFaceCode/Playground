@@ -1,6 +1,7 @@
 var struct_highlight =
 [
-    [ "mHighlightColor", "db/dec/struct_highlight.html#a3c42e01c2d1d0b64bbf78713b11c8813", null ],
-    [ "mPrevColor", "db/dec/struct_highlight.html#ad445df557c2c05f79913d17d9c6586b4", null ],
-    [ "mToHighlight", "db/dec/struct_highlight.html#a7cdbda862d8c0929874bed0b6ac9b330", null ]
+    [ "mHighlightColor", "db/dec/struct_highlight.html#a9fd9ba921fcfd6006fee07808d6fbb7d", null ],
+    [ "mIndex", "db/dec/struct_highlight.html#a2562a970da1209b954f569c6e4754da0", null ],
+    [ "mPrevColor", "db/dec/struct_highlight.html#ade3f1856c3bb08ce2feea47e685c5f69", null ],
+    [ "mToHighlight", "db/dec/struct_highlight.html#ad0ad90fda90223ca463ac547b0a32bf7", null ]
 ];

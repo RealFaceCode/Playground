@@ -2,7 +2,7 @@ var logger_8h =
 [
     [ "Highlight", "db/dec/struct_highlight.html", "db/dec/struct_highlight" ],
     [ "ANSI_END", "d1/d8c/logger_8h.html#ac36e7713f7d73d824dfb2104f862f11b", null ],
-    [ "C_HiLi", "d1/d8c/logger_8h.html#a29a740009e6408cfce6b7dea79f26bf0", null ],
+    [ "C_HiLi", "d1/d8c/logger_8h.html#a06c93e65d37406b643aca94a66e78a5f", null ],
     [ "LOG_ASSERT", "d1/d8c/logger_8h.html#a105311bb14edc2c52dd5cc2b88259f4e", null ],
     [ "LOG_ERROR", "d1/d8c/logger_8h.html#a68c7936c074b7c449ae99fa9a114013f", null ],
     [ "LOG_INFO", "d1/d8c/logger_8h.html#a2629b2299f7a15e1d8a94f859814a720", null ],
@@ -26,8 +26,8 @@ var logger_8h =
       [ "Gray", "d1/d8c/logger_8h.html#a35ffacb6a8d9e39e2b3f7797679ce65ca551cc46435cf57d89ca000b540d78ab0", null ],
       [ "DarkGray", "d1/d8c/logger_8h.html#a35ffacb6a8d9e39e2b3f7797679ce65ca4de15b8ee603dbccac7062665c37853f", null ]
     ] ],
-    [ "CreateHighlighter", "d1/d8c/logger_8h.html#add348f879897cd54273092c4d769af7c", null ],
-    [ "GetAnsiColor", "d1/d8c/logger_8h.html#ab5b158ee6eb7fd0f7310ad51c79ffa10", null ],
-    [ "Highlighter", "d1/d8c/logger_8h.html#afd77299e72b7dd46707aabe13e28496f", null ],
-    [ "Log", "d1/d8c/logger_8h.html#ab008045be30f33330b64c8eed133e485", null ]
+    [ "CreateHighlighter", "d1/d8c/logger_8h.html#a6a2d7bd0e1f51b40a31c6ce25b9bcb80", null ],
+    [ "GetAnsiColor", "d1/d8c/logger_8h.html#a0e115589c357e22adf344f958f051135", null ],
+    [ "Highlighter", "d1/d8c/logger_8h.html#a0596a1240b33c964196f2613f02eebea", null ],
+    [ "Log", "d1/d8c/logger_8h.html#a179f09e42f28ae1b522571790ba93138", null ]
 ];

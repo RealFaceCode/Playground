@@ -34,6 +34,7 @@ var namespace_input =
       [ "RELEASED", "da/dce/namespace_input.html#a84e3e3e1786b44f9a1e167c6783f816fac93c2189219d458e29112da4f4788fbc", null ],
       [ "ISDOWN", "da/dce/namespace_input.html#a84e3e3e1786b44f9a1e167c6783f816fa8605a679f7e963e502f519fa875a5f6a", null ]
     ] ],
+    [ "CleanInput", "da/dce/namespace_input.html#a95e096670f46dbbacec8d2d387e6f12a", null ],
     [ "GetCharInput", "da/dce/namespace_input.html#a9333040d28709dc16f6a0a963b17286e", null ],
     [ "GetCharInputModifierKey", "da/dce/namespace_input.html#a1bd2242b1eba204ccf5610c6917605a3", null ],
     [ "GetFameBufferSizeHeight", "da/dce/namespace_input.html#a0f1c46da356e3177daee0701c0d421b8", null ],
@@ -67,6 +68,7 @@ var namespace_input =
     [ "HasCursorEnteredWindow", "da/dce/namespace_input.html#ac3b4807ff72a47d9a5cf54a8b8d11e4e", null ],
     [ "HasCursorLeftWindow", "da/dce/namespace_input.html#a75850345678e94a2cefda17bf2c54dcb", null ],
     [ "HasFileDrop", "da/dce/namespace_input.html#aecfdc931940a87ffe611b1ad6b22bad1", null ],
+    [ "InitInput", "da/dce/namespace_input.html#a3d0dfcdf32d429d72804b633b3d99b65", null ],
     [ "IsKeyDown", "da/dce/namespace_input.html#aec1a52bb97f81888d5734afced45f1c5", null ],
     [ "IsKeyPressed", "da/dce/namespace_input.html#a3194ee98ab290535bf767ba127384160", null ],
     [ "IsKeyReleased", "da/dce/namespace_input.html#a7f37021aada978631316e8dc0bc04e44", null ],

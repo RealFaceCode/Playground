@@ -18,6 +18,7 @@ var window_8h =
       [ "Cursor32", "d3/df1/window_8h.html#a25d9049a5b75296bd853ebdb108b55c7ad1646530a8d3b2081796180b1edd73ca", null ],
       [ "Cursor64", "d3/df1/window_8h.html#a25d9049a5b75296bd853ebdb108b55c7a2ec6c196cbd05038098f01cea3cca4a2", null ]
     ] ],
+    [ "Cleanup", "d3/df1/window_8h.html#af0756b6e4fea62719e3bea3fc3d7c35d", null ],
     [ "Init", "d3/df1/window_8h.html#afddf437cee627426a7cfdda27093803a", null ],
     [ "pollEvents", "d3/df1/window_8h.html#aa5e409ecd45b4430ed72f4872a8f667f", null ],
     [ "SetSavePathDir", "d3/df1/window_8h.html#a15664406c79d0fb29a085febea924516", null ],

@@ -14,7 +14,7 @@ var searchData=
   ['loaddropedfiles_11',['LoadDropedFiles',['../da/dce/namespace_input.html#af86aaa3759c4564174f51c4c61b94b4aab6a65156658bbc6b89b4d914670ad8b4',1,'Input']]],
   ['loadsettings_12',['loadSettings',['../d4/da4/struct_window_1_1_window.html#a835351354ab659a328feb43f08dffc8f',1,'Window::Window']]],
   ['loadspritesheet_13',['LoadSpriteSheet',['../d2/d25/namespace_g_f_x_1_1_sprite_sheet_builder.html#a8b9a9adbbd14f58622b5856e355a7359',1,'GFX::SpriteSheetBuilder']]],
-  ['log_14',['Log',['../d1/d8c/logger_8h.html#ab008045be30f33330b64c8eed133e485',1,'logger.h']]],
+  ['log_14',['Log',['../d1/d8c/logger_8h.html#a179f09e42f28ae1b522571790ba93138',1,'logger.h']]],
   ['log_5fassert_15',['LOG_ASSERT',['../d1/d8c/logger_8h.html#a105311bb14edc2c52dd5cc2b88259f4e',1,'logger.h']]],
   ['log_5ferror_16',['LOG_ERROR',['../d1/d8c/logger_8h.html#a68c7936c074b7c449ae99fa9a114013f',1,'logger.h']]],
   ['log_5finfo_17',['LOG_INFO',['../d1/d8c/logger_8h.html#a2629b2299f7a15e1d8a94f859814a720',1,'logger.h']]],

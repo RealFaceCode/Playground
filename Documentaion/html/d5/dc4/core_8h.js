@@ -19,9 +19,8 @@ var core_8h =
     [ "ui8", "d5/dc4/core_8h.html#aefda6976618bffc0bcaee41c3335d484", null ],
     [ "asprintf", "d5/dc4/core_8h.html#a1af9acc6b6efdca3576cb8223d95f401", null ],
     [ "CoreInit", "d5/dc4/core_8h.html#a44a86a1ce71dc1cf546b9ad44e27ec33", null ],
-    [ "EndsWith", "d5/dc4/core_8h.html#a8bc077d23f5faee4274f0fe7c3b55f39", null ],
-    [ "GetDate", "d5/dc4/core_8h.html#ae2d6937a522a46fbb28382f5e8e47482", null ],
-    [ "GetFileName", "d5/dc4/core_8h.html#ac8324c1460da4c83c7781ca43e35cc46", null ],
-    [ "GetTime", "d5/dc4/core_8h.html#a6db7dc8e159c3120d8ec01ed26c7b689", null ],
+    [ "EndsWith", "d5/dc4/core_8h.html#a351fdaf590e7f8304d7478d468aa6527", null ],
+    [ "GetDate", "d5/dc4/core_8h.html#a1c200952e719b9f7897f70b75010f631", null ],
+    [ "GetTime", "d5/dc4/core_8h.html#ac0b4846a2fcd6922413c653eb11cc867", null ],
     [ "vasprintf", "d5/dc4/core_8h.html#a5ec7fd90ebe6015636bce974c192c86a", null ]
 ];

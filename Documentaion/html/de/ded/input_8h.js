@@ -34,6 +34,7 @@ var input_8h =
       [ "RELEASED", "de/ded/input_8h.html#a84e3e3e1786b44f9a1e167c6783f816fac93c2189219d458e29112da4f4788fbc", null ],
       [ "ISDOWN", "de/ded/input_8h.html#a84e3e3e1786b44f9a1e167c6783f816fa8605a679f7e963e502f519fa875a5f6a", null ]
     ] ],
+    [ "CleanInput", "de/ded/input_8h.html#a95e096670f46dbbacec8d2d387e6f12a", null ],
     [ "GetCharInput", "de/ded/input_8h.html#a9333040d28709dc16f6a0a963b17286e", null ],
     [ "GetCharInputModifierKey", "de/ded/input_8h.html#a1bd2242b1eba204ccf5610c6917605a3", null ],
     [ "GetFameBufferSizeHeight", "de/ded/input_8h.html#a0f1c46da356e3177daee0701c0d421b8", null ],
@@ -67,6 +68,7 @@ var input_8h =
     [ "HasCursorEnteredWindow", "de/ded/input_8h.html#ac3b4807ff72a47d9a5cf54a8b8d11e4e", null ],
     [ "HasCursorLeftWindow", "de/ded/input_8h.html#a75850345678e94a2cefda17bf2c54dcb", null ],
     [ "HasFileDrop", "de/ded/input_8h.html#aecfdc931940a87ffe611b1ad6b22bad1", null ],
+    [ "InitInput", "de/ded/input_8h.html#a3d0dfcdf32d429d72804b633b3d99b65", null ],
     [ "IsKeyDown", "de/ded/input_8h.html#aec1a52bb97f81888d5734afced45f1c5", null ],
     [ "IsKeyPressed", "de/ded/input_8h.html#a3194ee98ab290535bf767ba127384160", null ],
     [ "IsKeyReleased", "de/ded/input_8h.html#a7f37021aada978631316e8dc0bc04e44", null ],

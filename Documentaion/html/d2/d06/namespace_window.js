@@ -18,6 +18,7 @@ var namespace_window =
       [ "Cursor32", "d2/d06/namespace_window.html#a25d9049a5b75296bd853ebdb108b55c7ad1646530a8d3b2081796180b1edd73ca", null ],
       [ "Cursor64", "d2/d06/namespace_window.html#a25d9049a5b75296bd853ebdb108b55c7a2ec6c196cbd05038098f01cea3cca4a2", null ]
     ] ],
+    [ "Cleanup", "d2/d06/namespace_window.html#af0756b6e4fea62719e3bea3fc3d7c35d", null ],
     [ "Init", "d2/d06/namespace_window.html#afddf437cee627426a7cfdda27093803a", null ],
     [ "pollEvents", "d2/d06/namespace_window.html#aa5e409ecd45b4430ed72f4872a8f667f", null ],
     [ "SetSavePathDir", "d2/d06/namespace_window.html#a15664406c79d0fb29a085febea924516", null ],

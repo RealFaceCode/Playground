@@ -12,5 +12,5 @@ var searchData=
   ['hide_9',['hide',['../d4/da4/struct_window_1_1_window.html#a1dfb21fa7a24d000fa5ce5a865b293e7',1,'Window::Window']]],
   ['hidecursor_10',['hideCursor',['../d4/da4/struct_window_1_1_window.html#a0035a178a0ef6a56aa5a40bb886d6b0d',1,'Window::Window::hideCursor()'],['../d7/d15/struct_window_1_1_window_build_obj.html#ad1b6eca13b7ed89071960087e9f08014',1,'Window::WindowBuildObj::hideCursor()']]],
   ['hidewindow_11',['hideWindow',['../d7/d15/struct_window_1_1_window_build_obj.html#a2e3415d7dcfa20b36dd083458919f0af',1,'Window::WindowBuildObj']]],
-  ['highlighter_12',['Highlighter',['../d1/d8c/logger_8h.html#afd77299e72b7dd46707aabe13e28496f',1,'logger.h']]]
+  ['highlighter_12',['Highlighter',['../d1/d8c/logger_8h.html#a0596a1240b33c964196f2613f02eebea',1,'logger.h']]]
 ];
