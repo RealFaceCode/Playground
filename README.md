@@ -137,6 +137,10 @@ int main(int argc, char** argv)
         win.swapBuffers();
         Window::pollEvents();
     }
+
+    win.clear();
+    Window::Cleanup();
+    
     return EXIT_SUCCESS;
 }
 ```
