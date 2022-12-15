@@ -540,7 +540,6 @@ namespace FS
             if(!checkExistDir(dirPath.c_str()))
             {
                 ui64 lenRemove = mName.length() + mEnding.length() + 2;
-                String dirPath(mPath);
                 dirPath.remove(dirPath.length() - lenRemove, dirPath.length());
                 createDirIfNotExist(dirPath.c_str());
             }
