@@ -88,8 +88,8 @@ namespace Window
 	{
         CHECK_INIT
 
-        std::string path(dirSavePath);
-        path.append(mSettings.fileName);
+        String path(dirSavePath);
+        path.add(mSettings.fileName);
 
         FHandle::Node node;
         node["Window"]["Settings"]["Size"]              = (i32)mSettings.width;
@@ -112,8 +112,8 @@ namespace Window
 	void Window::loadSettings()
 	{
         CHECK_INIT
-		std::string path(dirSavePath);
-		path.append(mSettings.fileName);
+		String path(dirSavePath);
+		path.add(mSettings.fileName);
 		FHandle::Node node = FHandle::Node::loadNode(path.c_str());
 		if (!node.empty())
 		{

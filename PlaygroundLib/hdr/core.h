@@ -113,14 +113,14 @@ Result<T>::operator bool() const noexcept {
  */
 void CoreInit();
 
-/**@brief Gets the time as a std::string
+/**@brief Gets the time as a String
  * @returns
- * Returns a std::string with the actual time
+ * Returns a String with the actual time
  */
 String GetTime();
-/**@brief Gets the date as a std::string
+/**@brief Gets the date as a String
  * @returns
- * Returns a std::string with the actual date
+ * Returns a String with the actual date
  */
 String GetDate();
 /**@brief Checks if a file path end with a given file extension
