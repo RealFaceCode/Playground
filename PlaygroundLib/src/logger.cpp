@@ -55,7 +55,7 @@ void Highlighter(String& text, Highlight& highlight)
 void Log(const String& type,
          const ConsoleOutPutColor& logColor,
          const String& filePath,
-         int line,
+         const int& line,
          std::vector<Highlight> highlights,
          const String& format,
          ...)

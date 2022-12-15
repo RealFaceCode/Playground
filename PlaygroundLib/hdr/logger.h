@@ -77,7 +77,7 @@ void Highlighter(String& text, Highlight& highlight);
 */
 void Log(const String& type,
          const ConsoleOutPutColor& logColor,
-         const String& filePath, int line,
+         const String& filePath, const int& line,
          std::vector<Highlight> highlights,
          const String& format,
          ...);
@@ -87,6 +87,7 @@ void Log(const String& type,
     /**@brief Creates a highlight for text highlighting
     * @param[in] toHighlight
     * @param[in] color
+    * @param[in] index
     * @returns
     * Returns a c style string representation of the given color from the enum type.
     */
@@ -128,10 +129,11 @@ void Log(const String& type,
     /**@brief Creates a highlight for text highlighting
     * @param[in] toHighlight
     * @param[in] color
+    * @param[in] index
     * @returns
     * Returns a c style string representation of the given color from the enum type.
     */
-    #define C_HiLi(toHighlight, color)
+    #define C_HiLi(toHighlight, color, index)
     /**@brief Prints a info log to the console
      * @param[in] highlights
      * @param[in] fmt
