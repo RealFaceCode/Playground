@@ -23,5 +23,6 @@ var core_8h =
     [ "EndsWith", "d5/dc4/core_8h.html#a351fdaf590e7f8304d7478d468aa6527", null ],
     [ "GetDate", "d5/dc4/core_8h.html#a1c200952e719b9f7897f70b75010f631", null ],
     [ "GetTime", "d5/dc4/core_8h.html#ac0b4846a2fcd6922413c653eb11cc867", null ],
+    [ "ReverseBytes", "d5/dc4/core_8h.html#ab0f224473d2c51abff220c7c3297dfa7", null ],
     [ "vasprintf", "d5/dc4/core_8h.html#a5ec7fd90ebe6015636bce974c192c86a", null ]
 ];
