@@ -1,6 +1,3 @@
-//
-// Created by Kevin-Laptop on 07.08.2022.
-//
 #include "../../hdr/core.h"
 #include "../../hdr/logger.h"
 #include "../../hdr/util/hotloader.h"
@@ -22,18 +19,17 @@ namespace HotLoader
         return buf.st_mtime;
     }
 
-    //TODO: rewrite logging to file watcher instead of file to watch
     void AddFileToWatch(const char* filePath)
     {
         if(filePath == nullptr)
         {
-            LOG_WARNING({}, "Failed to add file to watch! file path was nullptr!");
+            LOG_WARNING({}, "Failed to add file to file watcher! file path was nullptr!");
             return;
         }
 
         if(!FHandle::checkExistFile(filePath))
         {
-            LOG_WARNING({}, "Failed to add file to watch with path'%s'! File do not exist!", filePath);
+            LOG_WARNING({}, "Failed to add file to file watcher with path'%s'! File do not exist!", filePath);
             return;
         }
 
