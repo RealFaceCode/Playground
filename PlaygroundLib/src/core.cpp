@@ -9,6 +9,7 @@ void exitFunc()
     {
         system("pause");
     }
+    system("pause");
 }
 
 void CoreInit()
@@ -41,7 +42,7 @@ String GetDate()
 
 bool EndsWith(const String& filepath, const String& ending)
 {
-    return ending == FS::getFileName(filepath.c_str());
+    return ending == FS::getFileNameExtension(filepath.c_str());
 }
 
 int vasprintf(char **strp, const char *fmt, va_list ap)

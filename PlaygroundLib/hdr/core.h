@@ -71,6 +71,8 @@ typedef double		f64;
 //ENUMS
 
 //Structs
+struct String;
+
 /**@brief Class for checking results*/
 template<typename T>
 struct Result
@@ -104,8 +106,6 @@ Result<T>::operator bool() const noexcept {
     return result;
 }
 
-struct String;
-
 //FUNCTIONS
 /**@brief Initialized all core related functions
  * @returns
@@ -115,15 +115,14 @@ void CoreInit();
 
 /**@brief Gets the time as a std::string
  * @returns
- * Returns a String with the actual time
+ * Returns a std::string with the actual time
  */
 String GetTime();
 /**@brief Gets the date as a std::string
  * @returns
- * Returns a String with the actual date
+ * Returns a std::string with the actual date
  */
 String GetDate();
-
 /**@brief Checks if a file path end with a given file extension
  * @retval TRUE if the file ends with the file extension
  * @retval FALSE if the file dont ends with the file extension

@@ -15,7 +15,12 @@ namespace Window
      * VOID
      */
 	void Init();
-	/**@brief Polls all window events
+	/**@brief Cleans the window namespace
+    * @returns
+    * VOID
+    */
+    void Cleanup();
+    /**@brief Polls all window events
     * @returns
     * VOID
     */

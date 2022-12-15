@@ -30,7 +30,14 @@ namespace Window
 		    LOG_ERROR({}, "GLFW error[%i] '%s'", error, discription);
 			}
 		);
+		Input::InitInput();
 		INIT = true;
+	}
+
+	void Cleanup()
+	{
+        glfwTerminate();
+        Input::CleanInput();
 	}
 
 	void pollEvents()
@@ -39,7 +46,9 @@ namespace Window
 		glfwPollEvents();
 	}
 
-	void Window::init()
+
+
+    void Window::init()
 	{
         CHECK_INIT
 		setInputPointer();
@@ -69,8 +78,8 @@ namespace Window
 
 		for (auto monitor : mMonitors)
 		{
-			Free((void*)monitor.vidModes);
-			Free((void*)monitor.monitor);
+		    MemDeReg((void*)monitor.vidModes);
+			MemDeReg((void*)monitor.monitor);
 		}
 		mMonitors.clear();
 	}

@@ -1,5 +1,6 @@
 #include "../../hdr/core.h"
 #include "../../hdr/window/input.h"
+#include "../../hdr/util/memory.h"
 
 namespace Input
 {
@@ -8,53 +9,72 @@ namespace Input
 	ui32* windowPosX	= nullptr;
 	ui32* windowPosY	= nullptr;
 
-	InputSettings settings
+	struct InputData
 	{
-		.collectKeyCallback					= false,
-		.collectCharacterCallback			= false,
-		.collectCursorPositionCallback		= false,
-		.collectCursorEnterCallback			= false,
-		.collectMouseButtonCallback			= false,
-		.collectScrollCallback				= false,
-		.collectDropCallback				= false,
-		.collectCharModsCallback			= false,
-		.collectFramebufferSizeCallback		= false,
-		.collectJoystickCallback			= false,
-		.collectMonitorCallback				= false,
-		.collectWindowContentScaleCallback	= false,
-		.collectWindowCloseCallback			= false,
-		.collectWindowFocusCallback			= false,
-		.collectWindowMaximizeCallback		= false,
-		.collectWindowPosCallback			= false,
-		.collectWindowRefreshCallback		= false,
-		.collectWindowSizeCallback			= false,
-		.collectWindowIconifyCallback		= false,
-		.loadDropedFiles					= false,
+	    InputSettings settings
+	    {
+	        .collectKeyCallback					= false,
+	        .collectCharacterCallback			= false,
+	        .collectCursorPositionCallback		= false,
+	        .collectCursorEnterCallback			= false,
+	        .collectMouseButtonCallback			= false,
+	        .collectScrollCallback				= false,
+	        .collectDropCallback				= false,
+	        .collectCharModsCallback			= false,
+	        .collectFramebufferSizeCallback		= false,
+	        .collectJoystickCallback			= false,
+	        .collectMonitorCallback				= false,
+	        .collectWindowContentScaleCallback	= false,
+	        .collectWindowCloseCallback			= false,
+	        .collectWindowFocusCallback			= false,
+	        .collectWindowMaximizeCallback		= false,
+	        .collectWindowPosCallback			= false,
+	        .collectWindowRefreshCallback		= false,
+	        .collectWindowSizeCallback			= false,
+	        .collectWindowIconifyCallback		= false,
+	        .loadDropedFiles					= false,
+	        };
+
+	    Key keys[GLFW_KEY_LAST]									= {};
+	    MouseButton buttons[GLFW_MOUSE_BUTTON_LAST]				= {};
+	    i8 scrollHorizontal										= 0;
+	    i8 scrollVertical										= 0;
+	    std::vector<String> whitelistedFileEndings              = {};
+	    std::queue<FileDrop> drops								= {};
+	    ui32 mouseX												= 0;
+	    ui32 mouseY												= 0;
+	    bool onMouseMove										= false;
+	    bool onWindowMove										= false;
+	    bool onWindowResize										= false;
+	    i8 windowEnterLeave										= 0;
+	    CharacterInput charInput								= { .hasInput = false, .hasModifier = false, .character = 0, .modifierKey = 0, };
+	    bool frameBufferResized									= false;
+	    i32 frameBufferWidth									= 0;
+	    i32 frameBufferHeight									= 0;
+	    f32 windowContextScaleX									= 0.0f;
+	    f32 windowContextScaleY									= 0.0f;
+	    i32 hasWindowFocus										= 0;
+	    bool isWindowMaximized									= false;
+	    bool isWindowMinimized									= false;
+	    bool isWindowSeen										= true;
+	    bool wasMaximizedBMinimized								= false;
 	};
 
-	Key keys[GLFW_KEY_LAST]									= {};
-	MouseButton buttons[GLFW_MOUSE_BUTTON_LAST]				= {};
-	i8 scrollHorizontal										= 0;
-	i8 scrollVertical										= 0;
-	std::vector<String> whitelistedFileEndings              = {};
-	std::queue<FileDrop> drops								= {};
-	ui32 mouseX												= 0;
-	ui32 mouseY												= 0;
-	bool onMouseMove										= false;
-	bool onWindowMove										= false;
-	bool onWindowResize										= false;
-	i8 windowEnterLeave										= 0;
-	CharacterInput charInput								= { .hasInput = false, .hasModifier = false, .character = 0, .modifierKey = 0, };
-	bool frameBufferResized									= false;
-	i32 frameBufferWidth									= 0;
-	i32 frameBufferHeight									= 0;
-	f32 windowContextScaleX									= 0.0f;
-	f32 windowContextScaleY									= 0.0f;
-	i32 hasWindowFocus										= 0;
-	bool isWindowMaximized									= false;
-	bool isWindowMinimized									= false;
-	bool isWindowSeen										= true;
-	bool wasMaximizedBMinimized								= false;
+	InputData* inputData;
+
+	void InitInput()
+	{
+	    inputData = (InputData*)MemReg(new InputData);
+	}
+
+	void CleanInput()
+	{
+	    for(String& str : inputData->whitelistedFileEndings)
+	    {
+	        str.destroy();
+	    }
+	    Free(inputData);
+	}
 
 	float ToFloatCoord(const int& coord, const int& maxLen, const bool& flip)
 	{
@@ -67,41 +87,41 @@ namespace Input
 	{
 		for (ui32 i = 0; i < GLFW_KEY_LAST; i++)
 		{
-			if (keys[i].mState == State::PRESSED)
+		    if (inputData->keys[i].mState == State::PRESSED)
 			{
-				keys[i].mState = State::ISDOWN;
+		        inputData->keys[i].mState = State::ISDOWN;
 			}
-			if (keys[i].mState == State::RELEASED)
+		    if (inputData->keys[i].mState == State::RELEASED)
 			{
-				keys[i].mState = State::NONE;
+		        inputData->keys[i].mState = State::NONE;
 			}
 		}
 
 		for (ui32 i = 0; i < GLFW_MOUSE_BUTTON_LAST; i++)
 		{
-			if (buttons[i].mState == State::PRESSED)
+		    if (inputData->buttons[i].mState == State::PRESSED)
 			{
-				buttons[i].mState = State::ISDOWN;
+		        inputData->buttons[i].mState = State::ISDOWN;
 			}
-			if (buttons[i].mState == State::RELEASED)
+		    if (inputData->buttons[i].mState == State::RELEASED)
 			{
-				buttons[i].mState = State::NONE;
+		        inputData->buttons[i].mState = State::NONE;
 			}
 		}
 
-		scrollHorizontal = 0;
-		scrollVertical = 0;
-		windowEnterLeave = -1;
+		inputData->scrollHorizontal = 0;
+		inputData->scrollVertical = 0;
+		inputData->windowEnterLeave = -1;
 
-		onWindowResize = false;
-		onMouseMove = false;
-		onWindowMove = false;
-		frameBufferResized = false;
+		inputData->onWindowResize = false;
+		inputData->onMouseMove = false;
+		inputData->onWindowMove = false;
+		inputData->frameBufferResized = false;
 
-		charInput.hasInput = false;
-		charInput.hasModifier = false;
-		charInput.character = 0;
-		charInput.modifierKey = 0;
+		inputData->charInput.hasInput = false;
+		inputData->charInput.hasModifier = false;
+		inputData->charInput.character = 0;
+		inputData->charInput.modifierKey = 0;
 	}
 
 	bool Key::isPressed() const
@@ -149,63 +169,63 @@ namespace Input
 		switch (setting)
 		{
 		case Input::CollectKeyCallback:
-			settings.collectKeyCallback = value;
+		    inputData->settings.collectKeyCallback = value;
 			break;
 		case Input::CollectCharacterCallback:
-			settings.collectCharacterCallback = value;
+		    inputData->settings.collectCharacterCallback = value;
 			break;
 		case Input::CollectCursorPositionCallback:
-			settings.collectCursorPositionCallback = value;
+		    inputData->settings.collectCursorPositionCallback = value;
 			break;
 		case Input::CollectCursorEnterCallback:
-			settings.collectCursorEnterCallback = value;
+		    inputData->settings.collectCursorEnterCallback = value;
 			break;
 		case Input::CollectMouseButtonCallback:
-			settings.collectMouseButtonCallback = value;
+		    inputData->settings.collectMouseButtonCallback = value;
 			break;
 		case Input::CollectScrollCallback:
-			settings.collectScrollCallback = value;
+		    inputData->settings.collectScrollCallback = value;
 			break;
 		case Input::CollectDropCallback:
-			settings.collectDropCallback = value;
+		    inputData->settings.collectDropCallback = value;
 			break;
 		case Input::CollectCharModsCallback:
-			settings.collectCharModsCallback = value;
+		    inputData->settings.collectCharModsCallback = value;
 			break;
 		case Input::CollectFramebufferSizeCallback:
-			settings.collectFramebufferSizeCallback = value;
+		    inputData->settings.collectFramebufferSizeCallback = value;
 			break;
 		case Input::CollectJoystickCallback:
-			settings.collectJoystickCallback = value;
+		    inputData->settings.collectJoystickCallback = value;
 			break;
 		case Input::CollectMonitorCallback:
-			settings.collectMonitorCallback = value;
+		    inputData->settings.collectMonitorCallback = value;
 			break;
 		case Input::CollectWindowContentScaleCallback:
-			settings.collectWindowContentScaleCallback = value;
+		    inputData->settings.collectWindowContentScaleCallback = value;
 			break;
 		case Input::CollectWindowCloseCallback:
-			settings.collectWindowCloseCallback = value;
+		    inputData->settings.collectWindowCloseCallback = value;
 			break;
 		case Input::CollectWindowFocusCallback:
-			settings.collectWindowFocusCallback = value;
+		    inputData->settings.collectWindowFocusCallback = value;
 			break;
 		case Input::CollectWindowMaximizeCallback:
-			settings.collectWindowMaximizeCallback = value;
+		    inputData->settings.collectWindowMaximizeCallback = value;
 			break;
 		case Input::CollectWindowPosCallback:
-			settings.collectWindowPosCallback = value;
+		    inputData->settings.collectWindowPosCallback = value;
 			break;
 		case Input::CollectWindowRefreshCallback:
-			settings.collectWindowRefreshCallback = value;
+		    inputData->settings.collectWindowRefreshCallback = value;
 			break;
 		case Input::CollectWindowSizeCallback:
-			settings.collectWindowSizeCallback = value;
+		    inputData->settings.collectWindowSizeCallback = value;
 			break;
 		case Input::CollectWindowIconifyCallback:
-			settings.collectWindowIconifyCallback = value;
+		    inputData->settings.collectWindowIconifyCallback = value;
 		case Input::LoadDropedFiles:
-			settings.loadDropedFiles = value;
+		    inputData->settings.loadDropedFiles = value;
 		default:
 			break;
 		}
@@ -225,17 +245,17 @@ namespace Input
 
 	bool IsKeyPressed(const int& key)
 	{
-		return keys[key].isPressed();
+	    return inputData->keys[key].isPressed();
 	}
 
 	bool IsKeyDown(const int& key)
 	{
-		return keys[key].isDown();
+	    return inputData->keys[key].isDown();
 	}
 
 	bool IsKeyReleased(const int& key)
 	{
-		return keys[key].isReleased();
+	    return inputData->keys[key].isReleased();
 	}
 
 	bool IsKeyState(const State& state, const int& key)
@@ -243,13 +263,13 @@ namespace Input
 		switch (state)
 		{
 		case Input::NONE:
-			return keys[key].mState == State::NONE;
+		    return inputData->keys[key].mState == State::NONE;
 			break;
 		case Input::PRESSED:
 			return IsKeyPressed(key);
 			break;
 		case Input::REPEAT:
-			return keys[key].isRepeat();
+		    return inputData->keys[key].isRepeat();
 			break;
 		case Input::RELEASED:
 			return IsKeyReleased(key);
@@ -266,17 +286,17 @@ namespace Input
 
 	bool IsMouseButtonPressed(const int& button)
 	{
-		return buttons[button].isPressed();
+	    return inputData->buttons[button].isPressed();
 	}
 
 	bool IsMouseButtonDown(const int& button)
 	{
-		return buttons[button].isDown();
+	    return inputData->buttons[button].isDown();
 	}
 
 	bool IsMouseButtonReleased(const int& button)
 	{
-		return buttons[button].isReleased();
+	    return inputData->buttons[button].isReleased();
 	}
 
 	bool IsMouseButtonState(const State& state, const int& button)
@@ -284,13 +304,13 @@ namespace Input
 		switch (state)
 		{
 		case Input::NONE:
-			return buttons[button].mState == State::NONE;
+		    return inputData->buttons[button].mState == State::NONE;
 			break;
 		case Input::PRESSED:
 			return IsMouseButtonPressed(button);
 			break;
 		case Input::REPEAT:
-			return buttons[button].isRepeat();
+		    return inputData->buttons[button].isRepeat();
 			break;
 		case Input::RELEASED:
 			return IsMouseButtonReleased(button);
@@ -307,148 +327,148 @@ namespace Input
 
 	bool IsScrollUp()
 	{
-		return (scrollHorizontal == 1);
+	    return (inputData->scrollHorizontal == 1);
 	}
 
 	bool IsScrollDown()
 	{
-		return (scrollHorizontal == -1);
+	    return (inputData->scrollHorizontal == -1);
 	}
 
 	bool IsScrollLeft()
 	{
-		return (scrollVertical == -1);
+	    return (inputData->scrollVertical == -1);
 	}
 
 	bool IsScrollRight()
 	{
-		return (scrollVertical == 1);
+	    return (inputData->scrollVertical == 1);
 	}
 
 	i32 GetMouseX()
 	{
-		return (i32)mouseX;
+	    return (i32)inputData->mouseX;
 	}
 
 	i32 GetMouseY()
 	{
-	    return (i32)mouseY;
+	    return (i32)inputData->mouseY;
 	}
 
 	f32 GetMouseXFloat()
 	{
-		return ToFloatCoord(mouseX, *windowWidth);
+	    return ToFloatCoord(inputData->mouseX, *windowWidth);
 	}
 
 	f32 GetMouseYFloat(bool flip)
 	{
-		return ToFloatCoord(mouseY, *windowHeight, flip);
+	    return ToFloatCoord(inputData->mouseY, *windowHeight, flip);
 	}
 
 	bool WasWindowResized()
 	{
-		return onWindowResize;
+	    return inputData->onWindowResize;
 	}
 
 	bool WasWindowMoved()
 	{
-		return onWindowMove;
+	    return inputData->onWindowMove;
 	}
 
 	bool IsMouseOnMove()
 	{
-		return onMouseMove;
+	    return inputData->onMouseMove;
 	}
 
 	bool HasCursorEnteredWindow()
 	{
-		return (windowEnterLeave == 1);
+	    return (inputData->windowEnterLeave == 1);
 	}
 
 	bool HasCursorLeftWindow()
 	{
-		return (windowEnterLeave == 0);
+	    return (inputData->windowEnterLeave == 0);
 	}
 
 	bool HasFileDrop()
 	{
-		return !drops.empty();
+	    return !inputData->drops.empty();
 	}
 
-	void SetFileEndingToWhitelist(const String& fileEnding)
+	void SetFileEndingToWhitelist(const char* fileEnding)
 	{
-		whitelistedFileEndings.emplace_back(fileEnding);
+	    inputData->whitelistedFileEndings.emplace_back(fileEnding);
 	}
 
 	FileDrop getFileDrop()
 	{
-		FileDrop drop = drops.front();
-		drops.pop();
+	    FileDrop drop = inputData->drops.front();
+	    inputData->drops.pop();
 		return drop;
 	}
 
 	bool HasCharInput()
 	{
-		return charInput.hasInput;
+	    return inputData->charInput.hasInput;
 	}
 
 	ui32 GetCharInput()
 	{
-		return charInput.character;
+	    return inputData->charInput.character;
 	}
 
 	bool HasCharInputModifierKey()
 	{
-		return charInput.hasModifier;
+	    return inputData->charInput.hasModifier;
 	}
 
 	i32 GetCharInputModifierKey()
 	{
-		return charInput.modifierKey;
+	    return inputData->charInput.modifierKey;
 	}
 
 	bool WasFrameBufferResized()
 	{
-		return frameBufferResized;
+	    return inputData->frameBufferResized;
 	}
 
 	i32 GetFrameBufferSizeWidth()
 	{
-		return frameBufferWidth;
+	    return inputData->frameBufferWidth;
 	}
 
 	i32 GetFameBufferSizeHeight()
 	{
-		return frameBufferHeight;
+	    return inputData->frameBufferHeight;
 	}
 
 	bool IsWindowFocused()
 	{
-		return hasWindowFocus == 1;
+	    return inputData->hasWindowFocus == 1;
 	}
 
 	bool IsWindowMaximized()
 	{
-		return isWindowMaximized;
+	    return inputData->isWindowMaximized;
 	}
 
 	bool IsWindowMinimized()
 	{
-		return isWindowMinimized;
+	    return inputData->isWindowMinimized;
 	}
 
 	bool IsWindowSeen()
 	{
-		return isWindowSeen;
+	    return inputData->isWindowSeen;
 	}
 
 	void glfwKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
-		if (settings.collectKeyCallback)
+	    if (inputData->settings.collectKeyCallback)
 		{
 			if (action == GLFW_PRESS)
 			{
-				keys[key].mState = State::PRESSED;
+			    inputData->keys[key].mState = State::PRESSED;
 			}
 			if (action == GLFW_REPEAT)
 			{
@@ -456,79 +476,79 @@ namespace Input
 			}
 			if (action == GLFW_RELEASE)
 			{
-				keys[key].mState = State::RELEASED;
+			    inputData->keys[key].mState = State::RELEASED;
 			}
 		}
 	}
 
 	void glfwCharacterCallback(GLFWwindow* window, unsigned int codepoint)
 	{
-		if (settings.collectCharacterCallback)
+	    if (inputData->settings.collectCharacterCallback)
 		{
-			charInput.hasModifier = true;
-			charInput.hasInput = true;
-			charInput.character = codepoint;
+	        inputData->charInput.hasModifier = true;
+	        inputData->charInput.hasInput = true;
+	        inputData->charInput.character = codepoint;
 		}
 	}
 
 	void glfwCursorPositionCallback(GLFWwindow* window, double xpos, double ypos)
 	{
-		if (settings.collectCursorPositionCallback)
+	    if (inputData->settings.collectCursorPositionCallback)
 		{
-			onMouseMove = true;
-			mouseX = (ui32)xpos;
-			mouseY = (ui32)ypos;
+			inputData->onMouseMove = true;
+			inputData->mouseX = (ui32)xpos;
+			inputData->mouseY = (ui32)ypos;
 		}
 	}
 
 	void glfwCursorEnterCallback(GLFWwindow* window, int entered)
 	{
-		if (settings.collectCursorEnterCallback)
+	    if (inputData->settings.collectCursorEnterCallback)
 		{
-			windowEnterLeave = entered;
+	        inputData->windowEnterLeave = entered;
 		}
 	}
 
 	void glfwMouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 	{
-		if (settings.collectMouseButtonCallback)
+	    if (inputData->settings.collectMouseButtonCallback)
 		{
 			if (action == GLFW_PRESS)
 			{
-				buttons[button].mState = State::PRESSED;
+			    inputData->buttons[button].mState = State::PRESSED;
 			}
 			if (action == GLFW_REPEAT)
 			{
-				buttons[button].mState = State::REPEAT;
+			    inputData->buttons[button].mState = State::REPEAT;
 			}
 			if (action == GLFW_RELEASE)
 			{
-				buttons[button].mState = State::RELEASED;
+			    inputData->buttons[button].mState = State::RELEASED;
 			}
 		}
 	}
 
 	void glfwScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 	{
-		if (settings.collectScrollCallback)
+	    if (inputData->settings.collectScrollCallback)
 		{
-			scrollHorizontal = yoffset;
-			scrollVertical = xoffset;
+			inputData->scrollHorizontal = yoffset;
+			inputData->scrollVertical = xoffset;
 		}
 	}
 
 	void glfwDropCallback(GLFWwindow* window, int count, const char** paths)
 	{
-		if (settings.collectDropCallback)
+	    if (inputData->settings.collectDropCallback)
 		{
 			std::vector<String> path;
 			std::vector<String> rejectedPath;
 			bool accepted = false;
 			for (int i = 0; i < count; i++)
 			{
-				for (const auto& ending : whitelistedFileEndings)
+			    for (const auto& ending : inputData->whitelistedFileEndings)
 				{
-					if (EndsWith(paths[i], ending))
+					if (EndsWith(paths[i], ending.c_str()))
 					{
 						accepted = true;
 						path.emplace_back(paths[i]);
@@ -550,100 +570,100 @@ namespace Input
 				.numRejectedFiles	= rejectedPath.size(),
 				.rejectedFilePaths	= rejectedPath,
 			};
-			for (const String& p : path)
+			for (auto p : path)
 			{
-				if (settings.loadDropedFiles)
+			    if (inputData->settings.loadDropedFiles)
 				{
-					drop.files.emplace_back(FHandle::File(p.c_str(), FILE_GET_SIZE & FILE_CHECK_EXIST & FILE_READ));
+			        drop.files.emplace_back(FHandle::File(p.c_str(), FILE_GET_SIZE & FILE_CHECK_EXIST & FILE_READ));
 				}
 				else
 				{
-					drop.files.emplace_back(FHandle::File(p.c_str(), FILE_GET_SIZE & FILE_CHECK_EXIST));
+				    drop.files.emplace_back(FHandle::File(p.c_str(), FILE_GET_SIZE & FILE_CHECK_EXIST));
 				}
 			}
-			drops.push(drop);
+			inputData->drops.push(drop);
 		}
 	}
 
 	void glfwCharModsCallback(GLFWwindow* window, unsigned int codepoint, int mods)
 	{
-		if (settings.collectCharModsCallback)
+	    if (inputData->settings.collectCharModsCallback)
 		{
-			charInput.hasInput = true;
-			charInput.character = codepoint;
-			charInput.modifierKey = mods;
+	        inputData->charInput.hasInput = true;
+			inputData->charInput.character = codepoint;
+			inputData->charInput.modifierKey = mods;
 		}
 	}
 
 	void glfwFramebufferSizeCallback(GLFWwindow* window, int width, int height)
 	{
-		if (settings.collectFramebufferSizeCallback)
+	    if (inputData->settings.collectFramebufferSizeCallback)
 		{
-			frameBufferResized = true;
-			frameBufferWidth = width;
-			frameBufferHeight = height;
+			inputData->frameBufferResized = true;
+			inputData->frameBufferWidth = width;
+			inputData->frameBufferHeight = height;
 		}
 	}
 
 	void glfwJoystickCallback(int jid, int event_)
 	{
-		if (settings.collectJoystickCallback)
+	    if (inputData->settings.collectJoystickCallback)
 		{
 		}
 	}
 
 	void glfwMonitorCallback(GLFWmonitor* monitor, int event)
 	{
-		if (settings.collectMonitorCallback)
+	    if (inputData->settings.collectMonitorCallback)
 		{
 		}
 	}
 
 	void glfwWindowContentScaleCallback(GLFWwindow* window, float xscale, float yscale)
 	{
-		if (settings.collectWindowContentScaleCallback)
+	    if (inputData->settings.collectWindowContentScaleCallback)
 		{
-			windowContextScaleX = xscale;
-			windowContextScaleY = yscale;
+			inputData->windowContextScaleX = xscale;
+			inputData->windowContextScaleY = yscale;
 		}
 	}
 
 	void glfwWindowCloseCallback(GLFWwindow* window)
 	{
-		if (settings.collectWindowCloseCallback)
+	    if (inputData->settings.collectWindowCloseCallback)
 		{
 		}
 	}
 
 	void glfwWindowFocusCallback(GLFWwindow* window, int focused)
 	{
-		if (settings.collectWindowFocusCallback)
+	    if (inputData->settings.collectWindowFocusCallback)
 		{
-			hasWindowFocus = focused;
+	        inputData->hasWindowFocus = focused;
 		}
 	}
 
 	void glfwWindowMaximizeCallback(GLFWwindow* window, int maximized)
 	{
-		if (settings.collectWindowMaximizeCallback)
+	    if (inputData->settings.collectWindowMaximizeCallback)
 		{
 			if (maximized)
 			{
-				isWindowMaximized = true;
-				isWindowMinimized = false;
+				inputData->isWindowMaximized = true;
+				inputData->isWindowMinimized = false;
 			}
 			else
 			{
-				isWindowMaximized = false;
+			    inputData->isWindowMaximized = false;
 			}
 		}
 	}
 
 	void glfwWindowPosCallback(GLFWwindow* window, int xpos, int ypos)
 	{
-		if (settings.collectWindowPosCallback)
+	    if (inputData->settings.collectWindowPosCallback)
 		{
-			onWindowMove = true;
+	        inputData->onWindowMove = true;
 			if (windowPosX)
 			{
 				*windowPosX = xpos;
@@ -657,16 +677,16 @@ namespace Input
 
 	void glfwWindowRefreshCallback(GLFWwindow* window)
 	{
-		if (settings.collectWindowRefreshCallback)
+	    if (inputData->settings.collectWindowRefreshCallback)
 		{
 		}
 	}
 
 	void glfwWindowSizeCallback(GLFWwindow* window, int width, int height)
 	{
-		if (settings.collectWindowSizeCallback)
+	    if (inputData->settings.collectWindowSizeCallback)
 		{
-			onWindowResize = true;
+	        inputData->onWindowResize = true;
 			*windowWidth = width;
 			*windowHeight = height;
 		}
@@ -674,32 +694,40 @@ namespace Input
 
 	void glfwIconifyCallback(GLFWwindow* window, int iconified)
 	{
-		if (settings.collectWindowIconifyCallback)
+	    if (inputData->settings.collectWindowIconifyCallback)
 		{
 			if (!iconified)
 			{
-				isWindowSeen = true;
-				isWindowMinimized = false;
+			    inputData->isWindowSeen = true;
+			    inputData->isWindowMinimized = false;
 			}
 			else
 			{
-				isWindowSeen = false;
-				isWindowMinimized = true;
-				if (isWindowMaximized)
+			    inputData->isWindowSeen = false;
+			    inputData->isWindowMinimized = true;
+			    if (inputData->isWindowMaximized)
 				{
-					wasMaximizedBMinimized = true;
+			        inputData->wasMaximizedBMinimized = true;
 				}
 			}
 
-			if (!isWindowMinimized && wasMaximizedBMinimized)
+			if (!inputData->isWindowMinimized && inputData->wasMaximizedBMinimized)
 			{
-				isWindowMaximized = true;
-				wasMaximizedBMinimized = false;
+			    inputData->isWindowMaximized = true;
+			    inputData->wasMaximizedBMinimized = false;
 			}
 			else
 			{
-				isWindowMaximized = false;
+			    inputData->isWindowMaximized = false;
 			}
 		}
 	}
+
+    FileDrop::~FileDrop()
+    {
+        for(String& s : rejectedFilePaths)
+        {
+            s.destroy();
+        }
+    }
 }

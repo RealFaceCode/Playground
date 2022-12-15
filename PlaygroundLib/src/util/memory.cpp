@@ -115,7 +115,7 @@ bool    MemoryPrintStack()
     std::string leaks;
     for(const auto& trace : stackTrace)
     {
-        char* fmt = (char*)"Memory leak detected at address: '\033[38;5;226m%p\\033[m' in file: '\033[38;5;226m%s\\033[m' at line \033[38;5;226m%i\\033[m\n";
+        char* fmt = (char*)"Memory leak detected at address: '\033[38;5;226m%p\033[m' in file: '\033[38;5;226m%s\033[m' at line \033[38;5;226m%i\033[m\n";
         char* str;
         asprintf(&str, fmt, trace.mPtr, FS::getFileName(trace.mFile).c_str(), trace.mLine);
         leaks.append(str);

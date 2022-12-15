@@ -139,7 +139,16 @@ namespace FS
         }
 
         String name(filePath);
-        auto offset = name.find("/").back();
+        auto pos = name.find("/");
+        if(pos.empty())
+        {
+            pos = name.find("\\");
+            if(pos.empty())
+            {
+                return "Failed to get name from file!";
+            }
+        }
+        ui64 offset = pos.back();
         name.remove(0, offset + 1);
         offset = name.find(".").back();
         name.remove(offset, name.length());
