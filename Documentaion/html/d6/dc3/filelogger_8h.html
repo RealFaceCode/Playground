@@ -90,12 +90,316 @@ $(document).ready(function(){initNavTree('d6/dc3/filelogger_8h.html','../../'); 
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">filelogger.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="../../d1/d8c/logger_8h_source.html">logger.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="../../da/d66/string_8h_source.html">util/buffer/string.h</a>&quot;</code><br />
 </div>
 <p><a href="../../d6/dc3/filelogger_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a77fc4488abc13f656052f1122ee34bd3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc3/filelogger_8h.html#a77fc4488abc13f656052f1122ee34bd3">LOG_INFO_FILE</a>(filePath,  fmt, ...)&#160;&#160;&#160;{ <a class="el" href="../../d6/dc3/filelogger_8h.html#a92ab685f8d0cc3ad6cf561d1049d225a">FileLog</a>(&quot;INFO&quot;, filePath, __FILE__, __LINE__, fmt, ##__VA_ARGS__); }</td></tr>
+<tr class="memdesc:a77fc4488abc13f656052f1122ee34bd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a log to a file.  <a href="../../d6/dc3/filelogger_8h.html#a77fc4488abc13f656052f1122ee34bd3">More...</a><br /></td></tr>
+<tr class="separator:a77fc4488abc13f656052f1122ee34bd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a147e54e29d140d39d243e28048479865"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc3/filelogger_8h.html#a147e54e29d140d39d243e28048479865">LOG_WARNING_FILE</a>(filePath,  fmt, ...)&#160;&#160;&#160;{ <a class="el" href="../../d6/dc3/filelogger_8h.html#a92ab685f8d0cc3ad6cf561d1049d225a">FileLog</a>(&quot;WARNING&quot;, filePath, __FILE__, __LINE__, fmt, ##__VA_ARGS__); }</td></tr>
+<tr class="memdesc:a147e54e29d140d39d243e28048479865"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a log to a file.  <a href="../../d6/dc3/filelogger_8h.html#a147e54e29d140d39d243e28048479865">More...</a><br /></td></tr>
+<tr class="separator:a147e54e29d140d39d243e28048479865"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae04cdbfe3163ef25dd6627bf73286597"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc3/filelogger_8h.html#ae04cdbfe3163ef25dd6627bf73286597">LOG_ERROR_FILE</a>(filePath,  fmt, ...)&#160;&#160;&#160;{ <a class="el" href="../../d6/dc3/filelogger_8h.html#a92ab685f8d0cc3ad6cf561d1049d225a">FileLog</a>(&quot;ERROR&quot;, filePath, __FILE__, __LINE__, fmt, ##__VA_ARGS__); }</td></tr>
+<tr class="memdesc:ae04cdbfe3163ef25dd6627bf73286597"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a log to a file.  <a href="../../d6/dc3/filelogger_8h.html#ae04cdbfe3163ef25dd6627bf73286597">More...</a><br /></td></tr>
+<tr class="separator:ae04cdbfe3163ef25dd6627bf73286597"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6450efa8f9ce34366f8e8ab753df65ca"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc3/filelogger_8h.html#a6450efa8f9ce34366f8e8ab753df65ca">LOG_ASSERT_FILE</a>(boolean,  filePath,  fmt, ...)&#160;&#160;&#160;{ <a class="el" href="../../d6/dc3/filelogger_8h.html#a92ab685f8d0cc3ad6cf561d1049d225a">FileLog</a>(&quot;ASSERT&quot;, filePath, __FILE__, __LINE__, fmt, ##__VA_ARGS__); assert(boolean); }</td></tr>
+<tr class="memdesc:a6450efa8f9ce34366f8e8ab753df65ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a log to a file.  <a href="../../d6/dc3/filelogger_8h.html#a6450efa8f9ce34366f8e8ab753df65ca">More...</a><br /></td></tr>
+<tr class="separator:a6450efa8f9ce34366f8e8ab753df65ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a92ab685f8d0cc3ad6cf561d1049d225a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc3/filelogger_8h.html#a92ab685f8d0cc3ad6cf561d1049d225a">FileLog</a> (const <a class="el" href="../../d1/d18/struct_string.html">String</a> &amp;type, const <a class="el" href="../../d1/d18/struct_string.html">String</a> &amp;fileWritePath, const <a class="el" href="../../d1/d18/struct_string.html">String</a> &amp;filePath, const int &amp;line, const <a class="el" href="../../d1/d18/struct_string.html">String</a> &amp;format,...)</td></tr>
+<tr class="memdesc:a92ab685f8d0cc3ad6cf561d1049d225a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a log to a file.  <a href="../../d6/dc3/filelogger_8h.html#a92ab685f8d0cc3ad6cf561d1049d225a">More...</a><br /></td></tr>
+<tr class="separator:a92ab685f8d0cc3ad6cf561d1049d225a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af232fe1807c041a2ff05f9d041fa6e9b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc3/filelogger_8h.html#af232fe1807c041a2ff05f9d041fa6e9b">FileLogCleanup</a> ()</td></tr>
+<tr class="memdesc:af232fe1807c041a2ff05f9d041fa6e9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans all related FileLog functions.  <a href="../../d6/dc3/filelogger_8h.html#af232fe1807c041a2ff05f9d041fa6e9b">More...</a><br /></td></tr>
+<tr class="separator:af232fe1807c041a2ff05f9d041fa6e9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a6450efa8f9ce34366f8e8ab753df65ca" name="a6450efa8f9ce34366f8e8ab753df65ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6450efa8f9ce34366f8e8ab753df65ca">&#9670;&#160;</a></span>LOG_ASSERT_FILE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LOG_ASSERT_FILE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">boolean, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">filePath, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;{ <a class="el" href="../../d6/dc3/filelogger_8h.html#a92ab685f8d0cc3ad6cf561d1049d225a">FileLog</a>(&quot;ASSERT&quot;, filePath, __FILE__, __LINE__, fmt, ##__VA_ARGS__); assert(boolean); }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write a log to a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">boolean</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">filePath</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fmt</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ARGS</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>VOID </dd></dl>
+
+</div>
+</div>
+<a id="ae04cdbfe3163ef25dd6627bf73286597" name="ae04cdbfe3163ef25dd6627bf73286597"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae04cdbfe3163ef25dd6627bf73286597">&#9670;&#160;</a></span>LOG_ERROR_FILE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LOG_ERROR_FILE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">filePath, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;{ <a class="el" href="../../d6/dc3/filelogger_8h.html#a92ab685f8d0cc3ad6cf561d1049d225a">FileLog</a>(&quot;ERROR&quot;, filePath, __FILE__, __LINE__, fmt, ##__VA_ARGS__); }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write a log to a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">filePath</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fmt</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ARGS</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>VOID </dd></dl>
+
+</div>
+</div>
+<a id="a77fc4488abc13f656052f1122ee34bd3" name="a77fc4488abc13f656052f1122ee34bd3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77fc4488abc13f656052f1122ee34bd3">&#9670;&#160;</a></span>LOG_INFO_FILE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LOG_INFO_FILE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">filePath, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;{ <a class="el" href="../../d6/dc3/filelogger_8h.html#a92ab685f8d0cc3ad6cf561d1049d225a">FileLog</a>(&quot;INFO&quot;, filePath, __FILE__, __LINE__, fmt, ##__VA_ARGS__); }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write a log to a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">filePath</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fmt</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ARGS</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>VOID </dd></dl>
+
+</div>
+</div>
+<a id="a147e54e29d140d39d243e28048479865" name="a147e54e29d140d39d243e28048479865"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a147e54e29d140d39d243e28048479865">&#9670;&#160;</a></span>LOG_WARNING_FILE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LOG_WARNING_FILE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">filePath, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">fmt, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;{ <a class="el" href="../../d6/dc3/filelogger_8h.html#a92ab685f8d0cc3ad6cf561d1049d225a">FileLog</a>(&quot;WARNING&quot;, filePath, __FILE__, __LINE__, fmt, ##__VA_ARGS__); }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write a log to a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">filePath</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fmt</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ARGS</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>VOID </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a92ab685f8d0cc3ad6cf561d1049d225a" name="a92ab685f8d0cc3ad6cf561d1049d225a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92ab685f8d0cc3ad6cf561d1049d225a">&#9670;&#160;</a></span>FileLog()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FileLog </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="../../d1/d18/struct_string.html">String</a> &amp;&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="../../d1/d18/struct_string.html">String</a> &amp;&#160;</td>
+          <td class="paramname"><em>fileWritePath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="../../d1/d18/struct_string.html">String</a> &amp;&#160;</td>
+          <td class="paramname"><em>filePath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int &amp;&#160;</td>
+          <td class="paramname"><em>line</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="../../d1/d18/struct_string.html">String</a> &amp;&#160;</td>
+          <td class="paramname"><em>format</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Writes a log to a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fileWritePath</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">filePath</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">line</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">format</td><td></td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ARGS</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>VOID </dd></dl>
+
+</div>
+</div>
+<a id="af232fe1807c041a2ff05f9d041fa6e9b" name="af232fe1807c041a2ff05f9d041fa6e9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af232fe1807c041a2ff05f9d041fa6e9b">&#9670;&#160;</a></span>FileLogCleanup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FileLogCleanup </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Cleans all related FileLog functions. </p>
+<dl class="section return"><dt>Returns</dt><dd>VOID </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function should not be called. Its called automatically </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -14,12 +14,16 @@ var searchData=
   ['loaddropedfiles_11',['LoadDropedFiles',['../da/dce/namespace_input.html#af86aaa3759c4564174f51c4c61b94b4aab6a65156658bbc6b89b4d914670ad8b4',1,'Input']]],
   ['loadsettings_12',['loadSettings',['../d4/da4/struct_window_1_1_window.html#a835351354ab659a328feb43f08dffc8f',1,'Window::Window']]],
   ['loadspritesheet_13',['LoadSpriteSheet',['../d2/d25/namespace_g_f_x_1_1_sprite_sheet_builder.html#a8b9a9adbbd14f58622b5856e355a7359',1,'GFX::SpriteSheetBuilder']]],
-  ['log_14',['Log',['../d1/d8c/logger_8h.html#a179f09e42f28ae1b522571790ba93138',1,'logger.h']]],
+  ['log_14',['Log',['../d1/d8c/logger_8h.html#a70587031361b55c3a1bca0f741e52900',1,'logger.h']]],
   ['log_5fassert_15',['LOG_ASSERT',['../d1/d8c/logger_8h.html#a105311bb14edc2c52dd5cc2b88259f4e',1,'logger.h']]],
-  ['log_5ferror_16',['LOG_ERROR',['../d1/d8c/logger_8h.html#a68c7936c074b7c449ae99fa9a114013f',1,'logger.h']]],
-  ['log_5finfo_17',['LOG_INFO',['../d1/d8c/logger_8h.html#a2629b2299f7a15e1d8a94f859814a720',1,'logger.h']]],
-  ['log_5fwarning_18',['LOG_WARNING',['../d1/d8c/logger_8h.html#aff0dd6ef72ce1b345666292dcb5844e1',1,'logger.h']]],
-  ['logger_20example_19',['Logger Example',['../d1/d52/md_markdown_examples__logger_example.html',1,'']]],
-  ['logger_2eh_20',['logger.h',['../d1/d8c/logger_8h.html',1,'']]],
-  ['loggerexample_2emd_21',['LoggerExample.md',['../da/d89/_logger_example_8md.html',1,'']]]
+  ['log_5fassert_5ffile_16',['LOG_ASSERT_FILE',['../d6/dc3/filelogger_8h.html#a6450efa8f9ce34366f8e8ab753df65ca',1,'filelogger.h']]],
+  ['log_5ferror_17',['LOG_ERROR',['../d1/d8c/logger_8h.html#a68c7936c074b7c449ae99fa9a114013f',1,'logger.h']]],
+  ['log_5ferror_5ffile_18',['LOG_ERROR_FILE',['../d6/dc3/filelogger_8h.html#ae04cdbfe3163ef25dd6627bf73286597',1,'filelogger.h']]],
+  ['log_5finfo_19',['LOG_INFO',['../d1/d8c/logger_8h.html#a2629b2299f7a15e1d8a94f859814a720',1,'logger.h']]],
+  ['log_5finfo_5ffile_20',['LOG_INFO_FILE',['../d6/dc3/filelogger_8h.html#a77fc4488abc13f656052f1122ee34bd3',1,'filelogger.h']]],
+  ['log_5fwarning_21',['LOG_WARNING',['../d1/d8c/logger_8h.html#aff0dd6ef72ce1b345666292dcb5844e1',1,'logger.h']]],
+  ['log_5fwarning_5ffile_22',['LOG_WARNING_FILE',['../d6/dc3/filelogger_8h.html#a147e54e29d140d39d243e28048479865',1,'filelogger.h']]],
+  ['logger_20example_23',['Logger Example',['../d1/d52/md_markdown_examples__logger_example.html',1,'']]],
+  ['logger_2eh_24',['logger.h',['../d1/d8c/logger_8h.html',1,'']]],
+  ['loggerexample_2emd_25',['LoggerExample.md',['../da/d89/_logger_example_8md.html',1,'']]]
 ];

@@ -29,5 +29,5 @@ var logger_8h =
     [ "CreateHighlighter", "d1/d8c/logger_8h.html#a6a2d7bd0e1f51b40a31c6ce25b9bcb80", null ],
     [ "GetAnsiColor", "d1/d8c/logger_8h.html#a0e115589c357e22adf344f958f051135", null ],
     [ "Highlighter", "d1/d8c/logger_8h.html#a0596a1240b33c964196f2613f02eebea", null ],
-    [ "Log", "d1/d8c/logger_8h.html#a179f09e42f28ae1b522571790ba93138", null ]
+    [ "Log", "d1/d8c/logger_8h.html#a70587031361b55c3a1bca0f741e52900", null ]
 ];

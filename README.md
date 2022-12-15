@@ -17,7 +17,7 @@ An easy way to get a fast project setup for gui apps.
 - [x] Sprite sheet builder
 - [x] Console logging system
 - [x] Filestream system
-- [ ] File logging system
+- [x] File logging system
 - [x] File hot loading
 - [ ] SXF 
 - [x] Memory leak tracking

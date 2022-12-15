@@ -4,9 +4,11 @@
 #include "../hdr/util/FileStream.h"
 #include "../hdr/util/hotloader.h"
 #include "../hdr/window/window.h"
+#include "../hdr/filelogger.h"
 
 void exitFunc()
 {
+    FileLogCleanup();
     Window::Cleanup();
     CoreCleanup();
     if(MemoryPrintStack())
