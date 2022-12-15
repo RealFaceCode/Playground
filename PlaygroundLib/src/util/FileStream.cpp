@@ -231,7 +231,7 @@ namespace FS
         return true;
     }
 
-    bool ReadFromFile(void** data, const char* filePath, const bool& nullTerm)
+    bool ReadFromFile(void** data, const char* filePath, ui64* length, const bool& nullTerm)
     {
         if(!checkExistFile(filePath))
         {
@@ -244,6 +244,11 @@ namespace FS
         {
             LOG_ERROR({}, "File with path'%s' is empty!", filePath);
             return false;
+        }
+
+        if(length)
+        {
+            *length = fileSize;
         }
 
         FILE* file = _fsopen(filePath, "rb", _SH_DENYNO);;
@@ -265,7 +270,12 @@ namespace FS
             return false;
         }
 
-        size_t result = fread_s(*data, fileSize, fileSize - 1, 1, file);
+        if(nullTerm)
+        {
+            fileSize--;
+        }
+
+        size_t result = fread_s(*data, fileSize, fileSize, 1, file);
         fclose(file);
 
         if(result == 0)
@@ -279,7 +289,7 @@ namespace FS
         if(nullTerm)
         {
             cData = (char*)*data;
-            cData[fileSize - 1] = '\0';
+            cData[fileSize] = '\0';
         }
 
         return true;
@@ -316,11 +326,12 @@ namespace FS
     void File::read()
     {
         const char* filePath = (const char *)mPath.getSource();
-        char* buffer = nullptr;
-        ReadFromFile((void**)&buffer ,filePath, true);
+        void* buffer = nullptr;
+        ui64 len;
+        ReadFromFile((void**)&buffer ,filePath, &len, false);
         if(buffer)
         {
-            mSource.add(buffer, true);
+            mSource.push(len, buffer);
             Free(buffer);
         }
     }
@@ -509,11 +520,32 @@ namespace FS
     {
         if(!mExist)
         {
-            ui64 lenRemove = mName.length() + mEnding.length() + 2;
+            auto pos = mPath.find("/");
+            if(pos.empty())
+            {
+                pos = mPath.find("\\");
+            }
+            if(pos.empty())
+            {
+                mExist = createFile(mPath.c_str());
+                if(!mExist)
+                {
+                    LOG_ASSERT(false, {}, "Failed to create file with path: %s", mPath.c_str())
+                    return;
+                }
+            }
+            ui64 p = pos.back();
             String dirPath(mPath);
-            dirPath.remove(dirPath.length() - lenRemove, dirPath.length());
-            createDirIfNotExist(dirPath.c_str());
-            if(!(mExist = createFile(mPath.c_str())))
+            dirPath.remove(p, dirPath.length());
+            if(!checkExistDir(dirPath.c_str()))
+            {
+                ui64 lenRemove = mName.length() + mEnding.length() + 2;
+                String dirPath(mPath);
+                dirPath.remove(dirPath.length() - lenRemove, dirPath.length());
+                createDirIfNotExist(dirPath.c_str());
+            }
+            mExist = createFile(mPath.c_str());
+            if(!mExist)
             {
                 LOG_ASSERT(false, {}, "Failed to create file with path: %s", mPath.c_str())
             }

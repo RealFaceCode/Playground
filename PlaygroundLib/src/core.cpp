@@ -41,6 +41,12 @@ String GetTime()
 	return buffer;
 }
 
+void ReverseBytes( void *start, int size )
+{
+    char* istart = (char*)start, *iend = istart + size;
+    std::reverse(istart, iend);
+}
+
 String GetDate()
 {
     time_t rawtime;

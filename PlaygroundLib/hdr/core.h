@@ -50,6 +50,7 @@
 #include <algorithm>
 #include <array>
 #include <memory>
+#include <algorithm>
 
 //FILEHANDLE
 #include <BasicFileHandling.h>
@@ -134,6 +135,8 @@ String GetDate();
  * @retval FALSE if the file dont ends with the file extension
  */
 bool EndsWith(const String& filepath, const String& ending);
+
+void ReverseBytes( void *start, int size );
 
 //C STRING HELPER
 int vasprintf(char** strp, const char* fmt, va_list ap);

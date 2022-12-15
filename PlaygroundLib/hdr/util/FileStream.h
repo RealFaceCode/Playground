@@ -109,11 +109,12 @@ namespace FS
     /**@brief Reads from a file
      * @param[out] data
      * @param[in] filePath
+     * @param[in] length
      * @param[in] nullTerm
      * @retval TRUE if the read was successful
      * @retval FALSE if the read was not successful
      */
-    bool ReadFromFile(void** data, const char* filePath, const bool& nullTerm = false);
+    bool ReadFromFile(void** data, const char* filePath, ui64* length, const bool& nullTerm = false);
 
     /**@brief A buffer to store data and write it to a file or read from a file*/
     struct File

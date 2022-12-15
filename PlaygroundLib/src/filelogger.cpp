@@ -64,6 +64,7 @@ void FileLog(const String &type,
              type.c_str(),fileName,line, date.c_str(), time.c_str());
     String out(str);
     out.add(userFormat);
+    out.add("\n");
     Free(str);
     str = nullptr;
 
@@ -78,7 +79,7 @@ void FileLogCleanup()
 {
     for(auto& p : files)
     {
-        String& str =(String&)p.first;
+        auto& str =(String&)p.first;
         str.destroy();
         fclose(p.second);
     }
