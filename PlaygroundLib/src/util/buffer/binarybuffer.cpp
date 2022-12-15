@@ -92,7 +92,7 @@ void BinaryBuffer::add(const f64& f)
 
 void BinaryBuffer::add(const char* string, const bool& withoutLen)
 {
-    ui64 strLen = strlen(string);
+    ui64 strLen = strlen(string) + 1;
     if(!withoutLen)
     {
         add(strLen);
@@ -102,7 +102,7 @@ void BinaryBuffer::add(const char* string, const bool& withoutLen)
 
 void BinaryBuffer::add(const std::string& string, const bool& withoutLen)
 {
-    ui64 strLen = string.length();
+    ui64 strLen = string.length() + 1;
     if(!withoutLen)
     {
         add(strLen);
@@ -112,7 +112,7 @@ void BinaryBuffer::add(const std::string& string, const bool& withoutLen)
 
 void BinaryBuffer::add(const String& string, const bool& withoutLen)
 {
-    ui64 strLen = string.length();
+    ui64 strLen = string.length() + 1;
     if(!withoutLen)
     {
         add(strLen);
