@@ -60,7 +60,7 @@ namespace Input
 	    bool wasMaximizedBMinimized								= false;
 	};
 
-	InputData* inputData;
+	InputData* inputData = nullptr;
 
 	void InitInput()
 	{
@@ -69,11 +69,14 @@ namespace Input
 
 	void CleanInput()
 	{
-	    for(String& str : inputData->whitelistedFileEndings)
+	    if(inputData)
 	    {
-	        str.destroy();
+	        for(String& str : inputData->whitelistedFileEndings)
+	        {
+	            str.destroy();
+	        }
+	        Free(inputData);
 	    }
-	    Free(inputData);
 	}
 
 	float ToFloatCoord(const int& coord, const int& maxLen, const bool& flip)
