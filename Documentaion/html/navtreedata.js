@@ -25,9 +25,13 @@
 var NAVTREE =
 [
   [ "Playground", "index.html", [
-    [ "Build", "index.html#section1Playground", null ],
-    [ "Examples", "index.html#section2Playground", null ],
-    [ "Links", "index.html#section3Playground", null ],
+    [ "Dependencies", "index.html#section1Playground", null ],
+    [ "Supported platform", "index.html#section2Playground", null ],
+    [ "Features", "index.html#section3Playground", null ],
+    [ "Planned Features", "index.html#section4Playground", null ],
+    [ "Build", "index.html#section5Playground", null ],
+    [ "Examples", "index.html#section6Playground", null ],
+    [ "Links", "index.html#section7Playground", null ],
     [ "Build", "d4/da7/md_markdown_build.html", [
       [ "CMAKE", "d4/da7/md_markdown_build.html#section1build", null ]
     ] ],

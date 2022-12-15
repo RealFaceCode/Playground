@@ -6,6 +6,7 @@ An easy way to get a fast project setup for gui apps.
 - glfw
 - glad
 - glm
+- openal-soft
 
 ## Supported platform
 - [x] windows
@@ -23,6 +24,10 @@ An easy way to get a fast project setup for gui apps.
 - [x] Memory leak tracking
 - [x] User input system
 - [ ] Unit text system
+
+## Planned Features
+- [ ] Scripting support lua
+- [ ] Scripting support C#
 
 ## Build instructions
 
