@@ -119,7 +119,7 @@ bool    MemoryPrintStack()
         char* str;
         asprintf(&str, fmt, trace.mPtr, FS::getFileName(trace.mFile).c_str(), trace.mLine);
         leaks.append(str);
-        Free(str);
+        MemoryFree(str);
     }
     LOG_WARNING({}, leaks.c_str());
     return true;
