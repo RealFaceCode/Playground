@@ -96,6 +96,6 @@ void Log(const String& type,
              "%s[%s][FILE:%s][LINE:%i][%s][%s]%s",
              color.c_str(), type.c_str(),fileName,line, cDate, cTime, ANSI_END);
 
-    printf("%s\n%s\n", str, userFormat.c_str());
+    printf("%s\n%s\n%s", str, userFormat.c_str(), ANSI_END);
     Free(str);
 }
