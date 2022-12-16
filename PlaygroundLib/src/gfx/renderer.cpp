@@ -1,13 +1,8 @@
-//
-// Created by Kevin-Laptop on 28.07.2022.
-//
-
+#include <OpenGL.h>
 #include "../../hdr/core.h"
 #include "../../hdr/gfx/renderer.h"
 #include "../../hdr/gfx/batch.h"
 #include "../../hdr/gfx/image.h"
-#include "../../hdr/window/window.h"
-#include "../../hdr/window/input.h"
 
 namespace GFX
 {
@@ -15,17 +10,8 @@ namespace GFX
     {
         static glm::vec4 white(1.0f, 1.0f, 1.0f, 1.0f);
 
-        ::Window::Settings* wSettings;
-
-        void Init(Window::Window* win)
-        {
-            wSettings = &win->mSettings;
-        }
-
         void DrawTriangle(BatchHandler& batchHandler, const glm::vec2& position, const glm::vec4& color, const float& width, const float& height)
         {
-            CHECK_INIT_GFX
-
             float textureIndex = 0;
 
             {
@@ -47,8 +33,6 @@ namespace GFX
 
         void DrawTexturedTriangle(BatchHandler& batchHandler, const glm::vec2& position, const Image* texture, const float& width, const float& height)
         {
-            CHECK_INIT_GFX
-
             if(texture == nullptr)
             {
                 return;
@@ -75,8 +59,6 @@ namespace GFX
 
         void DrawTexturedTriangle(BatchHandler& batchHandler, const glm::vec2& position, const Sprite* sprite, const float& width, const float& height)
         {
-            CHECK_INIT_GFX
-
             if(sprite == nullptr)
             {
                 return;
@@ -103,8 +85,6 @@ namespace GFX
 
         void DrawRectangle(BatchHandler& batchHandler, const glm::vec2& position, const glm::vec4& color, const float& width, const float& height)
         {
-            CHECK_INIT_GFX
-
             float textureIndex = 0;
 
             {
@@ -130,8 +110,6 @@ namespace GFX
 
         void DrawTexturedRectangle(BatchHandler& batchHandler, const glm::vec2& position, const Image* texture, const float& width, const float& height)
         {
-            CHECK_INIT_GFX
-
             if(texture == nullptr)
             {
                 return;
@@ -162,8 +140,6 @@ namespace GFX
 
         void DrawTexturedRectangle(BatchHandler& batchHandler, const glm::vec2& position, const Sprite* sprite, const float& width, const float& height)
         {
-            CHECK_INIT_GFX
-
             if(sprite == nullptr)
             {
                 return;
@@ -198,8 +174,6 @@ namespace GFX
                       const glm::vec4& color,
                       const float& lineWidth)
         {
-            CHECK_INIT_GFX
-
             float textureIndex = 0;
 
             {
@@ -250,8 +224,6 @@ namespace GFX
                                 const float &height,
                                 const float &lineWidth)
         {
-            CHECK_INIT_GFX
-
             float w = lineWidth / 2;
 
             DrawLine(batchHandler, {position.x, position.y - w}, {position.x + width, position.y - w}, color, lineWidth);
@@ -264,5 +236,21 @@ namespace GFX
         {
             batchHandler.renderBatches(shader);
         }
+    }
+
+    Renderer::Renderer() {
+
+    }
+
+    Renderer::~Renderer() {
+
+    }
+
+    void Renderer::render()
+    {
+        glViewport(0, 0, 900, 600);             //TODO: get window width/height
+        glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        mBatchHandler.renderBatches(*mShader);
     }
 }

@@ -2,7 +2,6 @@
 #include "../../hdr/gfx/image.h"
 #include "../../hdr/gfx/shader.h"
 #include "../../hdr/gfx/batch.h"
-#include "../../hdr/logger.h"
 #include <OpenGL.h>
 
 namespace GFX
@@ -40,9 +39,7 @@ namespace GFX
 	}
 
 	Batch::~Batch()
-	{
-		
-	}
+	{}
 
 	void Batch::addTexture(const Image& image)
 	{

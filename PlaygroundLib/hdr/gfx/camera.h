@@ -8,7 +8,6 @@ namespace GFX
     {
     public:
         Camera();
-        Camera(const ui32* windowWidth , const ui32* windowHeight);
         ~Camera();
 
         virtual void calculate() = 0;
@@ -27,9 +26,7 @@ namespace GFX
     {
     public:
         OrthoCamera();
-        OrthoCamera(const ui32* mWindowWidth,
-                    const ui32* mWindowHeight,
-                    const float& left,
+        OrthoCamera(const float& left,
                     const float& right,
                     const float& top,
                     const float& bottom,

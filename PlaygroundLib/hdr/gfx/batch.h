@@ -11,6 +11,7 @@ namespace GFX
 
 	struct BatchVertex
 	{
+	public:
 		glm::vec2 mPosition;
 		glm::vec4 mColor;
 		glm::vec2 mTexCoord;
@@ -19,18 +20,6 @@ namespace GFX
 
 	struct Batch
 	{
-	public:
-		ui64 mMaxVertices;
-		ui64 mUsedVertices;
-		ui32 mVao;
-		ui32 mVbo;
-		ui32 mDrawMode;
-		glm::mat4 mTransform;
-		ui8 mNumTextures;
-		ui32 mTextures[8];
-		//Shader* mShader;
-        std::unordered_map<ui32, ui8> mMapedTextureIndex;
-
 	public:
 		Batch(const ui64 maxVertices, const ui32 drawMode);
 		~Batch();
@@ -52,26 +41,17 @@ namespace GFX
 		bool hasSpace(const ui64 elements) const;
 		void render(Shader & shader);
 		void clear();
+	public:
+	    ui64 mMaxVertices;
+	    ui64 mUsedVertices;
+	    ui32 mVao;
+	    ui32 mVbo;
+	    ui32 mDrawMode;
+	    glm::mat4 mTransform;
+	    ui8 mNumTextures;
+	    ui32 mTextures[8];
+	    std::unordered_map<ui32, ui8> mMapedTextureIndex;
 	};
-
-	//namespace BatchHandler
-	//{
-	//	extern Image defaultImage;
-//
-	//	void Init();
-	//	void SetDefaultValuesBatch(const ui64 maxVertices, const ui32 drawMode);
-	//	void AddBatch();
-	//	void AddBatch(const ui64 maxVertices, const ui32 drawMode);
-	//	void AddImage(const Image& image);
-	//	Batch* GetBatchHasSpace(const ui64 elements);
-	//	Batch* GetBatchHasSpaceMatchTexture(const ui64 elements, const ui32 texture);
-	//	Batch* GetBatchMatchTexture(const ui32 texture);
-	//	void AddToBatch(const BatchVertex vertex, const Image& image = defaultImage);
-	//	void AddToBatch(const BatchVertex* vertices, const ui64 elements, const Image& image = defaultImage);
-    //   void AddToBatch(const BatchVertex* vertices, const ui64 elements, const ui32 imageId);
-	//	void RenderBatches(Shader& shader);
-	//	void Clear();
-	//}
 
 	struct BatchHandler
 	{

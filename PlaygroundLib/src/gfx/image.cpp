@@ -257,7 +257,6 @@ namespace GFX
 
     Image::Image(const char* path, const char* settingsName)
     {
-        CHECK_INIT_GFX
         stbi_set_flip_vertically_on_load(true);
         unsigned char* texData = stbi_load(path, &mWidth, &mHeight, &mComp, 0);
         if (texData == nullptr)
@@ -302,8 +301,6 @@ namespace GFX
     Image::Image(const unsigned char* data, ui32 width, ui32 height, ui32 comp, const char* settingsName)
             :mWidth(width), mHeight(height), mComp(comp)
     {
-        CHECK_INIT_GFX
-
         if (data == nullptr)
         {
             LOG_ERROR({}, "Failed to create Texture!");
@@ -343,8 +340,6 @@ namespace GFX
 
     Image::Image(const Image& image)
     {
-        CHECK_INIT_GFX
-
         mId = image.mId;
         mWidth = image.mWidth;
         mHeight = image.mHeight;
@@ -353,30 +348,22 @@ namespace GFX
 
     void Image::bind()
     {
-        CHECK_INIT_GFX
-
         glBindTexture(GL_TEXTURE_2D, mId);
     }
 
     void Image::unbind()
     {
-        CHECK_INIT_GFX
-
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
     void Image::clear()
     {
-        CHECK_INIT_GFX
-
         glBindTexture(GL_TEXTURE_2D, 0);
         glDeleteTextures(1, &mId);
     }
 
     Image& Image::operator=(const Image& other)
     {
-        CHECK_INIT_GFX
-
         mId = other.mId;
         mWidth = other.mWidth;
         mHeight = other.mHeight;
@@ -390,8 +377,6 @@ namespace GFX
 
         void AddFile(const char* filePath)
         {
-            CHECK_INIT_GFX
-
             for(const auto& path : mFilePaths)
             {
                 if(path == std::string(filePath))
@@ -589,8 +574,6 @@ namespace GFX
 
         SpriteSheet CreateSpriteSheet(const char* name, const bool& forceOverWrite)
         {
-            CHECK_INIT_GFX
-
             if(FHandle::checkExistFile(name) && !forceOverWrite)
             {
                 mFilePaths.clear();
@@ -672,8 +655,6 @@ namespace GFX
 
         const Image* GetImage(const char* imageName)
         {
-            CHECK_INIT_GFX
-
             if(images.find(std::string(imageName)) != images.end())
             {
                 return &images.at(std::string(imageName));
@@ -685,7 +666,6 @@ namespace GFX
 
         void AddImage(const char* imagePath, const char* settingsName)
         {
-            CHECK_INIT_GFX
             if(!FHandle::checkExistFile(imagePath))
             {
                 LOG_WARNING({}, "Failed to add image with image path'%s'", imagePath);
@@ -708,7 +688,6 @@ namespace GFX
 
         void AddImages(const char* dirPath, const char* settingsName)
         {
-            CHECK_INIT_GFX
             if(!FHandle::checkExistDir(dirPath))
             {
                 LOG_WARNING({}, "Failed to add images from dir path'%s'", dirPath);
@@ -745,7 +724,6 @@ namespace GFX
 
         const SpriteSheet* GetSheet(const char* sheetName)
         {
-            CHECK_INIT_GFX
             if(sheets.find(std::string(sheetName)) != sheets.end())
             {
                 return (const SpriteSheet*)&sheets.at(std::string(sheetName));
@@ -755,7 +733,6 @@ namespace GFX
 
         const Sprite* getSpriteFromSheet(const char* sheetName, const char* spriteName)
         {
-            CHECK_INIT_GFX
             const auto* sheet = GetSheet(sheetName);
             if(sheet == nullptr)
             {
@@ -771,7 +748,6 @@ namespace GFX
 
         void AddSheet(const char* sheetPath)
         {
-            CHECK_INIT_GFX
             if(!FHandle::checkExistFile(sheetPath))
             {
                 LOG_WARNING({}, "Failed to add sheet with path'%s'", sheetPath);
@@ -794,7 +770,6 @@ namespace GFX
 
         void AddSheets(const char* dirPath)
         {
-            CHECK_INIT_GFX
             if(!FHandle::checkExistDir(dirPath))
             {
                 LOG_WARNING({}, "Failed to add sheets from path'%s'", dirPath);
@@ -822,7 +797,6 @@ namespace GFX
 
         void AddRawToSheet(const char* sheetName, const char* dirPath)
         {
-            CHECK_INIT_GFX
             if(!FHandle::checkExistDir(dirPath))
             {
                 LOG_WARNING({}, "Failed to create sheet from path'%s'", dirPath);

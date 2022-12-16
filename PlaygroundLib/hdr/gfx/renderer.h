@@ -1,8 +1,9 @@
-#include "../../hdr/core.h"
-#include "../../hdr/window/window.h"
-
 #ifndef PLAYGROUND_RENDERER_H
 #define PLAYGROUND_RENDERER_H
+#include "../core.h"
+#include "../window/window.h"
+#include "batch.h"
+#include "camera.h"
 
 namespace GFX
 {
@@ -10,12 +11,9 @@ namespace GFX
     struct Sprite;
     struct Shader;
     struct BatchVertex;
-    struct BatchHandler;
 
     namespace Draw
     {
-        void Init(Window::Window* win);
-
         void DrawTriangle(BatchHandler& batchHandler, const glm::vec2& position, const glm::vec4& color, const float& width, const float& height);
         void DrawTexturedTriangle(BatchHandler& batchHandler, const glm::vec2& position, const Image* texture, const float& width, const float& height);
         void DrawTexturedTriangle(BatchHandler& batchHandler, const glm::vec2& position, const Sprite* sprite, const float& width, const float& height);
@@ -41,7 +39,7 @@ namespace GFX
     {
     public:
         float lineWidth = 0.01;
-        glm::vec4 windowColor = { 36.0f / 255.0f, 44.0f / 255.0f, 56.0f / 255.0f, 255.0f / 255.0f};
+        glm::vec4 windowColor = {36.0f / 255.0f, 44.0f / 255.0f, 56.0f / 255.0f, 255.0f / 255.0f};
         glm::vec4 lineColor = {22.0f / 255.0f, 2.0f / 255.0f, 94.0f / 255.0f, 255.0f / 255.0f};
     };
 
@@ -50,8 +48,12 @@ namespace GFX
     public:
         Renderer();
         ~Renderer();
-    private:
 
+        void render();
+    private:
+        BatchHandler mBatchHandler;
+        Camera* mCamera;
+        Shader* mShader;
     };
 }
 #endif //PLAYGROUND_RENDERER_H

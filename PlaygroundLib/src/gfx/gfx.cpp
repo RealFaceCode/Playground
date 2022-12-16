@@ -3,12 +3,11 @@
 #include "../../hdr/gfx/gfx.h"
 #include "../../hdr/gfx/batch.h"
 #include "../../hdr/gfx/image.h"
+
 #include <OpenGL.h>
 
 namespace GFX
 {
-    bool INIT = false;
-
     static void GLAPIENTRY GLErrorCallback( GLenum source,
                      GLenum type,
                      GLuint id,
@@ -17,7 +16,8 @@ namespace GFX
                      const GLchar* message,
                      const void* userParam )
     {
-        if(type == GL_DEBUG_TYPE_ERROR ) {
+        if(type == GL_DEBUG_TYPE_ERROR )
+        {
             fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
                     ("** GL ERROR **"), type, severity, message);
         }
@@ -36,7 +36,9 @@ namespace GFX
         ImageSettingsBuilder::SetImageFormat("defaultWhiteSetting", ImageSettingsBuilder::ImageFormat::AUTO);
     }
 
-	void Init(RenderApi api)
+    const ::Window::Settings* wSettings = nullptr;
+
+    void Init(const Window::Window& window, const RenderApi& api)
 	{
 		bool result = false;;
 		switch (api)
@@ -54,14 +56,23 @@ namespace GFX
 		{
 		    LOG_ASSERT(false, {}, "Failed to init glad!");
 		}
-        INIT = true;
 
 #ifdef _DEBUG
         glEnable(GL_DEBUG_OUTPUT);
         glDebugMessageCallback( GLErrorCallback, 0 );
 #endif
         PreDefineImageSettings();
-
 		BatchHandler::Init();
+		wSettings = &window.mSettings;
+	}
+
+	const ui32* GetWindowWidth()
+	{
+	    return &wSettings->width;
+	}
+
+	const ui32* GetWindowHeight()
+	{
+	    return &wSettings->height;
 	}
 }
