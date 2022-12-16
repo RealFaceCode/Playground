@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['uv0_0',['uv0',['../d1/d2a/struct_g_f_x_1_1_sprite.html#aabdfd1c2438d58c585f89c60d45af1e8',1,'GFX::Sprite']]],
-  ['uv1_1',['uv1',['../d1/d2a/struct_g_f_x_1_1_sprite.html#af656a1663785289611d2505211fad564',1,'GFX::Sprite']]],
-  ['uv2_2',['uv2',['../d1/d2a/struct_g_f_x_1_1_sprite.html#aa3fb496ee5e4cfd3add9c0ccbef50a1b',1,'GFX::Sprite']]],
-  ['uv3_3',['uv3',['../d1/d2a/struct_g_f_x_1_1_sprite.html#a4ed044b497d6c9198fd7dcf64c521159',1,'GFX::Sprite']]]
+  ['videomode_0',['videoMode',['../df/d50/struct_window_1_1_settings.html#ac5c8c3b1659792cdad03291c1b80a8f5',1,'Window::Settings']]],
+  ['vidmodes_1',['vidModes',['../d2/d73/struct_window_1_1_monitor.html#a56b17e0686e5519d87d3d195ca62714c',1,'Window::Monitor']]]
 ];

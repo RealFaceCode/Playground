@@ -54,23 +54,49 @@ namespace GFX
 		void clear();
 	};
 
-	namespace BatchHandler
-	{
-		extern Image defaultImage;
+	//namespace BatchHandler
+	//{
+	//	extern Image defaultImage;
+//
+	//	void Init();
+	//	void SetDefaultValuesBatch(const ui64 maxVertices, const ui32 drawMode);
+	//	void AddBatch();
+	//	void AddBatch(const ui64 maxVertices, const ui32 drawMode);
+	//	void AddImage(const Image& image);
+	//	Batch* GetBatchHasSpace(const ui64 elements);
+	//	Batch* GetBatchHasSpaceMatchTexture(const ui64 elements, const ui32 texture);
+	//	Batch* GetBatchMatchTexture(const ui32 texture);
+	//	void AddToBatch(const BatchVertex vertex, const Image& image = defaultImage);
+	//	void AddToBatch(const BatchVertex* vertices, const ui64 elements, const Image& image = defaultImage);
+    //   void AddToBatch(const BatchVertex* vertices, const ui64 elements, const ui32 imageId);
+	//	void RenderBatches(Shader& shader);
+	//	void Clear();
+	//}
 
-		void Init();
-		void SetDefaultValuesBatch(const ui64 maxVertices, const ui32 drawMode);
-		void AddBatch();
-		void AddBatch(const ui64 maxVertices, const ui32 drawMode);
-		void AddImage(const Image& image);
-		Batch* GetBatchHasSpace(const ui64 elements);
-		Batch* GetBatchHasSpaceMatchTexture(const ui64 elements, const ui32 texture);
-		Batch* GetBatchMatchTexture(const ui32 texture);
-		void AddToBatch(const BatchVertex vertex, const Image& image = defaultImage);
-		void AddToBatch(const BatchVertex* vertices, const ui64 elements, const Image& image = defaultImage);
-        void AddToBatch(const BatchVertex* vertices, const ui64 elements, const ui32 imageId);
-		void RenderBatches(Shader& shader);
-		void Clear();
-	}
+	struct BatchHandler
+	{
+    public:
+	    static void Init();
+	    BatchHandler();
+	    BatchHandler(const ui64& maxVertices, const ui32& drawMode);
+	    ~BatchHandler();
+	    void addBatch();
+	    void addBatch(const ui64& maxVertices, const ui32& drawMode);
+	    void addImage(const Image& image);
+	    Batch* getBatchHasSpace(const ui64& elements);
+	    Batch* getBatchMatchTexture(const ui32& texture);
+	    Batch* getBatchHasSpaceMatchTexture(const ui64& elements, const ui32& texture);
+	    void addToBatch(const BatchVertex& vertex, const Image& image = mDefaultImage);
+	    void addToBatch(const BatchVertex* vertices, const ui64& elements, const Image& image = mDefaultImage);
+	    void addToBatch(const BatchVertex* vertices, const ui64& elements, const ui32& imageId);
+	    void renderBatches(Shader& shader);
+	    void clear();
+	    static const Image& GetDefaultImage();
+	private:
+	    std::vector<Batch> mBatches;
+	    ui64 mMaxVerticesDefault;
+	    ui32 mDrawModeDefault;
+	    static Image mDefaultImage;
+	};
 }
 #endif

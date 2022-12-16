@@ -78,7 +78,7 @@ void Highlighter(String& text, Highlight& highlight);
 void Log(const String& type,
          const ConsoleOutPutColor& logColor,
          const String& filePath, const int& line,
-         std::vector<Highlight> highlights,
+         const std::vector<Highlight>& highlights,
          const String& format,
          ...);
 

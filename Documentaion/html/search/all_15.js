@@ -8,7 +8,7 @@ var searchData=
   ['window_2eh_5',['window.h',['../d3/df1/window_8h.html',1,'']]],
   ['windowbuilder_6',['WindowBuilder',['../d2/d06/namespace_window.html#a73cc00d62b59d0f9127f04517cccaf24',1,'Window']]],
   ['windowbuildobj_7',['WindowBuildObj',['../d7/d15/struct_window_1_1_window_build_obj.html',1,'Window']]],
-  ['windowcolor_8',['windowColor',['../dc/dca/struct_g_f_x_1_1_renderer_1_1_gui_1_1_gui_settings.html#abf18a47a75597d8ba17c27f27cf542a4',1,'GFX::Renderer::Gui::GuiSettings']]],
+  ['windowcolor_8',['windowColor',['../d7/d12/struct_g_f_x_1_1_gui_settings.html#ae689d26d81203e1ec9ec15cc27933f6e',1,'GFX::GuiSettings']]],
   ['windowheight_9',['windowHeight',['../da/dce/namespace_input.html#a775b80f8de05fa260ac884e3ed7c84e9',1,'Input']]],
   ['windowposx_10',['windowPosX',['../da/dce/namespace_input.html#a30e4fac206427460e83277f815f29c6e',1,'Input']]],
   ['windowposy_11',['windowPosY',['../da/dce/namespace_input.html#ab29a9c5f7c15b521acb4f8bd5a94f142',1,'Input']]],

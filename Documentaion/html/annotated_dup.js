@@ -8,16 +8,12 @@ var annotated_dup =
       [ "ImageSettingsBuilder", "d8/d63/namespace_g_f_x_1_1_image_settings_builder.html", [
         [ "ImageBuildingSettings", "df/d82/struct_g_f_x_1_1_image_settings_builder_1_1_image_building_settings.html", "df/d82/struct_g_f_x_1_1_image_settings_builder_1_1_image_building_settings" ]
       ] ],
-      [ "Renderer", "dd/d9c/namespace_g_f_x_1_1_renderer.html", [
-        [ "Gui", "de/dcc/namespace_g_f_x_1_1_renderer_1_1_gui.html", [
-          [ "GuiObject", "d7/d6a/struct_g_f_x_1_1_renderer_1_1_gui_1_1_gui_object.html", "d7/d6a/struct_g_f_x_1_1_renderer_1_1_gui_1_1_gui_object" ],
-          [ "GuiObjectValues", "d8/d27/struct_g_f_x_1_1_renderer_1_1_gui_1_1_gui_object_values.html", "d8/d27/struct_g_f_x_1_1_renderer_1_1_gui_1_1_gui_object_values" ],
-          [ "GuiSettings", "dc/dca/struct_g_f_x_1_1_renderer_1_1_gui_1_1_gui_settings.html", "dc/dca/struct_g_f_x_1_1_renderer_1_1_gui_1_1_gui_settings" ]
-        ] ]
-      ] ],
       [ "Batch", "d9/d16/struct_g_f_x_1_1_batch.html", "d9/d16/struct_g_f_x_1_1_batch" ],
+      [ "BatchHandler", "d7/db7/struct_g_f_x_1_1_batch_handler.html", "d7/db7/struct_g_f_x_1_1_batch_handler" ],
       [ "BatchVertex", "df/d2a/struct_g_f_x_1_1_batch_vertex.html", "df/d2a/struct_g_f_x_1_1_batch_vertex" ],
+      [ "GuiSettings", "d7/d12/struct_g_f_x_1_1_gui_settings.html", "d7/d12/struct_g_f_x_1_1_gui_settings" ],
       [ "Image", "de/d5e/struct_g_f_x_1_1_image.html", "de/d5e/struct_g_f_x_1_1_image" ],
+      [ "Renderer", "d9/d60/struct_g_f_x_1_1_renderer.html", "d9/d60/struct_g_f_x_1_1_renderer" ],
       [ "Shader", "dc/d13/struct_g_f_x_1_1_shader.html", "dc/d13/struct_g_f_x_1_1_shader" ],
       [ "Sprite", "d1/d2a/struct_g_f_x_1_1_sprite.html", "d1/d2a/struct_g_f_x_1_1_sprite" ],
       [ "SpriteSheet", "d0/d26/struct_g_f_x_1_1_sprite_sheet.html", "d0/d26/struct_g_f_x_1_1_sprite_sheet" ]

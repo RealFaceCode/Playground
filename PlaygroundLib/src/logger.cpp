@@ -56,26 +56,27 @@ void Log(const String& type,
          const ConsoleOutPutColor& logColor,
          const String& filePath,
          const int& line,
-         std::vector<Highlight> highlights,
+         const std::vector<Highlight>& highlights,
          const String& format,
          ...)
 {
     String userFormat(format);
+    auto& highlight = (std::vector<Highlight>&)highlights;
 
-    for(auto i = 0; i < highlights.size(); i++)
+    for(auto i = 0; i < highlight.size(); i++)
     {
         if(i != 0)
         {
-            if(highlights.at(i - 1).mPrevColor == ANSI_END)
+            if(highlight.at(i - 1).mPrevColor == ANSI_END)
             {
-                highlights.at(i).mPrevColor = ANSI_END;
+                highlight.at(i).mPrevColor = ANSI_END;
             }
             else
             {
-                highlights.at(i).mPrevColor = highlights.at(i - 1).mHighlightColor;
+                highlight.at(i).mPrevColor = highlight.at(i - 1).mHighlightColor;
             }
         }
-        Highlighter(userFormat, highlights.at(i));
+        Highlighter(userFormat, highlight.at(i));
     }
 
     char* str;

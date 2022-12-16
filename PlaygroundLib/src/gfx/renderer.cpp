@@ -11,7 +11,7 @@
 
 namespace GFX
 {
-    namespace Renderer
+    namespace Draw
     {
         static glm::vec4 white(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -22,15 +22,15 @@ namespace GFX
             wSettings = &win->mSettings;
         }
 
-        void DrawTriangle(const glm::vec2& position, const glm::vec4& color, const float& width, const float& height)
+        void DrawTriangle(BatchHandler& batchHandler, const glm::vec2& position, const glm::vec4& color, const float& width, const float& height)
         {
             CHECK_INIT_GFX
 
             float textureIndex = 0;
 
             {
-                Batch* batch = BatchHandler::GetBatchHasSpaceMatchTexture(3, BatchHandler::defaultImage.mId);
-                textureIndex =(float)batch->getMapedTextureIndex(BatchHandler::defaultImage.mId);
+                Batch* batch = batchHandler.getBatchHasSpaceMatchTexture(3, BatchHandler::GetDefaultImage().mId);
+                textureIndex =(float)batch->getMapedTextureIndex(BatchHandler::GetDefaultImage().mId);
             }
 
             float x = position.x;
@@ -42,10 +42,10 @@ namespace GFX
                     BatchVertex{glm::vec2{x, y - height}, color, glm::vec2{0, 0}, textureIndex}
             };
 
-            BatchHandler::AddToBatch(vertices, 3);
+            batchHandler.addToBatch(vertices, 3);
         }
 
-        void DrawTexturedTriangle(const glm::vec2& position, const Image* texture, const float& width, const float& height)
+        void DrawTexturedTriangle(BatchHandler& batchHandler, const glm::vec2& position, const Image* texture, const float& width, const float& height)
         {
             CHECK_INIT_GFX
 
@@ -57,7 +57,7 @@ namespace GFX
             float textureIndex = 0;
 
             {
-                Batch* batch = BatchHandler::GetBatchHasSpaceMatchTexture(3, texture->mId);
+                Batch* batch = batchHandler.getBatchHasSpaceMatchTexture(3, texture->mId);
                 textureIndex =(float)batch->getMapedTextureIndex(texture->mId);
             }
 
@@ -70,10 +70,10 @@ namespace GFX
                     BatchVertex{glm::vec2{x, y - height}, white, glm::vec2{0, 0}, textureIndex}
             };
 
-            BatchHandler::AddToBatch(vertices, 3, *texture);
+            batchHandler.addToBatch(vertices, 3, *texture);
         }
 
-        void DrawTexturedTriangle(const glm::vec2& position, const Sprite* sprite, const float& width, const float& height)
+        void DrawTexturedTriangle(BatchHandler& batchHandler, const glm::vec2& position, const Sprite* sprite, const float& width, const float& height)
         {
             CHECK_INIT_GFX
 
@@ -85,7 +85,7 @@ namespace GFX
             float textureIndex = 0;
 
             {
-                Batch* batch = BatchHandler::GetBatchHasSpaceMatchTexture(3, sprite->mId);
+                Batch* batch = batchHandler.getBatchHasSpaceMatchTexture(3, sprite->mId);
                 textureIndex =(float)batch->getMapedTextureIndex(sprite->mId);
             }
 
@@ -98,18 +98,18 @@ namespace GFX
                     BatchVertex{glm::vec2{x, y - height}, white, sprite->uv3, textureIndex}
             };
 
-            BatchHandler::AddToBatch(vertices, 3, sprite->mId);
+            batchHandler.addToBatch(vertices, 3, sprite->mId);
         }
 
-        void DrawRectangle(const glm::vec2& position, const glm::vec4& color, const float& width, const float& height)
+        void DrawRectangle(BatchHandler& batchHandler, const glm::vec2& position, const glm::vec4& color, const float& width, const float& height)
         {
             CHECK_INIT_GFX
 
             float textureIndex = 0;
 
             {
-                Batch* batch = BatchHandler::GetBatchHasSpaceMatchTexture(3, BatchHandler::defaultImage.mId);
-                textureIndex =(float)batch->getMapedTextureIndex(BatchHandler::defaultImage.mId);
+                Batch* batch = batchHandler.getBatchHasSpaceMatchTexture(3, BatchHandler::GetDefaultImage().mId);
+                textureIndex =(float)batch->getMapedTextureIndex(BatchHandler::GetDefaultImage().mId);
             }
 
             float x = position.x;
@@ -125,10 +125,10 @@ namespace GFX
                 BatchVertex{ glm::vec2{x, y - height}, color, glm::vec2{0.0f, 0.0f}, textureIndex }
             };
 
-            BatchHandler::AddToBatch(vertices, 6);
+            batchHandler.addToBatch(vertices, 6);
         }
 
-        void DrawTexturedRectangle(const glm::vec2& position, const Image* texture, const float& width, const float& height)
+        void DrawTexturedRectangle(BatchHandler& batchHandler, const glm::vec2& position, const Image* texture, const float& width, const float& height)
         {
             CHECK_INIT_GFX
 
@@ -140,7 +140,7 @@ namespace GFX
             float textureIndex = 0;
 
             {
-                Batch* batch = BatchHandler::GetBatchHasSpaceMatchTexture(3, texture->mId);
+                Batch* batch = batchHandler.getBatchHasSpaceMatchTexture(3, texture->mId);
                 textureIndex =(float)batch->getMapedTextureIndex(texture->mId);
             }
 
@@ -157,10 +157,10 @@ namespace GFX
                     BatchVertex{ glm::vec2{x, y - height}, white, glm::vec2{0.0f, 0.0f}, textureIndex }
             };
 
-            BatchHandler::AddToBatch(vertices, 6, texture->mId);
+            batchHandler.addToBatch(vertices, 6, texture->mId);
         }
 
-        void DrawTexturedRectangle(const glm::vec2& position, const Sprite* sprite, const float& width, const float& height)
+        void DrawTexturedRectangle(BatchHandler& batchHandler, const glm::vec2& position, const Sprite* sprite, const float& width, const float& height)
         {
             CHECK_INIT_GFX
 
@@ -172,7 +172,7 @@ namespace GFX
             float textureIndex = 0;
 
             {
-                Batch* batch = BatchHandler::GetBatchHasSpaceMatchTexture(3, sprite->mId);
+                Batch* batch = batchHandler.getBatchHasSpaceMatchTexture(3, sprite->mId);
                 textureIndex =(float)batch->getMapedTextureIndex(sprite->mId);
             }
 
@@ -189,10 +189,11 @@ namespace GFX
                     BatchVertex{ glm::vec2{x, y - height}, white, sprite->uv3, textureIndex }
             };
 
-            BatchHandler::AddToBatch(vertices, 6, sprite->mId);
+            batchHandler.addToBatch(vertices, 6, sprite->mId);
         }
 
-        void DrawLine(const glm::vec2& positionStart,
+        void DrawLine(BatchHandler& batchHandler,
+                      const glm::vec2& positionStart,
                       const glm::vec2& positionEnd,
                       const glm::vec4& color,
                       const float& lineWidth)
@@ -202,8 +203,8 @@ namespace GFX
             float textureIndex = 0;
 
             {
-                Batch* batch = BatchHandler::GetBatchHasSpaceMatchTexture(3, BatchHandler::defaultImage.mId);
-                textureIndex =(float)batch->getMapedTextureIndex(BatchHandler::defaultImage.mId);
+                Batch* batch = batchHandler.getBatchHasSpaceMatchTexture(3, BatchHandler::GetDefaultImage().mId);
+                textureIndex =(float)batch->getMapedTextureIndex(BatchHandler::GetDefaultImage().mId);
             }
 
             glm::vec2 ab = positionEnd - positionStart;
@@ -239,10 +240,11 @@ namespace GFX
                     BatchVertex{ VERTEX_FOUR, color, glm::vec2{0.0f, 0.0f}, textureIndex }
             };
 
-            BatchHandler::AddToBatch(vertices, 6);
+            batchHandler.addToBatch(vertices, 6);
         }
 
-        void DrawLinedRectangle(const glm::vec2 &position,
+        void DrawLinedRectangle(BatchHandler& batchHandler,
+                                const glm::vec2 &position,
                                 const glm::vec4 &color,
                                 const float &width,
                                 const float &height,
@@ -252,54 +254,15 @@ namespace GFX
 
             float w = lineWidth / 2;
 
-            DrawLine({position.x, position.y - w}, {position.x + width, position.y - w}, color, lineWidth);
-            DrawLine({position.x, position.y - height + w}, {position.x + width, position.y - height + w}, color, lineWidth);
-            DrawLine({position.x + w, position.y}, {position.x + w, position.y - height}, color, lineWidth);
-            DrawLine({position.x + width - w, position.y}, {position.x + width - w, position.y - height}, color, lineWidth);
+            DrawLine(batchHandler, {position.x, position.y - w}, {position.x + width, position.y - w}, color, lineWidth);
+            DrawLine(batchHandler, {position.x, position.y - height + w}, {position.x + width, position.y - height + w}, color, lineWidth);
+            DrawLine(batchHandler, {position.x + w, position.y}, {position.x + w, position.y - height}, color, lineWidth);
+            DrawLine(batchHandler, {position.x + width - w, position.y}, {position.x + width - w, position.y - height}, color, lineWidth);
         }
 
-        void render(Shader &shader)
+        void render(BatchHandler& batchHandler, Shader &shader)
         {
-            CHECK_INIT_GFX
-
-            BatchHandler::RenderBatches(shader);
-        }
-
-        namespace Gui
-        {
-            GuiObjectValues GuiObject::drawButton(
-                                 const ui32 &x,
-                                 const ui32 &y,
-                                 const ui32 &width,
-                                 const ui32 &height,
-                                 const char *text)
-            {
-                float xPos  = ((float)x/ (float)wSettings->width)   - 1.5f;
-                float yPos  = ((float)y / (float)wSettings->height) + 1.5f;
-                float w     = ((float)x / (float)wSettings->width)  ;
-                float h     = ((float)y / (float)wSettings->height) ;
-
-                DrawRectangle({xPos, yPos}, mGuiSettings.windowColor, w, h);
-                DrawLinedRectangle({xPos, yPos}, mGuiSettings.lineColor, w, h, mGuiSettings.lineWidth);
-                GuiObjectValues gov
-                {
-                    .mHoovered = false,
-                    .mPressedRight = false,
-                    .mPressedLeft = false,
-                    .mValue = 0.0f,
-                };
-
-                float mouseX = Input::GetMouseXFloat() * 1.5f;
-                float mouseY = Input::GetMouseYFloat() * 1.5f;
-
-                if(xPos >= mouseX && xPos + w <= mouseX && yPos >= mouseY && yPos + h <= mouseY)
-                {
-                    LOG_INFO({}, "YEAY");
-                }
-
-                return gov;
-            }
-
+            batchHandler.renderBatches(shader);
         }
     }
 }

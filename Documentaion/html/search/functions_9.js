@@ -4,5 +4,5 @@ var searchData=
   ['load_1',['load',['../d2/daa/struct_f_s_1_1_serializer.html#a497d3c9fa42517371b7a0cc7394f6415',1,'FS::Serializer']]],
   ['loadsettings_2',['loadSettings',['../d4/da4/struct_window_1_1_window.html#a835351354ab659a328feb43f08dffc8f',1,'Window::Window']]],
   ['loadspritesheet_3',['LoadSpriteSheet',['../d2/d25/namespace_g_f_x_1_1_sprite_sheet_builder.html#a8b9a9adbbd14f58622b5856e355a7359',1,'GFX::SpriteSheetBuilder']]],
-  ['log_4',['Log',['../d1/d8c/logger_8h.html#a70587031361b55c3a1bca0f741e52900',1,'logger.h']]]
+  ['log_4',['Log',['../d1/d8c/logger_8h.html#a8c081b18cb08d8dafec223556e3873d1',1,'logger.h']]]
 ];

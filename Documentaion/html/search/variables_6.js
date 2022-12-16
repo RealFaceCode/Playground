@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['image_0',['image',['../d0/d26/struct_g_f_x_1_1_sprite_sheet.html#a6b0e280ef14053e02f7b309b9b1f2654',1,'GFX::SpriteSheet']]],
-  ['init_1',['INIT',['../d7/dd4/namespace_g_f_x.html#aecf4cc4e5c10db038af7b3e03cffb2e1',1,'GFX']]]
+  ['linecolor_0',['lineColor',['../d7/d12/struct_g_f_x_1_1_gui_settings.html#a520225d9a2a0613b845bc1e84c633e48',1,'GFX::GuiSettings']]],
+  ['linewidth_1',['lineWidth',['../d7/d12/struct_g_f_x_1_1_gui_settings.html#ad1278ac6c5b27d6a1fb7152676b4c133',1,'GFX::GuiSettings']]],
+  ['loaddropedfiles_2',['loadDropedFiles',['../db/d62/struct_input_1_1_input_settings.html#a8990b9d03c48bff9245ec7a457c81e44',1,'Input::InputSettings']]]
 ];
