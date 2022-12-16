@@ -90,6 +90,7 @@ void Log(const String& type,
 
     Free(str);
 
+    //TODO: rewrite this!
     const String color      = GetAnsiColor(logColor);
     const auto fName        = FS::getFileName(filePath.c_str());
     const auto date         = GetDate();

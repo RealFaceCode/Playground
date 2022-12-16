@@ -56,10 +56,10 @@ target_link_libraries(ExampleProject PlaygroundLib)
 int main(int argc, char** argv)
 {
     CoreInit();
-    LOG_INFO({C_HiLi("highlight", Yellow)}, "info log -> highlight <- %s", "logger")
-    LOG_WARNING({C_HiLi("highlight", Blue)}, "warning log -> highlight <- %s", "logger")
-    LOG_ERROR({C_HiLi("highlight", Purple)}, "error log -> highlight <- %s", "logger")
-    LOG_ASSERT(true, {C_HiLi("highlight", Orange)}, "assert log -> highlight <- %s", "logger")
+    LOG_INFO({C_HiLi("highlight", Yellow, 0)}, "info log -> highlight <- %s", "logger")
+    LOG_WARNING({C_HiLi("highlight", Blue, 0)}, "warning log -> highlight <- %s", "logger")
+    LOG_ERROR({C_HiLi("highlight", Purple, 0)}, "error log -> highlight <- %s", "logger")
+    LOG_ASSERT(true, {C_HiLi("highlight", Orange, 0)}, "assert log -> highlight <- %s", "logger")
     return EXIT_SUCCESS;
 }
 ````
