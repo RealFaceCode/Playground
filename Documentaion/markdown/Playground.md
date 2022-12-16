@@ -38,3 +38,4 @@ Click @subpage page1example "here" to see all examples for this library.
 
 @section section7Playground Links
 - [Playground on github](https://github.com/RealFaceCode/Playground)
+- [Example project](https://github.com/RealFaceCode/PlaygroundExample)
