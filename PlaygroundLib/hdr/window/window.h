@@ -21,11 +21,6 @@ namespace Window
      * @note This function is called automatically. This should not called manually!
      */
     void Cleanup();
-    /**@brief Polls all window events
-    * @returns
-    * VOID
-    */
-	void pollEvents();
 
 	/**@brief Holds all window settings information*/
 	struct Settings
@@ -92,6 +87,11 @@ namespace Window
          * VOID
          */
 		void init();
+		/**@brief Polls all window events
+         * @returns
+         * VOID
+         */
+		void pollEvents();
 		/**@brief Clears the windows and set all values to 0
          * @returns
          * VOID

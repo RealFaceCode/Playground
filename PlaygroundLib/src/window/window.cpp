@@ -40,18 +40,20 @@ namespace Window
         Input::CleanInput();
 	}
 
-	void pollEvents()
-	{
-        CHECK_INIT
-		glfwPollEvents();
-	}
-
-
-
     void Window::init()
 	{
         CHECK_INIT
 		setInputPointer();
+	}
+
+	void Window::pollEvents()
+	{
+	    CHECK_INIT
+	    glfwPollEvents();
+	    if(Input::WasWindowResized())
+	    {
+	        glViewport(0, 0, (i32)mSettings.width, (i32)mSettings.height);
+	    }
 	}
 
 	void Window::clear()

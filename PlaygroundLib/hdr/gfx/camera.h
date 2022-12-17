@@ -4,6 +4,13 @@
 
 namespace GFX
 {
+
+    enum CameraMode
+    {
+        None,
+        Ortho,
+    };
+
     struct Camera
     {
     public:
@@ -15,7 +22,9 @@ namespace GFX
         float getAspect();
         glm::mat4& getProjectionMatrix();
         glm::mat4& getViewMatrix();
+        CameraMode& getMode();
     private:
+        CameraMode mMode;
         glm::mat4 mProj;
         glm::mat4 mView;
         ui32* mWindowWidth;
@@ -33,6 +42,10 @@ namespace GFX
                     const float& zNear,
                     const float& zFar);
         ~OrthoCamera();
+
+        void setOrtho(const f32& left, const f32& right,
+                      const f32& top, const f32& bottom,
+                      const f32& zNear, const f32& zFar);
 
         void calculate() override;
     private:
