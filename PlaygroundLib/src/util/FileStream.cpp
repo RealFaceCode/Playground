@@ -246,11 +246,6 @@ namespace FS
             return false;
         }
 
-        if(length)
-        {
-            *length = fileSize;
-        }
-
         FILE* file = _fsopen(filePath, "rb", _SH_DENYNO);;
         if(!file)
         {
@@ -261,6 +256,11 @@ namespace FS
         if(nullTerm)
         {
             fileSize++;
+        }
+
+        if(length)
+        {
+            *length = fileSize;
         }
 
         *data = Malloc(fileSize);
