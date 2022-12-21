@@ -705,6 +705,8 @@ public:
      * @retval FALSE if the given string is bigger than the actual string
      */
     bool operator>=(const String& other) const;
+
+    std::strong_ordering operator <=>(const String& other) const;
 private:
     bool checkCap(const ui64& size) const;
     void makeFit(const ui64& size);

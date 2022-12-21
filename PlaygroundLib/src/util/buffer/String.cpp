@@ -1245,6 +1245,11 @@ void String::destroy() {
     mLen = 0;
 }
 
+std::strong_ordering String::operator<=>(const String &other) const
+{
+    return  std::strcmp((const char*)mSource, (const char*)other.mSource) <=> 0;
+}
+
 StringView::StringView(const ui64& posBegin, const ui64& posEnd, const String& string)
 {
     ui64 strLen = posEnd - posBegin + 1;
