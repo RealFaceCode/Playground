@@ -1217,7 +1217,7 @@ bool String::operator<(const String &other) const
 
 bool String::operator>(const String &other) const
 {
-    return mLen > other.mLen;
+    return other < *this;
 }
 
 bool String::operator==(const String &other) const
@@ -1227,12 +1227,17 @@ bool String::operator==(const String &other) const
 
 bool String::operator<=(const String &other) const
 {
-    return mLen <= other.mLen;
+    return !(other < *this);
 }
 
 bool String::operator>=(const String &other) const
 {
-    return mLen >= other.mLen;
+    return !(*this < other);
+}
+
+std::strong_ordering String::operator<=>(const String &other) const
+{
+    return  std::strcmp((const char*)mSource, (const char*)other.mSource) <=> 0;
 }
 
 void String::destroy() {
@@ -1243,11 +1248,6 @@ void String::destroy() {
     mSource = nullptr;
     mCap = 0;
     mLen = 0;
-}
-
-std::strong_ordering String::operator<=>(const String &other) const
-{
-    return  std::strcmp((const char*)mSource, (const char*)other.mSource) <=> 0;
 }
 
 StringView::StringView(const ui64& posBegin, const ui64& posEnd, const String& string)
