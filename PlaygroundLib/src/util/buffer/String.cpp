@@ -1212,7 +1212,17 @@ void String::makeFit(const ui64 &size) {
 
 bool String::operator<(const String &other) const
 {
-    return mLen < other.mLen || mCap < other.mCap || (*this == other);
+    ui64 sum1 = 0;
+    ui64 sum2 = 0;
+    for(ui64 i = 0; i < mLen; i++)
+    {
+        sum1 += mSource[i];
+    }
+    for(ui64 i = 0; i < other.mLen; i++)
+    {
+        sum2 += other.mSource[i];
+    }
+    return mLen < other.mLen || mCap < other.mCap || sum1 < sum2;
 }
 
 bool String::operator>(const String &other) const
