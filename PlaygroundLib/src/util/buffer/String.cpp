@@ -1212,7 +1212,7 @@ void String::makeFit(const ui64 &size) {
 
 bool String::operator<(const String &other) const
 {
-    return mLen < other.mLen;
+    return mLen < other.mLen || mCap < other.mCap || (*this == other);
 }
 
 bool String::operator>(const String &other) const
@@ -1222,7 +1222,7 @@ bool String::operator>(const String &other) const
 
 bool String::operator==(const String &other) const
 {
-    return mLen == other.mLen && (strcmp((const char*)mSource, (const char*)other.mSource) == 0);
+    return (strcmp((const char*)mSource, (const char*)other.mSource) == 0);
 }
 
 bool String::operator<=(const String &other) const
