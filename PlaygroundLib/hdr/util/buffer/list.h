@@ -173,18 +173,18 @@ const ui64 &List<Type>::capacity()
 template<typename Type>
 bool List<Type>::reserve(const ui64 &elements)
 {
-    ui64 bytes = elements * TypeSize;
+    ui64 bytes = (elements + mCap) * TypeSize;
     if(!mSource)
     {
         mSource = (Type*)Malloc(bytes);
     }
     else
     {
-        bytes += mCap * TypeSize;
-        mSource = (Type*)Realloc(mSource, bytes);
+        mSource = (Type*)Realloc(mSource,bytes);
     }
     if(mSource)
     {
+        ZeroMemory(mSource + mCap, elements * TypeSize);
         mCap += elements;
         return true;
     }
