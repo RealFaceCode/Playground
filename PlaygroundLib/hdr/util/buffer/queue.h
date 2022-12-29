@@ -20,6 +20,9 @@ public:
     Iterator<Type> begin();
     Iterator<Type> end();
 
+    Iterator_R<Type> rBegin();
+    Iterator_R<Type> rEnd();
+
     Type* source();
     const ui64& length();
     const ui64& capacity();
@@ -95,6 +98,18 @@ template<typename Type>
 Iterator <Type> Queue<Type>::end()
 {
     return mSource.end();
+}
+
+template<typename Type>
+Iterator_R <Type> Queue<Type>::rBegin()
+{
+    return mSource.rBegin();
+}
+
+template<typename Type>
+Iterator_R <Type> Queue<Type>::rEnd()
+{
+    return mSource.rEnd();
 }
 
 template<typename Type>
