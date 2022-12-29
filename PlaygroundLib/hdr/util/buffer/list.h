@@ -25,14 +25,8 @@ public:
     Iterator<Type> begin();
     Iterator<Type> end();
 
-    Iterator_R<Type> rBegin()
-    {
-        return Iterator_R<Type>(mSource, mLength).begin();
-    }
-    Iterator_R<Type> rEnd()
-    {
-        return Iterator_R<Type>(mSource, mLength).end();
-    }
+    Iterator_R<Type> rBegin();
+    Iterator_R<Type> rEnd();
 
     Type* source();
     const ui64& length();
@@ -56,17 +50,17 @@ private:
     ui64 mCap;
     Type* mSource;
 private:
-    const ui64 TypeSize = sizeof(Type);
+    const ui64 TypeSize;
 };
 
 template<typename Type>
 List<Type>::List()
-    : mLength(0), mCap(0), mSource(0)
+    : mLength(0), mCap(0), mSource(0), TypeSize(sizeof(Type))
 {}
 
 template<typename Type>
 List<Type>::List(const ui64 &elements)
-    : mLength(0), mCap(elements), mSource(0)
+    : mLength(0), mCap(elements), mSource(0), TypeSize(sizeof(Type))
 {
     makeFit(elements);
 }
@@ -150,6 +144,18 @@ template<typename Type>
 Iterator<Type> List<Type>::end()
 {
     return Iterator<Type>(mSource, mLength).end();
+}
+
+template<typename Type>
+Iterator_R<Type> List<Type>::rBegin()
+{
+    return Iterator_R<Type>(mSource, mLength).begin();
+}
+
+template<typename Type>
+Iterator_R<Type> List<Type>::rEnd()
+{
+    return Iterator_R<Type>(mSource, mLength).end();
 }
 
 template<typename Type>
