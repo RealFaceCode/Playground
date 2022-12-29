@@ -10,7 +10,7 @@ struct List
 {
 public:
     List();
-    List(const ui64& bytes);
+    List(const ui64& elements);
     ~List();
 
     void add(const Type& element);
@@ -39,6 +39,7 @@ public:
     List<Type>& operator=(const std::initializer_list<Type>& list);
     List<Type>& operator+=(const Type& element);
     List<Type>& operator+=(const List<Type>& list);
+    List<Type>& operator+=(const std::initializer_list<Type>& list);
 private:
     void makeFit(const ui64& elements);
 private:
@@ -127,7 +128,7 @@ Type *List<Type>::at(const ui64 &index)
     {
         return nullptr;
     }
-    return mSource[index];
+    return &mSource[index];
 }
 
 template<typename Type>
@@ -249,4 +250,12 @@ void List<Type>::makeFit(const ui64 &elements)
         reserve((mCap - mLength) + elements);
     }
 }
+
+template<typename Type>
+List<Type> &List<Type>::operator+=(const std::initializer_list<Type> &list)
+{
+    add(list);
+    return *this;
+}
+
 #endif //PLAYGROUNDLIB_LIST_H
