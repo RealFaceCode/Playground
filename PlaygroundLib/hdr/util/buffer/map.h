@@ -3,6 +3,7 @@
 #include "../../core.h"
 #include "pair.h"
 #include "iterator.h"
+#include "list.h"
 
 template<typename Key, typename Value>
 struct Map
@@ -19,7 +20,7 @@ public:
 
     Value& operator[](const Key& key);
 private:
-    std::vector<Pair<Key, Value>> mEntries;
+    List<Pair<Key, Value>> mEntries;
 };
 
 template<typename Key, typename Value>
@@ -29,7 +30,7 @@ void Map<Key, Value>::add(const Key& key)
     {
         return;
     }
-    mEntries.template emplace_back(Pair<Key, Value>{key, Value()});
+    mEntries.add(Pair<Key, Value>{key, Value()});
 }
 
 template<typename Key, typename Value>
@@ -41,7 +42,7 @@ void Map<Key, Value>::add(const Key& key, const Value&  value)
         p->second = value;
         return;
     }
-    mEntries.template emplace_back(Pair<Key, Value>{key, value});
+    mEntries.add(Pair<Key, Value>{key, value});
 }
 
 template<typename Key, typename Value>
@@ -58,11 +59,11 @@ bool Map<Key, Value>::contains(const Key& key)
 template<typename Key, typename Value>
 Pair<Key, Value>* Map<Key, Value>::find(const Key& key)
 {
-    for(Pair<Key, Value>& p : mEntries)
+    for(auto& p : mEntries)
     {
         if(p.first == key)
         {
-            return &p;
+            return (Pair<Key, Value>*)&p;
         }
     }
     return nullptr;
@@ -71,13 +72,13 @@ Pair<Key, Value>* Map<Key, Value>::find(const Key& key)
 template<typename Key, typename Value>
 Iterator<Pair<Key, Value>> Map<Key, Value>::begin()
 {
-    return Iterator<Pair<Key, Value>>(mEntries.begin().base(), mEntries.size());
+    return mEntries.begin();
 }
 
 template<typename Key, typename Value>
 Iterator<Pair<Key, Value>> Map<Key, Value>::end()
 {
-    return Iterator<Pair<Key, Value>>(mEntries.begin().base(), mEntries.size());
+    return mEntries.end();
 }
 
 template<typename Key, typename Value>
@@ -88,7 +89,7 @@ Value& Map<Key, Value>::operator[](const Key& key)
     {
         return (Value&)p->second;
     }
-    add(key);
-    return mEntries.at(mEntries.size() - 1).second;
+    add(key, Value());
+    return (Value&)mEntries.at(mEntries.length() - 1)->second;
 }
 #endif //PLAYGROUNDLIB_MAP_H
