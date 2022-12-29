@@ -25,6 +25,15 @@ public:
     Iterator<Type> begin();
     Iterator<Type> end();
 
+    Iterator_R<Type> rBegin()
+    {
+        return Iterator_R<Type>(mSource, mLength).begin();
+    }
+    Iterator_R<Type> rEnd()
+    {
+        return Iterator_R<Type>(mSource, mLength).end();
+    }
+
     Type* source();
     const ui64& length();
     const ui64& capacity();
@@ -134,13 +143,13 @@ Type *List<Type>::at(const ui64 &index)
 template<typename Type>
 Iterator<Type> List<Type>::begin()
 {
-    return Iterator<Type>(mSource, mLength);
+    return Iterator<Type>(mSource, mLength).begin();
 }
 
 template<typename Type>
 Iterator<Type> List<Type>::end()
 {
-    return Iterator<Type>(mSource, mLength);
+    return Iterator<Type>(mSource, mLength).end();
 }
 
 template<typename Type>
@@ -257,5 +266,4 @@ List<Type> &List<Type>::operator+=(const std::initializer_list<Type> &list)
     add(list);
     return *this;
 }
-
 #endif //PLAYGROUNDLIB_LIST_H
