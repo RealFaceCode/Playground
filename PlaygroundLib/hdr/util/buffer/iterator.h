@@ -37,7 +37,7 @@ Iterator<Type>::Iterator(Type *element)
 template<typename Type>
 bool Iterator<Type>::operator==(const Iterator &itr)
 {
-    return mPtr == itr.mPtr + mLength;
+    return mPtr == itr.mPtr + itr.mLength;
 }
 
 template<typename Type>
