@@ -2,59 +2,186 @@
 #define PLAYGROUNDLIB_ITERATOR_H
 #include "../../core.h"
 
-template<typename Value>
-class Iterator {
+template<typename Type>
+struct Iterator
+{
 public:
-    Iterator(Value* value);
-    Iterator(Value* value, const ui64& length);
+    Iterator(Type* element);
+    Iterator(Type* element, const ui64& length);
 
-    Iterator begin();
-    Iterator end();
+    virtual Type* begin();
+    virtual Type* end();
 
+    bool operator== (const Iterator& itr);
     bool operator!= (const Iterator& itr);
-    Iterator operator++();
-    const Value& operator*();
-private:
-    Value* mPtr;
-    uint64_t mLength;
+    virtual Iterator& operator++();
+    virtual const Iterator<Type> operator++(int);
+    virtual Iterator& operator--();
+    virtual const Iterator<Type> operator--(int);
+    const Type& operator*();
+    virtual Iterator& operator+(const ui64& length);
+    virtual Iterator& operator-(const ui64& length);
+protected:
+    Type* mPtr;
+    ui64 mLength;
 };
 
-template<typename Value>
-Iterator<Value>::Iterator(Value *value)
-: mPtr(value), mLength(0) {}
+template<typename Type>
+Iterator<Type>::Iterator(Type *element, const ui64 &length)
+: mPtr(element), mLength(length) {}
 
-template<typename Value>
-Iterator<Value>::Iterator(Value* value, const ui64& length)
-: mPtr(value), mLength(length){}
+template<typename Type>
+Iterator<Type>::Iterator(Type *element)
+: mPtr(element), mLength(0) {}
 
-template<typename Value>
-Iterator<Value> Iterator<Value>::begin()
+template<typename Type>
+bool Iterator<Type>::operator==(const Iterator &itr)
 {
-    return Iterator(mPtr, mLength);
+    return mPtr == itr.mPtr + mLength;
 }
 
-template<typename Value>
-Iterator<Value> Iterator<Value>::end()
-{
-    return Iterator(mPtr + mLength);
-}
-
-template<typename Value>
-bool Iterator<Value>::operator!=(const Iterator &itr)
+template<typename Type>
+bool Iterator<Type>::operator!=(const Iterator &itr)
 {
     return mPtr != itr.mPtr + itr.mLength;
 }
 
-template<typename Value>
-Iterator<Value> Iterator<Value>::operator++()
+template<typename Type>
+Iterator<Type>& Iterator<Type>::operator++()
 {
-    ++mPtr;
+    mPtr++;
     return *this;
 }
 
-template<typename Value>
-const Value& Iterator<Value>::operator*()
+template<typename Type>
+const Iterator<Type> Iterator<Type>::operator++(int)
+{
+    mPtr++;
+    return *this;
+}
+
+template<typename Type>
+Iterator<Type> &Iterator<Type>::operator--() {
+    mPtr--;
+    return *this;
+}
+
+template<typename Type>
+const Iterator<Type> Iterator<Type>::operator--(int)
+{
+    mPtr--;
+    return *this;
+}
+
+template<typename Type>
+const Type& Iterator<Type>::operator*()
 {
     return *mPtr;
 }
+
+template<typename Type>
+Type *Iterator<Type>::begin()
+{
+    return mPtr;
+}
+
+template<typename Type>
+Type *Iterator<Type>::end() {
+    return mPtr + mLength;
+}
+
+template<typename Type>
+Iterator<Type> &Iterator<Type>::operator+(const ui64& length)
+{
+    mPtr += length;
+    return *this;
+}
+
+template<typename Type>
+Iterator<Type> &Iterator<Type>::operator-(const ui64& length)
+{
+    mPtr -= length;
+    return *this;
+}
+
+template<typename Type>
+struct Iterator_R : Iterator<Type>
+{
+public:
+    Iterator_R(Type* element);
+    Iterator_R(Type* element, const ui64& length);
+
+    Type* begin() override;
+    Type* end() override;
+
+    Iterator<Type>& operator++() override;
+    const Iterator<Type> operator++(int) override;
+    Iterator<Type>& operator--() override;
+    const Iterator<Type> operator--(int) override;
+    Iterator<Type>& operator+(const ui64& length) override;
+    Iterator<Type>& operator-(const ui64& length) override;
+
+};
+
+template<typename Type>
+Iterator_R<Type>::Iterator_R(Type *element)
+    : Iterator<Type>(element) {}
+
+template<typename Type>
+Iterator_R<Type>::Iterator_R(Type *element, const ui64 &length)
+    : Iterator<Type>(element, length) {}
+
+template<typename Type>
+Type *Iterator_R<Type>::begin()
+{
+    return this->mPtr + this->mLength - 1;
+}
+
+template<typename Type>
+Type *Iterator_R<Type>::end()
+{
+    return this->mPtr - 1;
+}
+
+template<typename Type>
+Iterator<Type> &Iterator_R<Type>::operator++()
+{
+    this->mPtr--;
+    return *this;
+}
+
+template<typename Type>
+const Iterator<Type> Iterator_R<Type>::operator++(int)
+{
+    this->mPtr--;
+    return *this;
+}
+
+template<typename Type>
+Iterator<Type> &Iterator_R<Type>::operator--()
+{
+    this->mPtr++;
+    return *this;
+}
+
+template<typename Type>
+const Iterator<Type> Iterator_R<Type>::operator--(int)
+{
+    this->mPtr++;
+    return *this;
+}
+template<typename Type>
+Iterator<Type>& Iterator_R<Type>::operator+(const ui64& length)
+{
+    this->mPtr--;
+    return *this;
+}
+
+template<typename Type>
+Iterator<Type>& Iterator_R<Type>::operator-(const ui64& length)
+{
+    this->mPtr++;
+    return *this;
+}
+
 #endif //PLAYGROUNDLIB_ITERATOR_H
