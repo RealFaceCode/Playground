@@ -50,7 +50,7 @@ private:
     ui64 mCap;
     Type* mSource;
 private:
-    const ui64 TypeSize;
+    ui64 TypeSize;
 };
 
 template<typename Type>
@@ -224,6 +224,7 @@ Type *List<Type>::operator[](const ui64 &index)
 template<typename Type>
 List<Type> &List<Type>::operator=(const List<Type> &list)
 {
+    TypeSize = list.TypeSize;
     destroy();
     add(list);
     return *this;
