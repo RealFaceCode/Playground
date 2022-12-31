@@ -102,6 +102,8 @@ public:
      */
     String(const char* string);
     /**@brief Deconstruct the string and sets all values to 0*/
+    String(const String&& string);
+
     ~String();
 
     /**@brief Adds a String to the actual string
