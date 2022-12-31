@@ -99,16 +99,20 @@ template<typename Type>
 void List<Type>::add(const Type *element, const ui64 &elements)
 {
     makeFit(elements);
-    memcpy(&mSource[mLength], element, elements * sizeof(Type));
-    mLength += elements;
+    for(ui64 i = 0; i < elements; i++)
+    {
+        add(element[i]);
+    }
 }
 
 template<typename Type>
 void List<Type>::add(const List<Type> &list)
 {
     makeFit(list.mLength);
-    memcpy(&mSource[mLength], list.mSource, list.mLength * sizeof(Type));
-    mLength += list.mLength;
+    for(ui64 i = 0; i < list.mLength; i++)
+    {
+        add(*list[i]);
+    }
 }
 
 template<typename Type>
