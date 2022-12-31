@@ -152,6 +152,12 @@ String::String(const char* string)
     memcpy(mSource, string, mCap);
 }
 
+String::String(const String&& string)
+    : String()
+{
+    *this = string;
+}
+
 String::~String()
 {
     destroy();
@@ -1075,7 +1081,7 @@ bool String::reserve(const ui64& size)
     }
     else
     {
-        mSource = (ui8*)Realloc(mSource, mCap + size + 1);
+        mSource = (ui8*)Realloc_s(mSource, mCap,size + 1);
         mCap += size;
     }
 
