@@ -35,7 +35,7 @@ void*   MemoryMalloc(size_t bytes, const char* file, const int& line)
         };
         stackTrace.emplace_back(mt);
     }
-
+    MemoryZero(rPtr, bytes);
     return rPtr;
 }
 
@@ -54,6 +54,13 @@ void*   MemoryRealloc(void* buffer, size_t bytes, const char* file, const int& l
             }
         }
     }
+    return rPtr;
+}
+
+void*   MemoryRealloc_s(void* buffer, size_t bytesBuffer, size_t bytesAdd, const char* file, const int& line)
+{
+    void* rPtr = MemoryRealloc(buffer, bytesBuffer + bytesAdd, file, line);
+    MemoryZero((char*)rPtr + bytesBuffer, bytesAdd);
     return rPtr;
 }
 
