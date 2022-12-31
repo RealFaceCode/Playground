@@ -207,7 +207,6 @@ bool List<Type>::reserve(const ui64 &elements)
     }
     if(mSource)
     {
-        //ZeroMemory(mSource + mCap, elements * TypeSize);
         mCap += elements;
         return true;
     }
