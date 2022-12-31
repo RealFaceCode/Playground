@@ -47,6 +47,7 @@ public:
     List<Type>& operator+=(const std::initializer_list<Type>& list);
 private:
     void makeFit(const ui64& elements);
+    void callDeconstObj();
 private:
     ui64 mLength;
     ui64 mCap;
@@ -206,7 +207,6 @@ bool List<Type>::reserve(const ui64 &elements)
     }
     if(mSource)
     {
-        //ZeroMemory(mSource + mCap, elements * TypeSize);
         mCap += elements;
         return true;
     }
@@ -224,6 +224,7 @@ void List<Type>::destroy()
 {
     if(mSource)
     {
+        callDeconstObj();
         Free(mSource);
     }
     mSource = nullptr;
@@ -289,4 +290,14 @@ List<Type> &List<Type>::operator+=(const std::initializer_list<Type> &list)
     add(list);
     return *this;
 }
+
+template<typename Type>
+void List<Type>::callDeconstObj()
+{
+    for(ui64 i = 0; i < mLength; i++)
+    {
+        mSource[i].~Type();
+    }
+}
+
 #endif //PLAYGROUNDLIB_LIST_H
