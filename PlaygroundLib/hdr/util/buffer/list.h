@@ -48,6 +48,7 @@ public:
 private:
     void makeFit(const ui64& elements);
     void callDeconstObj();
+    const Type* at_c(const ui64 index) const;
 private:
     ui64 mLength;
     ui64 mCap;
@@ -111,7 +112,7 @@ void List<Type>::add(const List<Type> &list)
     makeFit(list.mLength);
     for(ui64 i = 0; i < list.mLength; i++)
     {
-        add(*list[i]);
+        add(*list.at_c(i));
     }
 }
 
@@ -302,6 +303,12 @@ void List<Type>::callDeconstObj()
     {
         mSource[i].~Type();
     }
+}
+
+template<typename Type>
+const Type *List<Type>::at_c(const ui64 index) const
+{
+    return &mSource[index];
 }
 
 #endif //PLAYGROUNDLIB_LIST_H
