@@ -11,6 +11,8 @@ struct List
 public:
     List();
     List(const ui64& elements);
+    List(const List& other);
+    List(const List&& other) noexcept ;
     ~List();
 
     void add(const Type& element);
@@ -55,14 +57,27 @@ private:
 
 template<typename Type>
 List<Type>::List()
-    : mLength(0), mCap(0), mSource(0), TypeSize(sizeof(Type))
-{}
+    : mLength(0), mCap(0), mSource(0), TypeSize(sizeof(Type)) {}
 
 template<typename Type>
 List<Type>::List(const ui64 &elements)
     : mLength(0), mCap(elements), mSource(0), TypeSize(sizeof(Type))
 {
     makeFit(elements);
+}
+
+template<typename Type>
+List<Type>::List(const List<Type>& other)
+    : List()
+{
+    *this = other;
+}
+
+template<typename Type>
+List<Type>::List(const List<Type>&& other) noexcept
+    : List()
+{
+    *this = std::move(other);
 }
 
 template<typename Type>
@@ -179,18 +194,19 @@ const ui64 &List<Type>::capacity()
 template<typename Type>
 bool List<Type>::reserve(const ui64 &elements)
 {
-    ui64 bytes = (elements + mCap) * TypeSize;
+    ui64 bytesAdd = elements * TypeSize;
     if(!mSource)
     {
-        mSource = (Type*)Malloc(bytes);
+        mSource = (Type*)Malloc(bytesAdd);
     }
     else
     {
-        mSource = (Type*)Realloc(mSource,bytes);
+        ui64 bytesBuffer = mCap * TypeSize;
+        mSource = (Type*) Realloc_s(mSource, bytesBuffer, bytesAdd);
     }
     if(mSource)
     {
-        ZeroMemory(mSource + mCap, elements * TypeSize);
+        //ZeroMemory(mSource + mCap, elements * TypeSize);
         mCap += elements;
         return true;
     }
