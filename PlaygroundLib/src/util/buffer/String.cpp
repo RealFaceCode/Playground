@@ -1161,7 +1161,7 @@ String& String::operator=(const std::string& string)
 
 String& String::operator=(const char* string)
 {
-    clear();
+    destroy();
     add(string);
     return *this;
 }
