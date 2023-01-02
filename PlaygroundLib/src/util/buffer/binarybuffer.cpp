@@ -290,7 +290,7 @@ void BinaryBuffer::reserve(const ui64 &size)
     }
     else
     {
-        mSource = (ui8*)Realloc(mSource, mCap + size + 1);
+        mSource = (ui8*)Realloc_s(mSource, mCap, size + 1);
         mCap += size;
     }
 }
