@@ -152,6 +152,12 @@ String::String(const char* string)
     memcpy(mSource, string, mCap);
 }
 
+String::String(const String&& string)
+    : String()
+{
+    *this = string;
+}
+
 String::~String()
 {
     destroy();
@@ -1075,7 +1081,7 @@ bool String::reserve(const ui64& size)
     }
     else
     {
-        mSource = (ui8*)Realloc(mSource, mCap + size + 1);
+        mSource = (ui8*)Realloc_s(mSource, mCap,size + 1);
         mCap += size;
     }
 
@@ -1155,7 +1161,7 @@ String& String::operator=(const std::string& string)
 
 String& String::operator=(const char* string)
 {
-    clear();
+    destroy();
     add(string);
     return *this;
 }
@@ -1212,27 +1218,42 @@ void String::makeFit(const ui64 &size) {
 
 bool String::operator<(const String &other) const
 {
-    return mLen < other.mLen;
+    ui64 sum1 = 0;
+    ui64 sum2 = 0;
+    for(ui64 i = 0; i < mLen; i++)
+    {
+        sum1 += mSource[i];
+    }
+    for(ui64 i = 0; i < other.mLen; i++)
+    {
+        sum2 += other.mSource[i];
+    }
+    return mLen < other.mLen || mCap < other.mCap || sum1 < sum2;
 }
 
 bool String::operator>(const String &other) const
 {
-    return mLen > other.mLen;
+    return other < *this;
 }
 
 bool String::operator==(const String &other) const
 {
-    return mLen == other.mLen && (strcmp((const char*)mSource, (const char*)other.mSource) == 0);
+    return (strcmp((const char*)mSource, (const char*)other.mSource) == 0);
 }
 
 bool String::operator<=(const String &other) const
 {
-    return mLen <= other.mLen;
+    return !(other < *this);
 }
 
 bool String::operator>=(const String &other) const
 {
-    return mLen >= other.mLen;
+    return !(*this < other);
+}
+
+std::strong_ordering String::operator<=>(const String &other) const
+{
+    return  std::strcmp((const char*)mSource, (const char*)other.mSource) <=> 0;
 }
 
 void String::destroy() {

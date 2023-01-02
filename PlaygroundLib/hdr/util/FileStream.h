@@ -243,6 +243,11 @@ namespace FS
          * Returns a String from the data buffer
          */
         String getString(const bool& withoutLen = false);
+        /**@brief Gets the loaded file as string
+         * @returns
+         * Returns a String from the data buffer
+         */
+        String string();
 
         /**@brief Adds data with a given length to the data buffer
          * @param[in] dat

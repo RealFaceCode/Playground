@@ -19,13 +19,16 @@ static std::vector<MemoryTrace> stackTrace;
 
 void    MemoryEnableTracking(const bool& track)
 {
+#ifdef _DEBUG
     trackMemory = track;
     stackTrace.reserve(preReservedSpace);
+ #endif
 }
 
 void*   MemoryMalloc(size_t bytes, const char* file, const int& line)
 {
     void* rPtr = malloc(bytes);
+#ifdef _DEBUG
     if(trackMemory)
     {
         MemoryTrace mt{
@@ -35,13 +38,15 @@ void*   MemoryMalloc(size_t bytes, const char* file, const int& line)
         };
         stackTrace.emplace_back(mt);
     }
-
+#endif
+    MemoryZero(rPtr, bytes);
     return rPtr;
 }
 
 void*   MemoryRealloc(void* buffer, size_t bytes, const char* file, const int& line)
 {
     void* rPtr = realloc(buffer, bytes);
+#ifdef _DEBUG
     if(trackMemory)
     {
         for(auto& trace : stackTrace)
@@ -54,11 +59,20 @@ void*   MemoryRealloc(void* buffer, size_t bytes, const char* file, const int& l
             }
         }
     }
+#endif
+    return rPtr;
+}
+
+void*   MemoryRealloc_s(void* buffer, size_t bytesBuffer, size_t bytesAdd, const char* file, const int& line)
+{
+    void* rPtr = MemoryRealloc(buffer, bytesBuffer + bytesAdd, file, line);
+    MemoryZero((char*)rPtr + bytesBuffer, bytesAdd);
     return rPtr;
 }
 
 void*   MemoryRegister(void* buffer, const char* file, const int& line)
 {
+#ifdef _DEBUG
     if(trackMemory)
     {
         for(const auto trace : stackTrace)
@@ -76,11 +90,13 @@ void*   MemoryRegister(void* buffer, const char* file, const int& line)
         };
         stackTrace.emplace_back(mt);
     }
+#endif
     return buffer;
 }
 
 void*   MemoryDeRegister(void* buffer)
 {
+#ifdef _DEBUG
     if(trackMemory)
     {
         for(auto i = 0; i < stackTrace.size(); i++)
@@ -92,6 +108,7 @@ void*   MemoryDeRegister(void* buffer)
             }
         }
     }
+#endif
     return buffer;
 }
 
@@ -107,6 +124,7 @@ void    MemoryFree(void* buffer)
 
 bool    MemoryPrintStack()
 {
+#ifdef _DEBUG
     if(stackTrace.empty())
     {
         return false;
@@ -122,5 +140,6 @@ bool    MemoryPrintStack()
         MemoryFree(str);
     }
     LOG_WARNING({}, leaks.c_str());
+#endif
     return true;
 }
