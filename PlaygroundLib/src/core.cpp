@@ -13,7 +13,6 @@ void exitFunc()
     {
         system("pause");
     }
-    system("pause");
 }
 
 void CoreInit()

@@ -62,7 +62,7 @@ namespace GFX
         glDebugMessageCallback( GLErrorCallback, 0 );
 #endif
         PreDefineImageSettings();
-		BatchHandler::Init();
+		BatchHandler<BatchVertex2D>::Init();
 		wSettings = &window.mSettings;
 	}
 

@@ -2,12 +2,15 @@
 #include "../../hdr/gfx/image.h"
 #include "../../hdr/gfx/shader.h"
 #include "../../hdr/gfx/batch.h"
+#include "../../hdr/gfx/vao.h"
+#include "../../hdr/gfx/vbo.h"
 #include <OpenGL.h>
 
 namespace GFX
 {
-	Batch::Batch(const ui64 maxVertices, const ui32 drawMode)
-		: mMaxVertices(maxVertices), mUsedVertices(0), mVao(0), mVbo(0), mDrawMode(drawMode), mTransform(glm::mat4(1.0f)), mNumTextures(0)
+	template<typename BatchType>
+	Batch<BatchType>::Batch(const ui64 maxVertices, const ui32 drawMode)
+		: mMaxVertices(maxVertices), mUsedVertices(0), mVao(0), mVbo(0), mDrawMode(drawMode), mTransform(glm::mat4(1.0f)), mNumTextures(0), mBatchTypeSize(sizeof(BatchType))
 	{
 		mTextures[0] = 0;
 		mTextures[1] = 0;
@@ -23,25 +26,35 @@ namespace GFX
 
 		glGenBuffers(1, &mVbo);
 		glBindBuffer(GL_ARRAY_BUFFER, mVbo);
-		glBufferData(GL_ARRAY_BUFFER, mMaxVertices * sizeof(BatchVertex), nullptr, GL_STREAM_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, mMaxVertices * mBatchTypeSize, nullptr, GL_STREAM_DRAW);
 
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(BatchVertex), 0);
+		if(std::is_same<BatchType, BatchVertex2D>::value)
+		{
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, mBatchTypeSize, 0);
+		}
+		else
+		{
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, mBatchTypeSize, 0);
+		}
+
 		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(BatchVertex), (void*)offsetof(BatchVertex, mColor));
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, mBatchTypeSize, (void*)offsetof(BatchType, mColor));
 		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(BatchVertex), (void*)offsetof(BatchVertex, mTexCoord));
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, mBatchTypeSize, (void*)offsetof(BatchType, mTexCoord));
 		glEnableVertexAttribArray(3);
-		glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(BatchVertex), (void*)offsetof(BatchVertex, mTexture));
+		glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, mBatchTypeSize, (void*)offsetof(BatchType, mTexture));
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 	}
-
-	Batch::~Batch()
+	template<typename BatchType>
+	Batch<BatchType>::~Batch()
 	{}
 
-	void Batch::addTexture(const Image& image)
+	template<typename BatchType>
+	void Batch<BatchType>::addTexture(const Image& image)
 	{
         if(mNumTextures >= 8)
 		{
@@ -53,7 +66,8 @@ namespace GFX
 		mNumTextures++;
 	}
 
-	void Batch::addTexture(const ui32 image)
+	template<typename BatchType>
+	void Batch<BatchType>::addTexture(const ui32 image)
 	{
         if (mNumTextures >= 8)
 		{
@@ -65,7 +79,8 @@ namespace GFX
 		mNumTextures++;
 	}
 
-	bool Batch::hasTexture(const Image& image)
+	template<typename BatchType>
+	bool Batch<BatchType>::hasTexture(const Image& image)
 	{
         for (int i = 0; i < 8; i++)
 		{
@@ -78,7 +93,8 @@ namespace GFX
 		return false;
 	}
 
-	bool Batch::hasTexture(const ui32 texId)
+	template<typename BatchType>
+	bool Batch<BatchType>::hasTexture(const ui32 texId)
 	{
         for (int i = 0; i < 8; i++)
 		{
@@ -91,7 +107,8 @@ namespace GFX
 		return false;
 	}
 
-	bool  Batch::hasSameTextures(const ui32 ids[8])
+	template<typename BatchType>
+	bool  Batch<BatchType>::hasSameTextures(const ui32 ids[8])
 	{
         if (mTextures[0] == ids[0]
 			&& mTextures[1] == ids[1]
@@ -107,27 +124,32 @@ namespace GFX
 		return false;
 	}
 
-	bool Batch::hasSpaceTexture()
+	template<typename BatchType>
+	bool Batch<BatchType>::hasSpaceTexture()
 	{
         return (mNumTextures <= 8);
 	}
 
-	ui32* Batch::getTextures()
+	template<typename BatchType>
+	ui32* Batch<BatchType>::getTextures()
 	{
         return mTextures;
 	}
 
-    ui8 Batch::getMapedTextureIndex(const Image& image)
+	template<typename BatchType>
+    ui8 Batch<BatchType>::getMapedTextureIndex(const Image& image)
     {
         return mMapedTextureIndex[image.mId];
     }
 
-    ui8 Batch::getMapedTextureIndex(const ui32& image)
+	template<typename BatchType>
+    ui8 Batch<BatchType>::getMapedTextureIndex(const ui32& image)
     {
         return mMapedTextureIndex[image];
     }
 
-	void Batch::add(const BatchVertex vertex)
+	template<typename BatchType>
+	void Batch<BatchType>::add(const BatchType vertex)
 	{
         if (mUsedVertices >= mMaxVertices)
 		{
@@ -136,12 +158,13 @@ namespace GFX
 
 		glBindVertexArray(mVao);
 		glBindBuffer(GL_ARRAY_BUFFER, mVbo);
-		glBufferSubData(GL_ARRAY_BUFFER, mUsedVertices * sizeof(BatchVertex), sizeof(BatchVertex), &vertex);
+		glBufferSubData(GL_ARRAY_BUFFER, mUsedVertices * mBatchTypeSize, mBatchTypeSize, &vertex);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		mUsedVertices++;
 	}
 
-	void Batch::add(const BatchVertex* vertices, ui64 elements)
+	template<typename BatchType>
+	void Batch<BatchType>::add(const BatchType* vertices, ui64 elements)
 	{
         if ((mUsedVertices + elements) >= mMaxVertices)
 		{
@@ -150,22 +173,25 @@ namespace GFX
 
 		glBindVertexArray(mVao);
 		glBindBuffer(GL_ARRAY_BUFFER, mVbo);
-		glBufferSubData(GL_ARRAY_BUFFER, mUsedVertices * sizeof(BatchVertex), sizeof(BatchVertex) * elements, vertices);
+		glBufferSubData(GL_ARRAY_BUFFER, mUsedVertices * mBatchTypeSize, mBatchTypeSize * elements, vertices);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		mUsedVertices += elements;
 	}
 
-	bool Batch::hasSpace() const 
+	template<typename BatchType>
+	bool Batch<BatchType>::hasSpace() const 
 	{
         return (mMaxVertices > mUsedVertices);
 	}
 
-	bool Batch::hasSpace(const ui64 elements) const
+	template<typename BatchType>
+	bool Batch<BatchType>::hasSpace(const ui64 elements) const
 	{
         return (mMaxVertices > (mUsedVertices + elements));
 	}
 
-	void Batch::render(Shader& shader)
+	template<typename BatchType>
+	void Batch<BatchType>::render(Shader& shader)
 	{
         if (mUsedVertices == 0)
 		{
@@ -189,7 +215,8 @@ namespace GFX
 		mUsedVertices = 0;
 	}
 
-	void Batch::clear()
+	template<typename BatchType>
+	void Batch<BatchType>::clear()
 	{
         if (mVbo)
 		{
@@ -210,38 +237,53 @@ namespace GFX
 		mNumTextures = 0;
 	}
 
-	Image BatchHandler::mDefaultImage;
-
-	void BatchHandler::Init()
+	template<typename BatchType>
+	Image BatchHandler<BatchType>::mDefaultImage;
+	
+	template<typename BatchType>
+	void BatchHandler<BatchType>::Init()
 	{
         const unsigned char whiteImage[4] = { 255, 255, 255, 255 };
 		Image image(whiteImage, 1, 1, 1, "defaultWhiteSetting");
 		mDefaultImage = image;
 	}
 
-	BatchHandler::BatchHandler()
-	:mMaxVerticesDefault(1000), mDrawModeDefault(GL_TRIANGLES)
+	template<typename BatchType>
+	BatchHandler<BatchType>::BatchHandler()
+		: mMaxVerticesDefault(1000), mDrawModeDefault(GL_TRIANGLES)
 	{}
 
-	BatchHandler::BatchHandler(const ui64 &maxVertices, const ui32 &drawMode)
-	:mMaxVerticesDefault(maxVertices), mDrawModeDefault(drawMode)
+	template<typename BatchType>
+	BatchHandler<BatchType>::BatchHandler(const ui64 &maxVertices, const ui32 &drawMode)
+		: mMaxVerticesDefault(maxVertices), mDrawModeDefault(drawMode)
 	{}
 
-	BatchHandler::~BatchHandler() = default;
+	template<typename BatchType>
+	BatchHandler<BatchType>::~BatchHandler() = default;
 
-	void BatchHandler::addBatch()
+	template<typename BatchType>
+	void BatchHandler<BatchType>::set(const ui64& maxVertices, const ui32& drawMode)
 	{
-        mBatches.emplace_back(Batch(mMaxVerticesDefault, mDrawModeDefault));
+		mMaxVerticesDefault = maxVertices;
+		mDrawModeDefault = drawMode;
 	}
 
-	void BatchHandler::addBatch(const ui64& maxVertices, const ui32& drawMode)
+	template<typename BatchType>
+	void BatchHandler<BatchType>::addBatch()
 	{
-        mBatches.emplace_back(Batch(maxVertices, drawMode));
+        mBatches.emplace_back(Batch<BatchType>(mMaxVerticesDefault, mDrawModeDefault));
 	}
 
-	Batch* BatchHandler::getBatchHasSpace(const ui64& elements)
+	template<typename BatchType>
+	void BatchHandler<BatchType>::addBatch(const ui64& maxVertices, const ui32& drawMode)
 	{
-        for (Batch& batch : mBatches)
+        mBatches.emplace_back(Batch<BatchType>(maxVertices, drawMode));
+	}
+
+	template<typename BatchType>
+	Batch<BatchType>* BatchHandler<BatchType>::getBatchHasSpace(const ui64& elements)
+	{
+        for (Batch<BatchType>& batch : mBatches)
 		{
 			if ((batch.mUsedVertices + elements) < batch.mMaxVertices)
 			{
@@ -254,9 +296,10 @@ namespace GFX
 		return &mBatches.back();
 	}
 
-	Batch *BatchHandler::getBatchMatchTexture(const ui32 &texture)
+	template<typename BatchType>
+	Batch<BatchType> *BatchHandler<BatchType>::getBatchMatchTexture(const ui32 &texture)
 	{
-	    for (Batch& batch : mBatches)
+	    for (Batch<BatchType>& batch : mBatches)
 	    {
 	        if (batch.hasTexture(texture))
 	        {
@@ -265,14 +308,15 @@ namespace GFX
 	    }
 
 	    addBatch(mMaxVerticesDefault, mDrawModeDefault);
-	    Batch& batch = mBatches.back();
+	    Batch<BatchType>& batch = mBatches.back();
 	    batch.addTexture(texture);
 	    return &batch;
 	}
 
-	Batch* BatchHandler::getBatchHasSpaceMatchTexture(const ui64& elements, const ui32& texture)
+	template<typename BatchType>
+	Batch<BatchType>* BatchHandler<BatchType>::getBatchHasSpaceMatchTexture(const ui64& elements, const ui32& texture)
 	{
-        for (Batch& batch : mBatches)
+        for (Batch<BatchType>& batch : mBatches)
 		{
 			if ((batch.mUsedVertices + elements) < batch.mMaxVertices && batch.hasTexture(texture))
 			{
@@ -286,19 +330,20 @@ namespace GFX
 		}
 
 		addBatch(mMaxVerticesDefault + elements, mDrawModeDefault);
-		Batch& batch = mBatches.back();
+		Batch<BatchType>& batch = mBatches.back();
 		batch.addTexture(texture);
 		return &batch;
 	}
 
-	void BatchHandler::addImage(const Image& image)
+	template<typename BatchType>
+	void BatchHandler<BatchType>::addImage(const Image& image)
 	{
         if (image.mId == 0)
 		{
 			return;
 		}
 
-		for (Batch& batch : mBatches)
+		for (Batch<BatchType>& batch : mBatches)
 		{
 			if (batch.hasSpaceTexture() && !batch.hasTexture(image))
 			{
@@ -308,51 +353,62 @@ namespace GFX
 		}
 
 		addBatch();
-		Batch& batch = mBatches.back();
+		Batch<BatchType>& batch = mBatches.back();
 		batch.addTexture(image);
 	}
 
-	void BatchHandler::addToBatch(const BatchVertex& vertex, const Image& image)
+	template<typename BatchType>
+	void BatchHandler<BatchType>::addToBatch(const BatchType& vertex, const Image& image)
 	{
-        Batch* batch = getBatchHasSpaceMatchTexture(1, image.mId);
+        Batch<BatchType>* batch = getBatchHasSpaceMatchTexture(1, image.mId);
 		batch->add(vertex);
 	}
 
-	void BatchHandler::addToBatch(const BatchVertex* vertices, const ui64& elements, const Image& image)
+	template<typename BatchType>
+	void BatchHandler<BatchType>::addToBatch(const BatchType* vertices, const ui64& elements, const Image& image)
 	{
-        Batch* batch = getBatchHasSpaceMatchTexture(elements, image.mId);
+        Batch<BatchType>* batch = getBatchHasSpaceMatchTexture(elements, image.mId);
 		batch->add(vertices, elements);
 	}
 
-	void BatchHandler::addToBatch(const BatchVertex* vertices, const ui64& elements, const ui32& imageId)
+	template<typename BatchType>
+	void BatchHandler<BatchType>::addToBatch(const BatchType* vertices, const ui64& elements, const ui32& imageId)
     {
-        Batch* batch = getBatchHasSpaceMatchTexture(elements, imageId);
+        Batch<BatchType>* batch = getBatchHasSpaceMatchTexture(elements, imageId);
         batch->add(vertices, elements);
     }
 
-    void BatchHandler::renderBatches(Shader& shader)
+	template<typename BatchType>
+    void BatchHandler<BatchType>::renderBatches(Shader& shader)
 	{
         shader.bind();
         int textures[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
         shader.setUniformiv("uTexture[0]", textures, 8);
-		for (Batch& batch : mBatches)
+		for (Batch<BatchType>& batch : mBatches)
 		{
 			batch.render(shader);
 		}
 		shader.unbind();
 	}
 
-	void BatchHandler::clear()
+	template<typename BatchType>
+	void BatchHandler<BatchType>::clear()
 	{
-        for (Batch& batch : mBatches)
+        for (Batch<BatchType>& batch : mBatches)
 		{
 			batch.clear();
 		}
 		mBatches.clear();
 	}
 
-    const Image &BatchHandler::GetDefaultImage()
+	template<typename BatchType>
+    const Image &BatchHandler<BatchType>::GetDefaultImage()
     {
         return mDefaultImage;
     }
+
+	template struct Batch<BatchVertex2D>;
+	template struct Batch<BatchVertex3D>;
+	template struct BatchHandler<BatchVertex2D>;
+	template struct BatchHandler<BatchVertex3D>;
 }

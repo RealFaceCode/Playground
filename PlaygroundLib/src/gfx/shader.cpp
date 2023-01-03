@@ -146,7 +146,7 @@ namespace GFX
 		}
         else
         {
-            LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
+            LOG_ASSERT(true, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -302,7 +302,7 @@ namespace GFX
 		}
 		else
         {
-		    LOG_ASSERT(false, {},"Uniform not found: '%s'", uniformName);
+		    LOG_ASSERT(true, {},"Uniform not found: '%s'", uniformName);
         }
 	}
 
@@ -409,7 +409,7 @@ namespace GFX
 
         Shader* GetShader(const char* shaderName)
         {
-            if(shaders.find(std::string(shaderName)) != shaders.end())
+            if(shaders.contains(shaderName))
             {
                 return &shaders.at(std::string(shaderName));
             }
