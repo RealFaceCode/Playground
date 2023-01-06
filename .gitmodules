@@ -1,6 +1,3 @@
 [submodule "Playground/PlaygroundLib/vendor/glfw"]
 	path = Playground/PlaygroundLib/vendor/glfw
 	url = https://github.com/glfw/glfw.git
-[submodule "PlaygroundLib/vendor/freetype"]
-	path = PlaygroundLib/vendor/freetype
-	url = https://gitlab.freedesktop.org/freetype/freetype.git
