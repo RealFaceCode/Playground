@@ -7,7 +7,6 @@ An easy way to get a fast project setup for gui apps.
 - glad
 - glm
 - openal-soft
-- freetype
 
 ## Supported platform
 - [x] windows
