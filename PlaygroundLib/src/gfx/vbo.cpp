@@ -17,7 +17,6 @@ void VertexBufferObject::bufferSubData(ui32 elements, ui32 offset ,ui32 size, co
 {
     bind();
     glBufferSubData(GL_ARRAY_BUFFER, offset, size, data);
-    mvertices += elements;
 }
 
 void VertexBufferObject::addAttrib(ui32 amount, ui32 type, bool normalize, ui32 stride, ui32 offset)

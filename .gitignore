@@ -18,5 +18,5 @@
 /CMakeLists.txt
 /Documentaion/Doxyfile
 /.idea/encodings.xml
-assets/settings/window.node
+/assets/settings/
 /.vscode

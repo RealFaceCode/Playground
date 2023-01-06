@@ -25,4 +25,4 @@ target_include_directories(PlaygroundLib PUBLIC vendor/glm/glm/ vendor/fhandle/ 
 target_compile_definitions(PlaygroundLib PUBLIC GLFW_INCLUDE_NONE)
 
 find_package(OpenGL REQUIRED)
-target_link_libraries(PlaygroundLib OpenGL::GL glfw OpenAL)
+target_link_libraries(PlaygroundLib OpenGL::GL glfw OpenAL freetype)
