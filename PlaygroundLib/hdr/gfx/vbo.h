@@ -18,7 +18,6 @@ public:
 private:
     ui32 mID;
     ui32 mAttribs;
-    ui32 mvertices;
 };
 
 #endif // __VBO_H__

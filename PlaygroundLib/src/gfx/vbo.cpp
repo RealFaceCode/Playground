@@ -2,7 +2,7 @@
 #include "OpenGL.h"
 
 VertexBufferObject::VertexBufferObject()
-    : mAttribs(0), mvertices(0)
+    : mAttribs(0), mID(0)
 {
     glGenBuffers(1, &mID);
 }
@@ -21,7 +21,7 @@ void VertexBufferObject::bufferSubData(ui32 elements, ui32 offset ,ui32 size, co
 
 void VertexBufferObject::addAttrib(ui32 amount, ui32 type, bool normalize, ui32 stride, ui32 offset)
 {
-    glVertexAttribPointer(mAttribs, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(f32), 0);
+    glVertexAttribPointer(mAttribs, amount, type, normalize, stride, (void*)offset);
     glEnableVertexAttribArray(mAttribs);
     mAttribs++;
 }

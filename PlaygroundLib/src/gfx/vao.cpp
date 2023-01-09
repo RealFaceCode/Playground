@@ -2,6 +2,7 @@
 #include "OpenGL.h"
 
 VertexArrayObject::VertexArrayObject()
+	: mID(0)
 {
     glGenVertexArrays(1, &mID);
 }
