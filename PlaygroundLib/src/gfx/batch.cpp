@@ -127,7 +127,7 @@ namespace GFX
 	template<typename BatchType>
 	bool Batch<BatchType>::hasSpaceTexture()
 	{
-        return (mNumTextures <= 8);
+        return (mNumTextures < 8);
 	}
 
 	template<typename BatchType>

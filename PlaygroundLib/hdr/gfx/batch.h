@@ -1,31 +1,14 @@
-#include "../core.h"
-#include "gfx.h"
-
 #ifndef BATCH_H
 #define BATCH_H
+
+#include "../core.h"
+#include "gfx.h"
+#include "batchrenderer/batchvertex.h"
 
 namespace GFX
 {
     struct Image;
     struct Shader;
-
-	struct BatchVertex2D
-	{
-	public:
-		glm::vec2 mPosition;
-		glm::vec4 mColor;
-		glm::vec2 mTexCoord;
-        f32 mTexture;
-	};
-
-	struct BatchVertex3D
-	{
-	public:
-		glm::vec3 mPosition;
-		glm::vec4 mColor;
-		glm::vec2 mTexCoord;
-        f32 mTexture;
-	};
 
 	template<typename BatchType>
 	struct Batch

@@ -15,7 +15,7 @@ namespace GFX
         return quad;
     }
 
-    static void HandleObjects(List<glm::vec2>& quadMesh, List<Quad>& quads, float& sumX, float& sumY)
+    static void HandleObjects(List<Pair<glm::vec2, glm::vec2>>& quadMesh, List<Quad>& quads, float& sumX, float& sumY)
     {
         glm::vec3 quadCenter{0.5, 0.5, 0};
         for(ui64 i = 0; i < quads.length(); i++)
@@ -27,6 +27,10 @@ namespace GFX
             float y = q.y;
             float w = q.width;
             float h = q.height; 
+            float s0 = q.texCoordS0;
+            float s1 = q.texCoordS1;
+            float t0 = q.texCoordT0;
+            float t1 = q.texCoordT1;
             float r = q.rotation;
 
             glm::mat4 rotateObj = glm::translate(glm::identity<glm::mat4>(), quadCenter);
@@ -43,11 +47,19 @@ namespace GFX
                 sumY += vert.y;
             }
 
-            quadMesh.add(&rawQuad[0], 6); 
+            std::array<Pair<glm::vec2, glm::vec2>, 6> processedQuad;
+            processedQuad[0] = Pair<glm::vec2, glm::vec2>{rawQuad[0], {s0, t0}};
+            processedQuad[1] = Pair<glm::vec2, glm::vec2>{rawQuad[1], {s1, t0}};
+            processedQuad[2] = Pair<glm::vec2, glm::vec2>{rawQuad[2], {s1, t1}};
+            processedQuad[3] = Pair<glm::vec2, glm::vec2>{rawQuad[3], {s1, t1}};
+            processedQuad[4] = Pair<glm::vec2, glm::vec2>{rawQuad[4], {s0, t1}};
+            processedQuad[5] = Pair<glm::vec2, glm::vec2>{rawQuad[5], {s0, t0}};
+
+            quadMesh.add(&processedQuad[0], 6); 
         }
     }
 
-    static void HandleMesh(List<glm::vec2>& quadMesh, const float& meshX, 
+    static void HandleMesh(List<Pair<glm::vec2, glm::vec2>>& quadMesh, const float& meshX, 
                             const float& meshY, const float& meshScaleW, 
                             const float& meshScaleH, const float& meshRotate,
                             const float& sumX, const float& sumY)
@@ -65,16 +77,16 @@ namespace GFX
 
         for (auto& vert : quadMesh)
         {
-            glm::vec2& v = (glm::vec2&)vert;
+            auto& v = (glm::vec2&)vert.first;
             v = transformMesh * glm::vec4(v, 0.0f, 1.0f);
         }
     }
 
-    List<glm::vec2> GetQuads(const float& meshX, const float& meshY, 
+    List<Pair<glm::vec2, glm::vec2>> GetQuads(const float& meshX, const float& meshY, 
                             const float& meshScaleW, const float& meshScaleH, 
                             const float& meshRotate, List<Quad>& quads)
     {
-        List<glm::vec2> quadMesh;
+        List<Pair<glm::vec2, glm::vec2>> quadMesh;
         float sumX = 0;
         float sumY = 0;
 
