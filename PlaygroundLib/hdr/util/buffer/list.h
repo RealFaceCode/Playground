@@ -24,15 +24,15 @@ public:
 
     Type* at(const ui64& index);
 
-    Iterator<Type> begin();
-    Iterator<Type> end();
+    Iterator<Type> begin() const;
+    Iterator<Type> end() const;
 
-    Iterator_R<Type> rBegin();
-    Iterator_R<Type> rEnd();
+    Iterator_R<Type> rBegin() const;
+    Iterator_R<Type> rEnd() const;
 
-    Type* source();
-    const ui64& length();
-    const ui64& capacity();
+    Type* source() const;
+    const ui64& length() const;
+    const ui64& capacity() const;
 
     bool reserve(const ui64& elements);
     void clear();
@@ -156,43 +156,43 @@ Type *List<Type>::at(const ui64 &index)
 }
 
 template<typename Type>
-Iterator<Type> List<Type>::begin()
+Iterator<Type> List<Type>::begin() const
 {
     return Iterator<Type>(mSource, mLength).begin();
 }
 
 template<typename Type>
-Iterator<Type> List<Type>::end()
+Iterator<Type> List<Type>::end() const
 {
     return Iterator<Type>(mSource, mLength).end();
 }
 
 template<typename Type>
-Iterator_R<Type> List<Type>::rBegin()
+Iterator_R<Type> List<Type>::rBegin() const
 {
     return Iterator_R<Type>(mSource, mLength).begin();
 }
 
 template<typename Type>
-Iterator_R<Type> List<Type>::rEnd()
+Iterator_R<Type> List<Type>::rEnd() const
 {
     return Iterator_R<Type>(mSource, mLength).end();
 }
 
 template<typename Type>
-Type *List<Type>::source()
+Type *List<Type>::source() const
 {
     return mSource;
 }
 
 template<typename Type>
-const ui64 &List<Type>::length()
+const ui64 &List<Type>::length() const
 {
     return mLength;
 }
 
 template<typename Type>
-const ui64 &List<Type>::capacity()
+const ui64 &List<Type>::capacity() const
 {
     return mCap;
 }

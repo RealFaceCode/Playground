@@ -12,11 +12,11 @@ public:
     void add(const Key& key);
     void add(const Key& key, const Value& value);
 
-    bool contains(const Key& key);
-    Pair<Key, Value>* find(const Key& key);
+    bool contains(const Key& key) const;
+    Pair<Key, Value>* find(const Key& key) const;
 
-    Iterator<Pair<Key, Value>> begin();
-    Iterator<Pair<Key, Value>> end();
+    Iterator<Pair<Key, Value>> begin() const;
+    Iterator<Pair<Key, Value>> end() const;
 
     Value& operator[](const Key& key);
 private:
@@ -46,7 +46,7 @@ void Map<Key, Value>::add(const Key& key, const Value&  value)
 }
 
 template<typename Key, typename Value>
-bool Map<Key, Value>::contains(const Key& key)
+bool Map<Key, Value>::contains(const Key& key) const
 {
     auto* p = find(key);
     if(p)
@@ -57,7 +57,7 @@ bool Map<Key, Value>::contains(const Key& key)
 }
 
 template<typename Key, typename Value>
-Pair<Key, Value>* Map<Key, Value>::find(const Key& key)
+Pair<Key, Value>* Map<Key, Value>::find(const Key& key) const
 {
     for(auto& p : mEntries)
     {
@@ -70,13 +70,13 @@ Pair<Key, Value>* Map<Key, Value>::find(const Key& key)
 }
 
 template<typename Key, typename Value>
-Iterator<Pair<Key, Value>> Map<Key, Value>::begin()
+Iterator<Pair<Key, Value>> Map<Key, Value>::begin() const
 {
     return mEntries.begin();
 }
 
 template<typename Key, typename Value>
-Iterator<Pair<Key, Value>> Map<Key, Value>::end()
+Iterator<Pair<Key, Value>> Map<Key, Value>::end() const
 {
     return mEntries.end();
 }
