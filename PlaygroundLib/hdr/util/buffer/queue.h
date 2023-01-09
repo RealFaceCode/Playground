@@ -1,5 +1,6 @@
 #ifndef PLAYGROUNDLIB_QUEUE_H
 #define PLAYGROUNDLIB_QUEUE_H
+#include "../../core.h"
 #include "list"
 
 template<typename Type>
@@ -17,15 +18,15 @@ public:
 
     Type pop();
 
-    Iterator<Type> begin();
-    Iterator<Type> end();
+    Iterator<Type> begin() const;
+    Iterator<Type> end() const;
 
-    Iterator_R<Type> rBegin();
-    Iterator_R<Type> rEnd();
+    Iterator_R<Type> rBegin() const;
+    Iterator_R<Type> rEnd() const;
 
-    Type* source();
-    const ui64& length();
-    const ui64& capacity();
+    Type* source() const;
+    const ui64& length() const;
+    const ui64& capacity() const;
 
     bool reserve(const ui64& elements);
     void clear();
@@ -89,42 +90,43 @@ Type Queue<Type>::pop()
 }
 
 template<typename Type>
-Iterator <Type> Queue<Type>::begin()
+Iterator <Type> Queue<Type>::begin() const
 {
     return mSource.begin();
 }
 
 template<typename Type>
-Iterator <Type> Queue<Type>::end()
+Iterator <Type> Queue<Type>::end() const
 {
     return mSource.end();
 }
 
 template<typename Type>
-Iterator_R <Type> Queue<Type>::rBegin()
+Iterator_R <Type> Queue<Type>::rBegin() const
 {
     return mSource.rBegin();
 }
 
 template<typename Type>
-Iterator_R <Type> Queue<Type>::rEnd()
+Iterator_R <Type> Queue<Type>::rEnd() const
 {
     return mSource.rEnd();
 }
 
 template<typename Type>
-Type *Queue<Type>::source() {
+Type *Queue<Type>::source() const
+{
     return mSource.source();
 }
 
 template<typename Type>
-const ui64 &Queue<Type>::length()
+const ui64 &Queue<Type>::length() const
 {
     return mSource.length();
 }
 
 template<typename Type>
-const ui64 &Queue<Type>::capacity()
+const ui64 &Queue<Type>::capacity() const
 {
     return mSource.capacity();
 }
