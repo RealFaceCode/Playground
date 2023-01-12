@@ -19,6 +19,9 @@ public:
     void add(const Type* element, const ui64& elements);
     void add(const List<Type>& list);
     void add(const std::initializer_list<Type>& list);
+    void add_copy(const Type* element, const ui64& elements);
+    void add_copy(const List<Type>& list);
+    void add_copy(const std::initializer_list<Type>& list);
     void remove(const ui64& index);
     void remove(const ui64& begin, const ui64& end);
 
@@ -120,6 +123,45 @@ template<typename Type>
 void List<Type>::add(const std::initializer_list<Type>& list)
 {
     add(data(list), list.size());
+}
+
+template<typename Type>
+void List<Type>::add_copy(const Type* element, const ui64& elements)
+{
+    if(!elements)
+    {
+        return;
+    }
+    makeFit(elements);
+
+    memcpy(&mSource[mLength], element, elements * TypeSize);
+    mLength += elements;
+}
+
+template<typename Type>
+void List<Type>::add_copy(const List<Type>& list)
+{
+    if(list.length() == 0)
+    {
+        return;
+    }
+    makeFit(list.length());
+
+    memcpy(&mSource[mLength], list.at_c(0), list.length() * TypeSize);
+    mLength += list.length();
+}
+
+template<typename Type>
+void List<Type>::add_copy(const std::initializer_list<Type>& list)
+{
+    if(list.size() == 0)
+    {
+        return;
+    }
+    makeFit(list.size());
+
+    memcpy(&mSource[mLength], data(list), list.size() * TypeSize);
+    mLength += list.size();
 }
 
 template<typename Type>
