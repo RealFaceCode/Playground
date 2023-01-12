@@ -95,4 +95,89 @@ namespace GFX
 
         return quadMesh;
     }
+
+    static void HandleObjects_BV2D(List<BatchVertex2D>& quadMesh, List<Quad>& quads, float& sumX, float& sumY)
+    {
+        glm::vec3 quadCenter{0.5, 0.5, 0};
+        for(ui64 i = 0; i < quads.length(); i++)
+        {
+            Quad q = *quads.at(i);
+            auto rawQuad = GetRawQuad();
+
+            float x = q.x;
+            float y = q.y;
+            float w = q.width;
+            float h = q.height; 
+            float s0 = q.texCoordS0;
+            float s1 = q.texCoordS1;
+            float t0 = q.texCoordT0;
+            float t1 = q.texCoordT1;
+            float ro = q.rotation;
+            glm::vec4 color{q.r, q.g, q.b, q.a};
+            float textureIndex = q.textureIndex;
+
+            glm::mat4 rotateObj = glm::translate(glm::identity<glm::mat4>(), quadCenter);
+            rotateObj = glm::rotate(rotateObj, glm::radians(ro), glm::vec3(0, 0, 1));
+            rotateObj = glm::translate(rotateObj, -quadCenter);
+            glm::mat4 scaleObj = glm::scale(glm::identity<glm::mat4>(), {w, h, 1});
+            glm::mat4 translateObj = glm::translate(glm::identity<glm::mat4>(), {x, y, 0});
+            glm::mat4 transformObj = translateObj * rotateObj * scaleObj;
+
+            for (auto& vert : rawQuad)
+            {
+                vert = transformObj * glm::vec4(vert, 0.0f, 1.0f);
+                sumX += vert.x;
+                sumY += vert.y;
+            }
+
+        	BatchVertex2D batchData[] =
+            {
+                BatchVertex2D{rawQuad[0], color, {s0, t0}, textureIndex},
+                BatchVertex2D{rawQuad[1], color, {s1, t0}, textureIndex},
+                BatchVertex2D{rawQuad[2], color, {s1, t1}, textureIndex},
+                BatchVertex2D{rawQuad[3], color, {s1, t1}, textureIndex},
+                BatchVertex2D{rawQuad[4], color, {s0, t1}, textureIndex},
+                BatchVertex2D{rawQuad[5], color, {s0, t0}, textureIndex},
+            };
+
+            quadMesh.add(batchData, 6); 
+        }
+    }
+
+    static void HandleMesh_BV2D(List<BatchVertex2D>& quadMesh, const float& meshX, 
+                            const float& meshY, const float& meshScaleW, 
+                            const float& meshScaleH, const float& meshRotate,
+                            const float& sumX, const float& sumY)
+    {
+        glm::vec3 meshCenter{0, 0, 0};
+        meshCenter.x = sumX / (float)quadMesh.length();
+        meshCenter.y = sumY / (float)quadMesh.length();
+
+        glm::mat4 rotateMesh = glm::translate(glm::identity<glm::mat4>(), meshCenter);
+        rotateMesh = glm::rotate(rotateMesh, glm::radians(meshRotate), glm::vec3(0, 0, 1));
+        rotateMesh = glm::translate(rotateMesh, -meshCenter);
+        glm::mat4 scaleMesh = glm::scale(glm::identity<glm::mat4>(), {meshScaleW, meshScaleH, 1});
+        glm::mat4 translateMesh = glm::translate(glm::identity<glm::mat4>(), {meshX, meshY, 0});
+        glm::mat4 transformMesh = translateMesh * rotateMesh * scaleMesh;
+
+        for (auto& vert : quadMesh)
+        {
+            auto& v = (glm::vec2&)vert.mPosition;
+            v = transformMesh * glm::vec4(v, 0.0f, 1.0f);
+        }
+    }
+
+    List<BatchVertex2D> GetQuads_BV2D(const float& meshX, const float& meshY, 
+                            const float& meshScaleW, const float& meshScaleH, 
+                            const float& meshRotate, List<Quad>& quads)
+    {
+        List<BatchVertex2D> quadMesh;
+        float sumX = 0;
+        float sumY = 0;
+
+        HandleObjects_BV2D(quadMesh, quads, sumX, sumY);
+        HandleMesh_BV2D(quadMesh, meshX, meshY, meshScaleW, meshScaleH, meshRotate, sumX, sumY);
+
+        return quadMesh;
+    }
 } // namespace GFX

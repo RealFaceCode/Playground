@@ -6,8 +6,10 @@ struct VertexArrayObject
 {
 public:
     VertexArrayObject();
-    void bind();
-    void unbind();
+    ~VertexArrayObject();
+    void create();
+    void bind() const;
+    void unbind() const;
     const ui32 getID() const;
     void clear();
 private:

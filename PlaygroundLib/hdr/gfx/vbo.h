@@ -6,13 +6,15 @@ struct VertexBufferObject
 {
 public:
     VertexBufferObject();
+    ~VertexBufferObject();
+    void create();
 
-    void bufferData(ui32 size, void* data, ui32 draw);
-    void bufferSubData(ui32 elemets, ui32 offset, ui32 size, const void* data);
+    void bufferData(ui32 size, void* data, ui32 draw) const;
+    void bufferSubData(ui32 offset, ui32 size, const void* data) const;
     void addAttrib(ui32 amount, ui32 type, bool normalize, ui32 stride, ui32 offset);
 
-    void bind();
-    void unbind();
+    void bind() const;
+    void unbind() const;
 
     void clear();
 private:

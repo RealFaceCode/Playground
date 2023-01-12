@@ -13,14 +13,20 @@ namespace GFX
         RenderableText() = default;
         RenderableText(const ui32& x, const ui32& y, const BitmaskSize& bms, Font& font, const String& text, const ui32& maxLineLenPx);
         ~RenderableText();
-        List<Pair<glm::vec2, glm::vec2>>& getRenderData();
-        ui32 textureID();
-    private:
-        void prepareRenderData(List<Pair<glm::vec2, glm::vec2>>& gl, const float& mTextureID);
 
+        List<BatchVertex2D>& getRenderData();
+        ui32 textureID() const;
+        ui32 verticesCount() const;
+
+        void prepareRenderData(const ui32& mapedTextureID);
     private:
-        List<Pair<glm::vec2, glm::vec2>> mRenderData;
+        List<BatchVertex2D> mRenderData;
         ui32 mTextureID;
+        ui32 mX;
+        ui32 mY;
+        String mText;
+        ui32 mMaxLineLenPx;
+        FontBitmask* mBitmask;
     };
 }
 

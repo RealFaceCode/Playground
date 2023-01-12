@@ -16,22 +16,22 @@ namespace GFX
         Batch_();
         Batch_(const ui32& maxVertexCount, const ui32& drawType);
         ~Batch_();
-
         bool hasTexture(const ui32& textureID) const;
         bool hasSpaceTexture() const;
         bool hasSpace(const ui32& elements) const;
         bool isSpaceAndTexture(const ui32& elements, const ui32& textureID) const;
 
+        void addElement(const BatchType& element, const ui32& textureID);
         void addElements(const BatchType* elements, const ui32& numElements, const ui32& textureID);
         void addElements(const List<BatchType>& elementList, const ui32& textureID);
         void addNewTexture(const ui32& textureID);
 
-        ui32 getMapedID(const ui32& textureID) const;
+        ui32 getMappedID(const ui32& textureID) const;
 
         void draw();
     private:
         void pushToGPU();
-    private:
+    public:
         VertexArrayObject vao;
         VertexBufferObject vbo;
         ui8 mNumTexIDs;
@@ -41,6 +41,4 @@ namespace GFX
         List<BatchType> mRenderData;
     };
 }
-
-
 #endif // __BATCH_H__

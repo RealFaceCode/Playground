@@ -3,16 +3,22 @@
 
 VertexArrayObject::VertexArrayObject()
 	: mID(0)
+{}
+
+VertexArrayObject::~VertexArrayObject()
+{}
+
+void VertexArrayObject::create()
 {
-    glGenVertexArrays(1, &mID);
+	glGenVertexArrays(1, &mID);
 }
 
-void VertexArrayObject::bind()
+void VertexArrayObject::bind() const
 {
     glBindVertexArray(mID);
 }
 
-void VertexArrayObject::unbind()
+void VertexArrayObject::unbind() const
 {
     glBindVertexArray(0);
 }
@@ -29,4 +35,5 @@ void VertexArrayObject::clear()
 			unbind();
 			glDeleteVertexArrays(1, &mID);
 		}
+		mID = 0;
 }

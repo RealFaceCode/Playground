@@ -14,10 +14,10 @@ namespace GFX
     template<typename BatchType>
     Batch_<BatchType>::Batch_(const ui32& maxVertexCount, const ui32& drawType)
         :mNumMaxVertexCount(maxVertexCount), mDrawType(drawType), mNumTexIDs(0), mMapedID(), mRenderData()
-    {
-        //vao = VertexArrayObject();
+    {   
+        vao.create();
         vao.bind();
-        //vbo = VertexBufferObject();
+        vbo.create();
         vbo.bind();
         vbo.bufferData(mNumMaxVertexCount * sizeof(BatchType), nullptr, mDrawType);
 
@@ -33,18 +33,15 @@ namespace GFX
         vbo.addAttrib(4, GL_FLOAT, GL_FALSE, sizeof(BatchType), offsetof(BatchType, mColor));
         vbo.addAttrib(2, GL_FLOAT, GL_FALSE, sizeof(BatchType), offsetof(BatchType, mTexCoord));
         vbo.addAttrib(1, GL_FLOAT, GL_FALSE, sizeof(BatchType), offsetof(BatchType, mTexture));
-
-        vbo.unbind();
-        vao.unbind();
     }
     
     template<typename BatchType>
     Batch_<BatchType>::~Batch_()
     {
-        vbo.unbind();
-        vao.unbind();
-        vbo.clear();
-        vao.clear();
+        //vbo.unbind();
+        //vao.unbind();
+        //vbo.clear();
+        //vao.clear();
     }
     
     template<typename BatchType>
@@ -78,6 +75,17 @@ namespace GFX
         return hasTexture(textureID) && hasSpace(elements);
     }
     
+    template<typename BatchType>
+    void Batch_<BatchType>::addElement(const BatchType& element, const ui32& textureID)
+    {
+        if(!isSpaceAndTexture(1, textureID))
+        {
+            //TODO: add error msg
+            return;
+        }
+        mRenderData.add(element);
+    }
+
     template<typename BatchType>
     void Batch_<BatchType>::addElements(const BatchType* elements, const ui32& numElements, const ui32& textureID)
     {
@@ -113,7 +121,7 @@ namespace GFX
     }
     
     template<typename BatchType>
-    ui32 Batch_<BatchType>::getMapedID(const ui32& textureID) const
+    ui32 Batch_<BatchType>::getMappedID(const ui32& textureID) const
     {
         for(auto& id : mMapedID)
         {
@@ -132,10 +140,11 @@ namespace GFX
 		{
 			return;
 		}
+
         vao.bind();
         vbo.bind();
 
-        for (int i = 0; i < mNumTextures; i++)
+        for (int i = 0; i < mNumTexIDs; i++)
 		{
 			glActiveTexture(GL_TEXTURE0 + i);
 			glBindTexture(GL_TEXTURE_2D, mMapedID[i].first);
@@ -153,7 +162,9 @@ namespace GFX
     template<typename BatchType>
     void Batch_<BatchType>::pushToGPU()
     {
-        glBufferSubData(GL_ARRAY_BUFFER, 0, mRenderData.length() * sizeof(BatchType), mRenderData.at(0));
+        vao.bind();
+        vbo.bind();
+        vbo.bufferSubData(0, mRenderData.length() * sizeof(BatchType), mRenderData.at(0));
     }
     
 }
