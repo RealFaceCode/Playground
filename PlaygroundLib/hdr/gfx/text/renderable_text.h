@@ -14,11 +14,14 @@ namespace GFX
         RenderableText(const ui32& x, const ui32& y, const BitmaskSize& bms, Font& font, const String& text, const ui32& maxLineLenPx);
         ~RenderableText();
 
+        void SetText(const String& text);
+        void SetBMS(const BitmaskSize& bms);
+
         List<BatchVertex2D>& getRenderData();
         ui32 textureID() const;
         ui32 verticesCount() const;
 
-        void prepareRenderData(const ui32& mapedTextureID);
+        void prepareRenderData(const ui32& mappedTextureID);
     private:
         List<BatchVertex2D> mRenderData;
         ui32 mTextureID;

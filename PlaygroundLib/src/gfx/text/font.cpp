@@ -134,4 +134,14 @@ namespace GFX
         mRenderData = GetQuads_BV2D(mX, cY, 1, 1, 0, quads);
     }
 
+    void RenderableText::SetText(const String &text)
+    {
+        mText = text;
+    }
+
+    void RenderableText::SetBMS(const BitmaskSize &bms)
+    {
+        mBitmask = nullptr;
+    }
+
 }
