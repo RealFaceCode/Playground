@@ -2,6 +2,7 @@
 #define PLAYGROUNDLIB_QUEUE_H
 #include "../../core.h"
 #include "list"
+#include "iterator.h"
 
 template<typename Type>
 struct Queue
