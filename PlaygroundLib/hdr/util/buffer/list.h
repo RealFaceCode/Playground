@@ -66,7 +66,7 @@ List<Type>::List()
 
 template<typename Type>
 List<Type>::List(const ui64 &elements)
-    : mLength(0), mCap(elements), mSource(0), TypeSize(sizeof(Type))
+    : mLength(0), mCap(0), mSource(0), TypeSize(sizeof(Type))
 {
     makeFit(elements);
 }
