@@ -25,7 +25,7 @@ public:
     void remove(const ui64& index);
     void remove(const ui64& begin, const ui64& end);
 
-    Type* at(const ui64& index);
+    Type* at(const ui64& index) const;
 
     Iterator<Type> begin() const;
     Iterator<Type> end() const;
@@ -188,7 +188,7 @@ void List<Type>::remove(const ui64 &begin, const ui64 &end)
 }
 
 template<typename Type>
-Type *List<Type>::at(const ui64 &index)
+Type *List<Type>::at(const ui64 &index) const
 {
     if(index >= mLength)
     {
