@@ -15,12 +15,12 @@ namespace GFX
         return quad;
     }
 
-    static void HandleObjects(List<Pair<glm::vec2, glm::vec2>>& quadMesh, List<Quad>& quads, float& sumX, float& sumY)
+    static void HandleObjects(List<Pair<glm::vec2, glm::vec2>>& quadMesh, const List<Quad>& quads, float& sumX, float& sumY)
     {
         glm::vec3 quadCenter{0.5, 0.5, 0};
         for(ui64 i = 0; i < quads.length(); i++)
         {
-            Quad q = *quads.at(i);
+            const Quad q = *quads.at(i);
             auto rawQuad = GetRawQuad();
 
             float x = q.x;
@@ -84,9 +84,9 @@ namespace GFX
 
     List<Pair<glm::vec2, glm::vec2>> GetQuads(const float& meshX, const float& meshY, 
                             const float& meshScaleW, const float& meshScaleH, 
-                            const float& meshRotate, List<Quad>& quads)
+                            const float& meshRotate, const List<Quad>& quads)
     {
-        List<Pair<glm::vec2, glm::vec2>> quadMesh;
+        List<Pair<glm::vec2, glm::vec2>> quadMesh(quads.length() * 6);
         float sumX = 0;
         float sumY = 0;
 
@@ -96,7 +96,7 @@ namespace GFX
         return quadMesh;
     }
 
-    static void HandleObjects_BV2D(List<BatchVertex2D>& quadMesh, List<Quad>& quads, float& sumX, float& sumY)
+    static void HandleObjects_BV2D(List<BatchVertex2D>& quadMesh, const List<Quad>& quads, float& sumX, float& sumY)
     {
         glm::vec3 quadCenter{0.5, 0.5, 0};
         for(ui64 i = 0; i < quads.length(); i++)
@@ -140,7 +140,7 @@ namespace GFX
                 BatchVertex2D{rawQuad[5], color, {s0, t0}, textureIndex},
             };
 
-            quadMesh.add(batchData, 6); 
+            quadMesh.add_copy(batchData, 6); 
         }
     }
 
@@ -169,9 +169,9 @@ namespace GFX
 
     List<BatchVertex2D> GetQuads_BV2D(const float& meshX, const float& meshY, 
                             const float& meshScaleW, const float& meshScaleH, 
-                            const float& meshRotate, List<Quad>& quads)
+                            const float& meshRotate, const List<Quad>& quads)
     {
-        List<BatchVertex2D> quadMesh;
+        List<BatchVertex2D> quadMesh(quads.length() * 6);
         float sumX = 0;
         float sumY = 0;
 
